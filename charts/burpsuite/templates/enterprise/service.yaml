@@ -9,8 +9,8 @@ spec:
   type: {{ .Values.enterprise.service.type }}
   ports:
     - port: {{ .Values.enterprise.service.port }}
-      targetPort: http
+      targetPort: web-server-api
       protocol: TCP
-      name: http
+      name: web-server-api
   selector:
     {{- include "burpsuite.selectorLabels" . | nindent 4 }}

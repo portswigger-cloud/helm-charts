@@ -13,12 +13,4 @@ spec:
     matchLabels:
       {{- include "burpsuite.selectorLabels" . | nindent 6 }}
   template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "burpsuite.selectorLabels" . | nindent 8 }}
-    spec:
-      {{- include "burpsuite.podTemplate" . }}
+    {{- include "burpsuite.podTemplate" . | nindent 4 }}

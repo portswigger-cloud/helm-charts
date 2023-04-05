@@ -1,4 +1,4 @@
-{{- define "burpsuite.enterprise.containerTemplate" }}
+{{- define "burpsuite.enterprise.containerTemplate" -}}
 image: {{ include "burpsuite.enterprise.image" . }}
 imagePullPolicy: Always
 name: enterprise
@@ -41,5 +41,5 @@ envFrom:
       name: {{ include "burpsuite.enterprise.fullname" . }}
 volumeMounts:
 - mountPath: /home/burpsuite
-  name: {{ include "burpsuite.enterprise.fullname" . }}
-{{- end }}
+  name: home-burpsuite
+{{- end -}}
