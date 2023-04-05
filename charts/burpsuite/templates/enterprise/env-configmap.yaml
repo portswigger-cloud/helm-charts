@@ -4,15 +4,18 @@ metadata:
   name: {{ include "burpsuite.enterprise.fullname" . }}
   namespace: {{ include "burpsuite.namespace" . }}
   labels:
-    app.kubernetes.io/name: enterprise-server
-    app.kubernetes.io/component: server
+    app.kubernetes.io/component: enterprise
 {{ include "burpsuite.labels" . | indent 4 }}
 data:
-{{- if .Values.database }}
-  {{ if .Values.database.url -}}BSEE_ADMIN_REPOSITORY_URL: {{ .Values.database.url }}{{- end }}
-  {{ if .Values.database.url -}}BSEE_AGENT_REPOSITORY_URL: {{ .Values.database.url }}{{- end }}
-  {{ if .Values.database.idleTimeout -}}BSEE_DB_CONNECTION_IDLE_TIMEOUT: {{ .Values.database.idleTimeout | quote }}{{- end }}
-  {{ if .Values.database.maxLifetimeTimeout -}}BSEE_DB_CONNECTION_MAX_LIFETIME_TIMEOUT: {{ .Values.database.maxLifetimeTimeout | quote }}{{- end }}
+{{- with include "burpsuite.database.url" . }}
+  BSEE_ADMIN_REPOSITORY_URL: {{ . }}
+  BSEE_AGENT_REPOSITORY_URL: {{ . }}
+{{- end }}
+{{- with .Values.database.idleTimeout }}
+  BSEE_DB_CONNECTION_IDLE_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with .Values.database.maxLifetimeTimeout }}
+  BSEE_DB_CONNECTION_MAX_LIFETIME_TIMEOUT: {{ . | quote }}
 {{- end }}
   BSEE_INSTALLATION_ENVIRONMENT: KUBERNETES
   BSEE_RUN_MODE: LICENSE_ONLY

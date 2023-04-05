@@ -166,30 +166,32 @@ postgresql:
       ##
       size: 8Gi
 
-## @section External Database settings
+## @section Database settings
 ##
-
-## External Database Configuration
-## These values are only used when postgresql.enabled is set to false
-##
-externalDatabase:
-  ## @param externalDatabase.url JDBC URL of an external database (only if postgresql.enabled=false)
-  ##
-  url: ""
+database:
+  # -- JDBC URL of an external database (only if postgresql.enabled=false)
+  externalUrl: ""
 
   users:
-    server:
-      ## @param externalDatabase.server.username User of an external PostgreSQL instance to connect (only if postgresql.enabled=false)
-      ##
-      username: server
-      ## @param externalDatabase.server.password Password of an external PostgreSQL instance to connect (only if postgresql.enabled=false)
-      ##
+    enterprise:
+      # -- Username for the Enterprise Server database connection
+      username: enterprise
+      # -- Password for the Enterprise Server database connection
       password: ""
+      # -- Connection username for the Enterprise Server database connection.
+      # Required if connection username differs from internal username e.g. if @hostname suffix is mandated (Azure)
+      connectionUsername: ""
     scanner:
-      ## @param externalDatabase.scanner.username User of an external PostgreSQL instance to connect (only if postgresql.enabled=false)
-      ##
+      # -- Username for the Scanning Resource database connection
       username: scanner
-      ## @param externalDatabase.scanner.password Password of an external PostgreSQL instance to connect (only if postgresql.enabled=false)
-      ##
+      # -- Password for the Scanning Resource database connection
       password: ""
+      # -- Connection username for the Scanning Resource database connection
+      # Required if connection username differs from internal username e.g. if @hostname suffix is mandated (Azure)
+      connectionUsername: ""
 
+  # -- (int) Idle timeout (ms) for the database connection
+  idleTimeout: 60000
+
+  # -- (int) Maximum lifetime timeout (ms) for the database connection
+  maxLifetimeTimeout: 120000

@@ -95,3 +95,17 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Fetch given field from existing enterprise secret or generate a new random value
+*/}}
+{{- define "burpsuite.enterprise.fetchOrCreateSecretField" -}}
+{{- $context := index . 0 -}}
+{{- $secretFieldName := index . 1 -}}
+
+{{- $secretName := include "burpsuite.enterprise.fullname" $context }}
+{{- $secretObj := (lookup "v1" "Secret" $context.Release.Namespace $secretName) | default dict }}
+{{- $secretData := (get $secretObj "data") | default dict }}
+{{- $secretFieldValue := (get $secretData $secretFieldName) | default (randAlphaNum 30 | b64enc) }}
+{{- $secretFieldValue -}}
+{{- end -}}
