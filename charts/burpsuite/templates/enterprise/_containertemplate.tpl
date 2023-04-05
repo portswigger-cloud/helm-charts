@@ -1,5 +1,5 @@
 {{- define "burpsuite.enterprise.containerTemplate" }}
-image: "{{ $values.image.name }}:{{ .Values.image.tag }}"
+image: {{ include "burpsuite.enterprise.image" . }}
 imagePullPolicy: Always
 name: enterprise
 resources:
@@ -9,47 +9,37 @@ resources:
   limits:
     memory:
 ports:
-{{- range $portName, $portSpec := .Values.ports }}
-  - name: {{ $portName }}
-    containerPort: {{ $portSpec.port }}
-    protocol: {{ $portSpec.protocol }}
-{{- end }}
+  - name: web-server-api
+    containerPort: 8072
+    protocol: TCP
 startupProbe:
-  {{- toYaml .Values.healthcheck | nindent 10 }}
+  tcpSocket:
+    port: web-server-api
   failureThreshold: 60
   periodSeconds: 5
   timeoutSeconds: 2
-readinessProbe:
-  {{- toYaml .Values.healthcheck | nindent 10 }}
-  failureThreshold: 1
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 2
 livenessProbe:
-  {{- toYaml .Values.healthcheck | nindent 10 }}
+  tcpSocket:
+    port: web-server-api
   failureThreshold: 3
   periodSeconds: 10
-  successThreshold: 1
   timeoutSeconds: 2
-{{- with .Values.deployment.lifecycle }}
-lifecycle:
-  {{- toYaml . | nindent 10 }}
-{{- end }}
+  successThreshold: 1
+readinessProbe:
+  tcpSocket:
+    port: web-server-api
+  failureThreshold: 1
+  periodSeconds: 10
+  timeoutSeconds: 2
+  successThreshold: 1
 securityContext:
-  {{- toYaml .Values.securityContext | nindent 10 }}
-{{- with .Values.args }}
-args:
-  {{- toYaml . | nindent 10 }}
-{{- end }}
-{{- with .Values.env }}
-env:
-  {{- toYaml . | nindent 10 }}
-{{- end }}
-{{- with .Values.envFrom }}
+  {{- toYaml .Values.enterprise.securityContext | nindent 2 }}
 envFrom:
-  {{- toYaml . | nindent 10 }}
-{{- end }}
+  - configMapRef:
+      name: {{ include "burpsuite.enterprise.fullname" . }}
+  - secretRef:
+      name: {{ include "burpsuite.enterprise.fullname" . }}
 volumeMounts:
-- mountPath: /tmp
-  name: tmp-volume
+- mountPath: /home/burpsuite
+  name: {{ include "burpsuite.enterprise.fullname" . }}
 {{- end }}

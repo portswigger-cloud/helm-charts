@@ -21,16 +21,4 @@ spec:
       labels:
         {{- include "burpsuite.selectorLabels" . | nindent 8 }}
     spec:
-
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "burpsuite.podTemplate" . }}
