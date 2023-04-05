@@ -1,0 +1,27 @@
+apiVersion: v2
+name: burpsuite
+description: Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
+type: application
+version: 0.0.1
+kubeVersion: ">=1.24.0-0"
+keywords:
+  - burpsuite
+  - dast
+  - security
+  - web
+home: https://portswigger.net/
+sources:
+  - https://github.com/portswigger-cloud/helm-charts/
+maintainers:
+  - name: James Hargreaves
+    email: james.hargreaves@portswigger.net
+  - name: Tim Birkett
+    email: tim.birkett@portswigger.net
+
+dependencies:
+  - condition: postgresql.enabled
+    name: postgresql
+    repository: https://charts.bitnami.com/bitnami
+    version: 12.x.x
+
+appVersion: "2023.3-12526"
