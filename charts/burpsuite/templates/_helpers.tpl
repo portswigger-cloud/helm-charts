@@ -33,7 +33,7 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create a default fully qualified web app name.
 */}}
-{{- define "burpsuite.webFullname" -}}
+{{- define "burpsuite.web.fullname" -}}
 {{- $name := include "burpsuite.fullname" | trunc 59 | trimSuffix "-" }}
 {{- printf "%s-web" $name }}
 {{- end }}
@@ -41,7 +41,7 @@ Create a default fully qualified web app name.
 {{/*
 Create a default fully qualified enterprise app name.
 */}}
-{{- define "burpsuite.enterpriseFullname" -}}
+{{- define "burpsuite.enterprise.fullname" -}}
 {{- $name := include "burpsuite.fullname" | trunc 52 | trimSuffix "-" }}
 {{- printf "%s-enterprise" $name }}
 {{- end }}

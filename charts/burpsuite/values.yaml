@@ -6,7 +6,7 @@ replicaCount: 1
 
 global:
   image:
-    repository: public.ecr.aws
+    registry: public.ecr.aws
     pullPolicy: Always
     # Overrides the image tag which defaults to .CHart.appVersion.
     tag: ""
@@ -14,6 +14,7 @@ global:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+namespaceOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -23,23 +24,6 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false
@@ -57,11 +41,16 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-nodeSelector: {}
+pod:
+  annotations: {}
 
-tolerations: []
+  securityContext: {}
+  # fsGroup: 2000
+  nodeSelector: {}
 
-affinity: {}
+  tolerations: []
+
+  affinity: {}
 
 ## @section Enterprise Server settings
 ##
@@ -70,6 +59,22 @@ enterprise:
     registry: ""
     repository: "portswigger/enterprise-server"
     tag: ""
+  service:
+    name: ""
+    type: ClusterIP
+    port: 80
+    annotations: {}
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  resources: {}
+
 
 ## @section Web Server settings
 ##
@@ -78,6 +83,19 @@ web:
     registry: ""
     repository: "portswigger/web-server"
     tag: ""
+  service:
+    name: ""
+    type: ClusterIP
+    port: 80
+    annotations: {}
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+  resources: {}
 
 ## @section Ephemeral Agent settings
 ##
