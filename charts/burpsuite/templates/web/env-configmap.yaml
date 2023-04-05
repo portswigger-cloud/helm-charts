@@ -11,7 +11,7 @@ data:
   BSEE_INSTALLATION_ENVIRONMENT: KUBERNETES
   BSEE_RUN_MODE: LICENSE_ONLY
   BSEE_SERVER_URL: "https://localhost:8072"
-  WEB_SERVER_OPTS: -Xms1g -Xmx5g
+  WEB_SERVER_OPTS: -Xms5g -Xmx5g
   BSEE_MUTABLE_CONFIG_REF: {{ include "burpsuite.webFullname" . }}
   BSEE_MUTABLE_SECRET_REF: {{ include "burpsuite.webFullname" . }}
   BSEE_CLIENT_KEYSTORE_LOCATION: /home/burpsuite/keystores/webserver.keystore

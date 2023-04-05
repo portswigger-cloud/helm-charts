@@ -46,6 +46,18 @@ Create a default fully qualified enterprise app name.
 {{- printf "%s-enterprise" $name }}
 {{- end }}
 
+{{- define "burpsuite.enterprise.image" -}}
+{{- printf "%s/%s:%s" (.Values.enterprise.image.registry | default .Values.global.image.registry) .Values.enterprise.image.repository (coalesce .Values.enterprise.image.tag .Values.global.image.tag .Chart.AppVersion) }}
+{{- end -}}
+
+{{- define "burpsuite.web.image" -}}
+{{- printf "%s/%s:%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository (coalesce .Values.web.image.tag .Values.global.image.tag .Chart.AppVersion) }}
+{{- end -}}
+
+{{- define "burpsuite.agent.image" -}}
+{{- printf "%s/%s:%s" (.Values.agent.image.registry | default .Values.global.image.registry) .Values.agent.image.repository (coalesce .Values.agent.image.tag .Values.global.image.tag .Chart.AppVersion) }}
+{{- end -}}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
