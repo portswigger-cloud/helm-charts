@@ -20,10 +20,9 @@ spec:
   securityContext:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.initContainers }}
   initContainers:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- include "burpsuite.enterprise.initContainerTemplates" . | nindent 4 }}
+    {{- include "burpsuite.web.initContainerTemplates" . | nindent 4 }}
   containers:
   - {{- include "burpsuite.enterprise.containerTemplate" . | nindent 4 }}
   - {{- include "burpsuite.web.containerTemplate" . | nindent 4 }}
