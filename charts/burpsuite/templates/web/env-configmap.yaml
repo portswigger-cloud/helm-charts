@@ -1,19 +1,18 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "burpsuite.web.fullname" . }}
+  name: web-env
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: web-server
-    app.kubernetes.io/component: server
+    app.kubernetes.io/component: web
 {{ include "burpsuite.labels" . | indent 4 }}
 data:
   BSEE_INSTALLATION_ENVIRONMENT: KUBERNETES
   BSEE_RUN_MODE: LICENSE_ONLY
   BSEE_SERVER_URL: "https://localhost:8072"
   WEB_SERVER_OPTS: -Xms5g -Xmx5g
-  BSEE_MUTABLE_CONFIG_REF: {{ include "burpsuite.web.fullname" . }}
-  BSEE_MUTABLE_SECRET_REF: {{ include "burpsuite.web.fullname" . }}
+  BSEE_MUTABLE_CONFIG_REF: web-env
+  BSEE_MUTABLE_SECRET_REF: web-env
   BSEE_CLIENT_KEYSTORE_LOCATION: /home/burpsuite/keystores/webserver.keystore
   BSEE_CLIENT_TRUSTSTORE_LOCATION: /home/burpsuite/keystores/webserver.keystore
   BSEE_DATA_PATH: /home/burpsuite/data

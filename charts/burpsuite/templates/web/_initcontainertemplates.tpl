@@ -10,9 +10,9 @@
       memory:
   envFrom:
     - configMapRef:
-        name: {{ include "burpsuite.web.fullname" . }}
+        name: web-env
     - secretRef:
-        name: {{ include "burpsuite.web.fullname" . }}
+        name: web-env
   command:
     - 'sh'
     - '-c'

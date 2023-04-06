@@ -40,9 +40,9 @@
     {{- toYaml .Values.web.securityContext | nindent 4 }}
   envFrom:
     - configMapRef:
-        name: {{ include "burpsuite.web.fullname" . }}
+        name: web-env
     - secretRef:
-        name: {{ include "burpsuite.web.fullname" . }}
+        name: web-env
   volumeMounts:
   - mountPath: /home/burpsuite
     name: home-burpsuite

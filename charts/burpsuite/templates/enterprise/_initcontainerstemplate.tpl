@@ -10,7 +10,7 @@
       memory:
   envFrom:
     - configMapRef:
-        name: {{ include "burpsuite.enterprise.fullname" . }}
+        name: enterprise-env
   command:
     - 'sh'
     - '-c'
@@ -40,9 +40,9 @@
       memory:
   envFrom:
     - configMapRef:
-        name: {{ include "burpsuite.enterprise.fullname" . }}
+        name: enterprise-env
     - secretRef:
-        name: {{ include "burpsuite.enterprise.fullname" . }}
+        name: enterprise-env
   command:
     - 'sh'
     - '-c'

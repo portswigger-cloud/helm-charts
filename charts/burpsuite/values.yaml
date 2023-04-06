@@ -155,6 +155,9 @@ postgresql:
       ## @param postgresql.primary.persistence.size PVC Storage Request for PostgreSQL volume
       ##
       size: 8Gi
+    extraEnvVarsSecret: enterprise-env
+    initdb:
+      scriptsSecret: postgresql-init-script
 
 ## @section Database settings
 ##

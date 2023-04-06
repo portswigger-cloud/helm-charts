@@ -36,9 +36,9 @@
     {{- toYaml .Values.enterprise.securityContext | nindent 4 }}
   envFrom:
     - configMapRef:
-        name: {{ include "burpsuite.enterprise.fullname" . }}
+        name: enterprise-env
     - secretRef:
-        name: {{ include "burpsuite.enterprise.fullname" . }}
+        name: enterprise-env
   volumeMounts:
   - mountPath: /home/burpsuite
     name: home-burpsuite
