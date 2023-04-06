@@ -110,7 +110,7 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- if $suppliedValue -}}
 {{ $suppliedValue | b64enc }}
 {{- else if $context.Values.postgres.enabled -}}
-{{- include "burpsuite.enterprise.fetchOrCreateSecretField"  (list $context $secretFieldName) -}}
+{{ include "burpsuite.enterprise.fetchOrCreateSecretField"  (list $context $secretFieldName) }}
 {{- end -}}
 {{- end -}}
 

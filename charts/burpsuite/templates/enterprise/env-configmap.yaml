@@ -23,8 +23,8 @@ data:
   BSEE_BURP_JAVA_OPTS: -Xms128m -Xmx512m
   BSEE_ENTERPRISE_SERVER_SERVICE_HOST: ignoreme
   BSEE_ENTERPRISE_SERVER_SERVICE_PORT_EPHEMERAL_AGENT: "6666"
-  BSEE_MUTABLE_CONFIG_REF: {{ include "burpsuite.enterprise.fullname" . }}
-  BSEE_MUTABLE_SECRET_REF: {{ include "burpsuite.enterprise.fullname" . }}
+  BSEE_MUTABLE_CONFIG_REF: enterprise-env
+  BSEE_MUTABLE_SECRET_REF: enterprise-env
   BSEE_HTTPS_KEYSTORE_LOCATION: /home/burpsuite/keystores/es.keystore
   BSEE_HTTPS_PORT: "8072"
   BSEE_LINUX_PREFS_STORE_PATH: /home/burpsuite/prefs

@@ -105,30 +105,6 @@ agent:
     repository: "portswigger/ephemeral-agent"
     tag: ""
 
-## @section PostgreSQL subchart settings
-##
-
-## PostgreSQL chart configuration
-## https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-##
-postgres:
-  ## @param postgresql.enabled Deploy PostgreSQL subchart
-  ##
-  enabled: true
-  extraEnvSecrets:
-    - enterprise-postgres-env
-  customScripts:
-    init-burp-enterprise-db.sh: |
-      #!/bin/bash -eu
-      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -v USERDBNAME="$POSTGRES_DB" -v AGENTDBUSER="$AGENT_USERNAME" -v AGENTDBPASSWORD="'$AGENT_PASSWORD'" <<-EOSQL
-        CREATE USER :AGENTDBUSER WITH PASSWORD :AGENTDBPASSWORD;
-      EOSQL
-  service:
-    port: 5432
-  storage:
-    requestedSize: 8Gi
-  userDatabase:
-    name: burpsuite
 
 ## @section Database settings
 ##
@@ -159,3 +135,38 @@ database:
 
   # -- (int) Maximum lifetime timeout (ms) for the database connection
   maxLifetimeTimeout: 120000
+
+## @section PostgreSQL subchart settings
+##
+
+## PostgreSQL chart configuration
+## https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+##
+postgres:
+  ## @param postgresql.enabled Deploy PostgreSQL subchart
+  ##
+  enabled: true
+  extraEnvSecrets:
+    - enterprise-postgres-env
+  customScripts:
+    init-burp-enterprise-db.sh: |
+      #!/bin/bash -eu
+      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" \
+      -v USERDBNAME="$POSTGRES_DB" \
+      -v ENTERPRISEDBUSER="$ENTERPRISE_USER" \
+      -v ENTERPRISEDBPASSWORD="'${ENTERPRISE_PASSWORD//'/\'}'" \
+      -v AGENTDBUSER="$AGENT_USER" \
+      -v AGENTDBPASSWORD="'${AGENT_PASSWORD//'/\'}'" <<-EOSQL
+        CREATE USER :ENTERPRISEDBUSER WITH PASSWORD :ENTERPRISEDBPASSWORD;
+        CREATE USER :AGENTDBUSER WITH PASSWORD :AGENTDBPASSWORD;
+        GRANT ALL PRIVILEGES ON DATABASE :USERDBNAME TO :ENTERPRISEDBUSER;
+        \c :USERDBNAME;
+        GRANT ALL ON SCHEMA public TO :ENTERPRISEDBUSER;
+      EOSQL
+  service:
+    port: 5432
+  storage:
+    requestedSize: 8Gi
+  userDatabase:
+    name: burpsuite
+

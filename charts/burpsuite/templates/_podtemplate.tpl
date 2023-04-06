@@ -34,6 +34,10 @@ spec:
   nodeSelector:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.pod.tolerations }}
+  tolerations:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
   {{- with .Values.pod.securityContext }}
   securityContext:
     {{- toYaml . | nindent 4 }}
