@@ -111,53 +111,24 @@ agent:
 ## PostgreSQL chart configuration
 ## https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
 ##
-postgresql:
+postgres:
   ## @param postgresql.enabled Deploy PostgreSQL subchart
   ##
   enabled: true
-  ## @param postgresql.nameOverride Override name of the PostgreSQL chart
-  ##
-  nameOverride: ""
-  auth:
-    enablePostgresUser: false
-    database: burpsuite
-
-  ## PostgreSQL Primary parameters
-  ##
-  primary:
-    ## PostgreSQL Primary service configuration
-    ##
-    service:
-      ## @param postgresql.primary.service.ports.postgresql PostgreSQL service port
-      ##
-      ports:
-        postgresql: 5432
-    ## PostgreSQL Primary persistence configuration
-    ##
-    persistence:
-      ## @param postgresql.primary.persistence.enabled Enable PostgreSQL Primary data persistence using PVC
-      ##
-      enabled: true
-      ## @param postgresql.primary.persistence.existingClaim Name of an existing PVC to use
-      ##
-      existingClaim: ""
-      ## @param postgresql.primary.persistence.storageClass PVC Storage Class for PostgreSQL Primary data volume
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      storageClass: ""
-      ## @param postgresql.primary.persistence.accessMode PVC Access Mode for PostgreSQL volume
-      ##
-      accessMode: ReadWriteOnce
-      ## @param postgresql.primary.persistence.size PVC Storage Request for PostgreSQL volume
-      ##
-      size: 8Gi
-    extraEnvVarsSecret: enterprise-env
-    initdb:
-      scriptsSecret: postgresql-init-script
+  extraEnvSecrets:
+    - enterprise-postgres-env
+  customScripts:
+    init-burp-enterprise-db.sh: |
+      #!/bin/bash -eu
+      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" -v USERDBNAME="$POSTGRES_DB" -v AGENTDBUSER="$AGENT_USERNAME" -v AGENTDBPASSWORD="'$AGENT_PASSWORD'" <<-EOSQL
+        CREATE USER :AGENTDBUSER WITH PASSWORD :AGENTDBPASSWORD;
+      EOSQL
+  service:
+    port: 5432
+  storage:
+    requestedSize: 8Gi
+  userDatabase:
+    name: burpsuite
 
 ## @section Database settings
 ##

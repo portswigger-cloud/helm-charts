@@ -19,9 +19,9 @@ maintainers:
     email: tim.birkett@portswigger.net
 
 dependencies:
-  - condition: postgresql.enabled
-    name: postgresql
-    repository: https://charts.bitnami.com/bitnami
-    version: 12.x.x
+  - condition: postgres.enabled
+    name: postgres
+    repository: https://groundhog2k.github.io/helm-charts/
+    version: 0.4.x
 
 appVersion: "2023.3-12526"

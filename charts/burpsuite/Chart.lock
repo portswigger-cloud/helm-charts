@@ -1,6 +1,6 @@
 dependencies:
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 12.2.7
-digest: sha256:5c81524c21e5a4ca885f2666b37bb0a161f52e514d63923f6b8b07b4e3db7d2f
-generated: "2023-04-05T13:17:48.865393+01:00"
+- name: postgres
+  repository: https://groundhog2k.github.io/helm-charts/
+  version: 0.4.4
+digest: sha256:9c65c9985a178800781f0c8835907ffa99e8e8efea8f48707925fb5f025b1d3d
+generated: "2023-04-06T11:53:05.473743+01:00"
