@@ -117,7 +117,7 @@ Fetch given field from existing enterprise secret or generate a new random value
 
 {{- define "burpsuite.database.url" -}}
 {{- if .Values.postgresql.enabled -}}
-{{ printf "jdbc:postgresql://%s-postgresql.%s.svc.cluster.local:%v" .Release.Name .Release.Namespace .Values.postgresql.primary.service.ports.postgresql }}
+{{ printf "jdbc:postgresql://%s-postgresql.%s.svc.cluster.local:%v/%v" .Release.Name .Release.Namespace .Values.postgresql.primary.service.ports.postgresql .Values.postgresql.auth.database }}
 {{- else if .Values.database.externalUrl -}}
 {{ .Values.database.externalUrl }}
 {{- end -}}

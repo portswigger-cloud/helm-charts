@@ -120,6 +120,8 @@ postgresql:
   nameOverride: ""
   auth:
     enablePostgresUser: false
+    database: burpsuite
+
   ## PostgreSQL Primary parameters
   ##
   primary:
