@@ -55,6 +55,7 @@ pod:
 ## @section Enterprise Server settings
 ##
 enterprise:
+  licenseKey: ""
   image:
     registry: ""
     repository: "portswigger/enterprise-server"
@@ -79,6 +80,7 @@ enterprise:
 ## @section Web Server settings
 ##
 web:
+  authenticationToken: ""
   image:
     registry: ""
     repository: "portswigger/web-server"
