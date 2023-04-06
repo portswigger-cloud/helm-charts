@@ -24,4 +24,4 @@ dependencies:
     repository: https://groundhog2k.github.io/helm-charts/
     version: 0.4.x
 
-appVersion: "2023.3-12526"
+appVersion: "2023.4-12551"
