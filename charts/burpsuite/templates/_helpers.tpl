@@ -6,13 +6,6 @@ Expand the name of the chart.
 {{- end }}
 
 {{/*
-Enable users to override the namespace that resources are created in.
-*/}}
-{{- define "burpsuite.namespace" -}}
-{{- default .Release.Namespace .Values.namespaceOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
 Create a default fully qualified web app name.
 */}}
 {{- define "burpsuite.web.fullname" -}}
@@ -109,3 +102,24 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- $secretFieldValue := (get $secretData $secretFieldName) | default (randAlphaNum 30 | b64enc) }}
 {{- $secretFieldValue -}}
 {{- end -}}
+
+{{- define "burpsuite.enterprise.secretValue" -}}
+{{- $context := index . 0 -}}
+{{- $suppliedValue := index . 1 -}}
+{{- $secretFieldName := index . 2 -}}
+{{- if $suppliedValue -}}
+{{ $suppliedValue | b64enc }}
+{{- else if $context.Values.postgresql.enabled -}}
+{{- include "burpsuite.enterprise.fetchOrCreateSecretField"  (list $context $secretFieldName) -}}
+{{- end -}}
+{{- end -}}
+
+
+{{- define "burpsuite.database.url" -}}
+{{- if .Values.postgresql.enabled -}}
+{{ printf "jdbc:postgresql://%s-postgresql.%s.svc.cluster.local:%v" .Release.Name .Release.Namespace .Values.postgresql.primary.service.ports.postgresql }}
+{{- else if .Values.database.externalUrl -}}
+{{ .Values.database.externalUrl }}
+{{- end -}}
+{{- end -}}
+
