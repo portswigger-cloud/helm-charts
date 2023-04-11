@@ -22,6 +22,6 @@ dependencies:
   - condition: postgres.enabled
     name: postgres
     repository: https://groundhog2k.github.io/helm-charts/
-    version: 0.4.x
+    version: 0.3.x
 
 appVersion: "2023.4-12551"
