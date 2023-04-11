@@ -123,3 +123,15 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- end -}}
 {{- end -}}
 
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "burpsuite.tplvalues.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "burpsuite.tplvalues.render" -}}
+    {{- if typeIs "string" .value }}
+        {{- tpl .value .context }}
+    {{- else }}
+        {{- tpl (.value | toYaml) .context }}
+    {{- end }}
+{{- end -}}

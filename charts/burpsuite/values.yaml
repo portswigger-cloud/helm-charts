@@ -138,6 +138,9 @@ database:
   # -- (int) Maximum lifetime timeout (ms) for the database connection
   maxLifetimeTimeout: 120000
 
+
+extraDeploy: []
+
 ## @section PostgreSQL subchart settings
 ##
 
@@ -171,4 +174,3 @@ postgres:
     requestedSize: 8Gi
   userDatabase:
     name: burpsuite
-
