@@ -96,8 +96,7 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- $context := index . 0 -}}
 {{- $secretFieldName := index . 1 -}}
 
-{{- $secretName := include "burpsuite.enterprise.fullname" $context }}
-{{- $secretObj := (lookup "v1" "Secret" $context.Release.Namespace $secretName) | default dict }}
+{{- $secretObj := (lookup "v1" "Secret" $context.Release.Namespace  "enterprise-env") | default dict }}
 {{- $secretData := (get $secretObj "data") | default dict }}
 {{- $secretFieldValue := (get $secretData $secretFieldName) | default (randAlphaNum 30 | b64enc) }}
 {{- $secretFieldValue -}}
