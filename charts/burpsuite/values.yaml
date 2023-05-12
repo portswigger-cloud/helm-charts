@@ -25,22 +25,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
 pod:
   annotations: {}
 
@@ -60,11 +44,6 @@ enterprise:
     registry: ""
     repository: "portswigger/enterprise-server"
     tag: ""
-  service:
-    name: ""
-    type: ClusterIP
-    port: 80
-    annotations: {}
 
   securityContext: {}
     # capabilities:
@@ -98,6 +77,21 @@ web:
     # runAsNonRoot: true
     # runAsUser: 1000
   resources: {}
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: chart-example.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 ## @section Ephemeral Agent settings
 ##
@@ -140,37 +134,3 @@ database:
 
 
 extraDeploy: []
-
-## @section PostgreSQL subchart settings
-##
-
-## PostgreSQL chart configuration
-## https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
-##
-postgres:
-  ## @param postgresql.enabled Deploy PostgreSQL subchart
-  ##
-  enabled: true
-  extraEnvSecrets:
-    - enterprise-postgres-env
-  customScripts:
-    init-burp-enterprise-db.sh: |
-      #!/bin/bash -eu
-      psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" \
-      -v USERDBNAME="$POSTGRES_DB" \
-      -v ENTERPRISEDBUSER="$ENTERPRISE_USER" \
-      -v ENTERPRISEDBPASSWORD="\$pass\$${ENTERPRISE_PASSWORD}\$pass\$" \
-      -v AGENTDBUSER="$AGENT_USER" \
-      -v AGENTDBPASSWORD="\$pass\$${AGENT_PASSWORD}\$pass\$" <<-EOSQL
-        CREATE USER :ENTERPRISEDBUSER WITH ENCRYPTED PASSWORD :ENTERPRISEDBPASSWORD ;
-        CREATE USER :AGENTDBUSER WITH ENCRYPTED PASSWORD :AGENTDBPASSWORD ;
-        GRANT ALL PRIVILEGES ON DATABASE :USERDBNAME TO :ENTERPRISEDBUSER ;
-        \c :USERDBNAME ;
-        GRANT ALL ON SCHEMA public TO :ENTERPRISEDBUSER ;
-      EOSQL
-  service:
-    port: 5432
-  storage:
-    requestedSize: 8Gi
-  userDatabase:
-    name: burpsuite

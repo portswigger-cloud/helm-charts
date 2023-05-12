@@ -108,18 +108,21 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- $secretFieldName := index . 2 -}}
 {{- if $suppliedValue -}}
 {{ $suppliedValue | b64enc }}
-{{- else if $context.Values.postgres.enabled -}}
+{{- else -}}
 {{ include "burpsuite.enterprise.fetchOrCreateSecretField"  (list $context $secretFieldName) }}
 {{- end -}}
 {{- end -}}
 
 
 {{- define "burpsuite.database.url" -}}
+jdbc:h2:tcp://localhost:9092/mem:bsee
+{{/*
 {{- if .Values.postgres.enabled -}}
 {{ printf "jdbc:postgresql://%s-postgres.%s.svc.cluster.local:%v/%v" .Release.Name .Release.Namespace .Values.postgres.service.port .Values.postgres.userDatabase.name }}
 {{- else if .Values.database.externalUrl -}}
 {{ .Values.database.externalUrl }}
 {{- end -}}
+*/}}
 {{- end -}}
 
 {{/*

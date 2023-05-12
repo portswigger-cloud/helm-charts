@@ -4,30 +4,34 @@
   name: enterprise
   resources:
     requests:
-      memory:
-      cpu:
+      memory: 1.5Gi
+      cpu: 200m
     limits:
-      memory:
+      memory: 1.5Gi
   ports:
-    - name: web-server-api
+    - name: ent-api
       containerPort: 8072
-      protocol: TCP
+    - name: ent-health
+      containerPort: 8078
   startupProbe:
-    tcpSocket:
-      port: web-server-api
+    httpGet:
+      port: ent-health
+      path: /health/readiness
     failureThreshold: 60
     periodSeconds: 5
     timeoutSeconds: 2
   livenessProbe:
-    tcpSocket:
-      port: web-server-api
+    httpGet:
+      port: ent-health
+      path: /health/liveness
     failureThreshold: 3
     periodSeconds: 10
     timeoutSeconds: 2
     successThreshold: 1
   readinessProbe:
-    tcpSocket:
-      port: web-server-api
+    httpGet:
+      port: ent-health
+      path: /health/readiness
     failureThreshold: 1
     periodSeconds: 10
     timeoutSeconds: 2

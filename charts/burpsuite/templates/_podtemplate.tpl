@@ -26,6 +26,7 @@ spec:
   containers:
     {{- include "burpsuite.enterprise.containerTemplate" . | nindent 4 }}
     {{- include "burpsuite.web.containerTemplate" . | nindent 4 }}
+    {{- include "burpsuite.h2db.containerTemplate" . | nindent 4 }}
   {{- with .Values.pod.affinity }}
   affinity:
     {{- tpl (toYaml .Values.pod.affinity) . | nindent 4 }}
