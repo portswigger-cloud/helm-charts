@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: enterprise-env
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: enterprise
+{{ include "burpsuite.labels" . | indent 4 }}
+data:
+{{- with include "burpsuite.database.url" . }}
+  BSEE_ADMIN_REPOSITORY_URL: {{ . }}
+  BSEE_AGENT_REPOSITORY_URL: {{ . }}
+{{- end }}
+{{- with .Values.database.idleTimeout }}
+  BSEE_DB_CONNECTION_IDLE_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with .Values.database.maxLifetimeTimeout }}
+  BSEE_DB_CONNECTION_MAX_LIFETIME_TIMEOUT: {{ . | quote }}
+{{- end }}
+  BSEE_INSTALLATION_ENVIRONMENT: KUBERNETES
+  BSEE_RUN_MODE: LICENSE_ONLY
+  ENTERPRISE_SERVER_OPTS: -Xms1g -Xmx1g
+  BSEE_BURP_JAVA_OPTS: -Xms128m -Xmx128m
+  BSEE_HTTPS_KEYSTORE_LOCATION: /home/burpsuite/keystores/es.keystore
+  BSEE_HTTPS_PORT: "8072"
+  BSEE_LINUX_PREFS_STORE_PATH: /home/burpsuite/prefs
+  BSEE_DATA_PATH: /home/burpsuite/data
+  BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
+  BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
+{{- if .Values.licenseKey }}
+  BSEE_LICENSE_KEY: {{ .Values.licenseKey | b64enc }}
+{{- end }}

@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "burpsuite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "burpsuite.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "burpsuite.selectorLabels" . | nindent 6 }}
+  template:
+    {{- include "burpsuite.podTemplate" . | nindent 4 }}
