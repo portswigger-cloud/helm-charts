@@ -1,0 +1,18 @@
+{{- if .Values.podLogs.enabled }}
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: {{ include "burpsuite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "burpsuite.labels" . | nindent 4 }}
+spec:
+  pipelineStages:
+  - docker: {}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "burpsuite.selectorLabels" . | nindent 6 }}
+{{- end }}

@@ -101,6 +101,11 @@ agent:
     repository: "portswigger/ephemeral-agent"
     tag: ""
 
+podLogs:
+  enabled: false
+
+podMonitor:
+  enabled: false
 
 ## @section Database settings
 ##
