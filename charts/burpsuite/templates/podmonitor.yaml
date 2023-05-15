@@ -2,12 +2,12 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: {{ include "burpsuite.enterprise.fullname" . }}
+  name: {{ include "burpsuite.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "burpsuite.labels" . | nindent 4 }}
 spec:
-  jobLabel: {{ .Release.Namespace }}-{{ include "burpsuite.enterprise.fullname" . }}
+  jobLabel: {{ include "burpsuite.fullname" . }}
   namespaceSelector:
     matchNames:
     -  {{ .Release.Namespace }}
@@ -16,34 +16,15 @@ spec:
     path: /metrics
     port: "8078"
     relabelings:
-    - source_labels: [__name__]
-      target_label: app.kubernetes.io/component
+    - action: replace
+      targetLabel: app.kubernetes.io/component
       replacement: enterprise
-  podTargetLabels:
-  - app.kubernetes.io/version
-  selector:
-    matchLabels:
-      {{- include "burpsuite.selectorLabels" . | nindent 6 }}
----
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
-metadata:
-  name: {{ include "burpsuite.web.fullname" . }}
-  namespace: {{ .Release.Namespace }}
-  labels:
-    {{- include "burpsuite.labels" . | nindent 4 }}
-spec:
-  jobLabel: {{ .Release.Namespace }}-{{ include "burpsuite.web.fullname" . }}
-  namespaceSelector:
-    matchNames:
-    -  {{ .Release.Namespace }}
-  podMetricsEndpoints:
   - interval: 15s
     path: /metrics
     port: "8088"
     relabelings:
-    - source_labels: [__name__]
-      target_label: app.kubernetes.io/component
+    - action: replace
+      targetLabel: app.kubernetes.io/component
       replacement: web
   podTargetLabels:
   - app.kubernetes.io/version
