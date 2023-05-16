@@ -14,20 +14,10 @@ spec:
   podMetricsEndpoints:
   - interval: 15s
     path: /metrics
-    port: "8078"
-    relabelings:
-    - targetLabel: component
-      replacement: enterprise
-    - targetLabel: app
-      replacement: burpsuite
+    port: ent-health
   - interval: 15s
     path: /metrics
-    port: "8088"
-    relabelings:
-    - targetLabel: component
-      replacement: web
-    - targetLabel: app
-      replacement: burpsuite
+    port: web-health
   podTargetLabels:
   - app.kubernetes.io/version
   selector:
