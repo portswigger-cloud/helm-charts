@@ -28,7 +28,12 @@
     - name: home-burpsuite
       mountPath: /tmp
   securityContext:
-    {{- toYaml .Values.enterprise.securityContext | nindent 4 }}
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
 - name: init-enterprise-server-keystore
   image: {{ include "burpsuite.enterprise.image" . }}
   resources:
@@ -54,5 +59,10 @@
     - name: home-burpsuite
       mountPath: /home/burpsuite
   securityContext:
-    {{- toYaml .Values.enterprise.securityContext | nindent 4 }}
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
 {{- end -}}

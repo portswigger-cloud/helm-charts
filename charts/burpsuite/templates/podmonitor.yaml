@@ -16,16 +16,18 @@ spec:
     path: /metrics
     port: "8078"
     relabelings:
-    - action: replace
-      targetLabel: component
+    - targetLabel: component
       replacement: enterprise
+    - targetLabel: app
+      replacement: burpsuite
   - interval: 15s
     path: /metrics
     port: "8088"
     relabelings:
-    - action: replace
-      targetLabel: component
+    - targetLabel: component
       replacement: web
+    - targetLabel: app
+      replacement: burpsuite
   podTargetLabels:
   - app.kubernetes.io/version
   selector:

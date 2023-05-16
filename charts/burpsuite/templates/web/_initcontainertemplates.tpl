@@ -28,5 +28,10 @@
     - name: home-burpsuite
       mountPath: /home/burpsuite
   securityContext:
-    {{- toYaml .Values.web.securityContext | nindent 4 }}
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
 {{- end -}}

@@ -41,5 +41,10 @@
     timeoutSeconds: 2
     successThreshold: 1
   securityContext:
-    {{- toYaml .Values.enterprise.securityContext | nindent 4 }}
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    runAsNonRoot: true
 {{- end -}}

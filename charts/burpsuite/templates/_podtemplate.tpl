@@ -15,11 +15,10 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   serviceAccountName: {{ include "burpsuite.serviceAccountName" . }}
-  terminationGracePeriodSeconds: {{ .Values.pod.terminationGracePeriodSeconds }}
-  {{- with .Values.podSecurityContext }}
+  terminationGracePeriodSeconds: 10
   securityContext:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    runAsUser: 42877
+    fsGroup: 42877
   initContainers:
     {{- include "burpsuite.enterprise.initContainerTemplates" . | nindent 4 }}
     {{- include "burpsuite.web.initContainerTemplates" . | nindent 4 }}
@@ -38,10 +37,6 @@ spec:
   {{- with .Values.pod.tolerations }}
   tolerations:
   {{- toYaml . | nindent 2 }}
-  {{- end }}
-  {{- with .Values.pod.securityContext }}
-  securityContext:
-    {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- if .Values.topologySpreadConstraints }}
   topologySpreadConstraints:
