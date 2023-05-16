@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "burpsuite.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ min .Values.replicaCount 1 }}
   strategy:
     type: Recreate
   selector:
