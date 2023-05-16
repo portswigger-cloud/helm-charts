@@ -46,4 +46,7 @@ spec:
   - name: home-burpsuite
     emptyDir:
       sizeLimit: 2Gi
+  - name: tmp
+    emptyDir:
+      sizeLimit: 1Gi
 {{- end }}

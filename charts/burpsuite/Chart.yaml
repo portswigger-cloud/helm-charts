@@ -2,7 +2,7 @@ apiVersion: v2
 name: burpsuite
 description: Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
 type: application
-version: 0.0.0-alpha.5
+version: 0.0.0-alpha.6
 kubeVersion: ">=1.24.0-0"
 keywords:
   - burpsuite
