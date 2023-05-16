@@ -36,6 +36,7 @@ pod:
 ##
 enterprise:
   licenseKey: ""
+  envFrom: []
   image:
     registry: ""
     repository: "portswigger/enterprise-server"
@@ -48,6 +49,7 @@ enterprise:
 ##
 web:
   authenticationToken: ""
+  envFrom: []
   image:
     registry: ""
     repository: "portswigger/web-server"
@@ -57,7 +59,6 @@ web:
     type: ClusterIP
     port: 80
     annotations: {}
-
   resources: {}
   ingress:
     enabled: false

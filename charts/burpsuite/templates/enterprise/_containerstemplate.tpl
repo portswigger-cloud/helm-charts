@@ -48,6 +48,9 @@
         name: enterprise-env
     - secretRef:
         name: enterprise-env
+    {{- with .Values.enterprise.envFrom }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   volumeMounts:
   - mountPath: /home/burpsuite
     name: home-burpsuite
