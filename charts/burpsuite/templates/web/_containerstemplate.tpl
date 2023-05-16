@@ -51,4 +51,6 @@
   volumeMounts:
   - mountPath: /home/burpsuite
     name: home-burpsuite
+  - mountPath: /tmp
+    name: tmp
 {{- end -}}
