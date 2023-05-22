@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+versionLabel: ""
+
 global:
   image:
     registry: public.ecr.aws

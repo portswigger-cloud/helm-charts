@@ -76,7 +76,7 @@ Common labels
 {{- define "burpsuite.labels" -}}
 helm.sh/chart: {{ include "burpsuite.chart" . }}
 {{ include "burpsuite.selectorLabels" . }}
-app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | quote }}
+app.kubernetes.io/version: {{ coalesce .Values.versionLabel (include "burpsuite.enterprise.version" .) | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
