@@ -26,7 +26,11 @@ Create a default fully qualified enterprise app name.
 {{- end -}}
 
 {{- define "burpsuite.enterprise.image" -}}
+{{- if .Values.enterprise.image.sha256 -}}
+{{- printf "%s/%s@%s" (.Values.enterprise.image.registry | default .Values.global.image.registry) .Values.enterprise.image.repository .Values.enterprise.image.sha256 }}
+{{- else -}}
 {{- printf "%s/%s:%s" (.Values.enterprise.image.registry | default .Values.global.image.registry) .Values.enterprise.image.repository (include "burpsuite.enterprise.version" .) }}
+{{- end -}}
 {{- end -}}
 
 {{- define "burpsuite.web.version" -}}
@@ -34,7 +38,11 @@ Create a default fully qualified enterprise app name.
 {{- end -}}
 
 {{- define "burpsuite.web.image" -}}
+{{- if .Values.web.image.sha256 -}}
+{{- printf "%s/%s@%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository .Values.web.image.sha256 }}
+{{- else -}}
 {{- printf "%s/%s:%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository (include "burpsuite.web.version" .) }}
+{{- end -}}
 {{- end -}}
 
 {{- define "burpsuite.agent.version" -}}
@@ -76,7 +84,7 @@ Common labels
 {{- define "burpsuite.labels" -}}
 helm.sh/chart: {{ include "burpsuite.chart" . }}
 {{ include "burpsuite.selectorLabels" . }}
-app.kubernetes.io/version: {{ coalesce .Values.versionLabel (include "burpsuite.enterprise.version" .) | quote }}
+app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 

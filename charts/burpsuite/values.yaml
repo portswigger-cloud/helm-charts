@@ -4,8 +4,6 @@
 
 replicaCount: 1
 
-versionLabel: ""
-
 global:
   image:
     registry: public.ecr.aws
@@ -45,6 +43,7 @@ enterprise:
     registry: ""
     repository: "portswigger/enterprise-server"
     tag: ""
+    sha256: ""
 
   resources: {}
 
@@ -58,6 +57,7 @@ web:
     registry: ""
     repository: "portswigger/web-server"
     tag: ""
+    sha256: ""
   service:
     name: ""
     type: ClusterIP
