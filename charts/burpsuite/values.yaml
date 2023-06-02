@@ -75,6 +75,8 @@ web:
         paths:
           - path: /
             pathType: ImplementationSpecific
+            serviceName: ""
+            servicePort: null
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -97,6 +99,8 @@ podMonitor:
 ## @section Database settings
 ##
 database:
+  h2:
+    enabled: false
   # -- JDBC URL of an external database (only if postgresql.enabled=false)
   externalUrl: ""
 
