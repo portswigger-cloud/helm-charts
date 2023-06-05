@@ -130,7 +130,7 @@ database:
 
 
 networkPolicy:
-  enabled: true
+  enabled: false
 
   ingress: []
 
