@@ -27,6 +27,3 @@ data:
   BSEE_DATA_PATH: /home/burpsuite/data
   BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
-{{- if .Values.licenseKey }}
-  BSEE_LICENSE_KEY: {{ .Values.licenseKey | b64enc }}
-{{- end }}

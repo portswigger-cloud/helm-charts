@@ -129,4 +129,25 @@ database:
   maxLifetimeTimeout: 120000
 
 
+networkPolicy:
+  enabled: true
+
+  ingress: []
+
+  egress: []
+  # - to:
+  #   - ipBlock:
+  #       cidr: 10.1.0.0/24
+  #   ports:
+  #   - protocol: TCP
+  #     port: 5432
+
+  ingressControllerNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: ingress
+
+  ingressControllerPodSelector:
+    matchLabels:
+      app.kubernetes.io/name: nginx
+
 extraDeploy: []

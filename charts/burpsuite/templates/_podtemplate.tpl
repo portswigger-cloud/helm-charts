@@ -1,6 +1,10 @@
 {{- define "burpsuite.podTemplate" -}}
 metadata:
   annotations:
+    checksum/enterprise-env-configmap: {{ include (print $.Template.BasePath "/enterprise/env-configmap.yaml") . | sha256sum }}
+    checksum/enterprise-env-secret: {{ include (print $.Template.BasePath "/enterprise/env-secret.yaml") . | sha256sum }}
+    checksum/web-env-configmap: {{ include (print $.Template.BasePath "/web/env-configmap.yaml") . | sha256sum }}
+    checksum/web-env-secret: {{ include (print $.Template.BasePath "/web/env-secret.yaml") . | sha256sum }}
   {{- with .Values.pod.annotations }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
