@@ -14,6 +14,10 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   {{- with .Values.pod.imagePullSecrets }}
   imagePullSecrets:
     {{- toYaml . | nindent 4 }}
