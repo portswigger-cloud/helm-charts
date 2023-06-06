@@ -134,6 +134,14 @@ networkPolicy:
 
   ingress: []
 
+  ingressControllerNamespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: ingress
+
+  ingressControllerPodSelector:
+    matchLabels:
+      app.kubernetes.io/name: nginx
+
   egress: []
   # - to:
   #   - ipBlock:
@@ -142,12 +150,6 @@ networkPolicy:
   #   - protocol: TCP
   #     port: 5432
 
-  ingressControllerNamespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: ingress
-
-  ingressControllerPodSelector:
-    matchLabels:
-      app.kubernetes.io/name: nginx
+  httpsEgress: true
 
 extraDeploy: []
