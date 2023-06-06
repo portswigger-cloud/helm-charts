@@ -1,10 +1,10 @@
 {{- define "burpsuite.podTemplate" -}}
 metadata:
   annotations:
-    checksum/enterprise-env-configmap: {{ include (print $.Template.BasePath "/enterprise/env-configmap.yaml") . | sha256sum }}
-    checksum/enterprise-env-secret: {{ include (print $.Template.BasePath "/enterprise/env-secret.yaml") . | sha256sum }}
-    checksum/web-env-configmap: {{ include (print $.Template.BasePath "/web/env-configmap.yaml") . | sha256sum }}
-    checksum/web-env-secret: {{ include (print $.Template.BasePath "/web/env-secret.yaml") . | sha256sum }}
+    checksum/enterprise-env-configmap: {{ $entEnvCm := include (print $.Template.BasePath "/enterprise/env-configmap.yaml") . | fromYaml }}{{ $entEnvCm.data | toYaml | sha256sum }}
+    checksum/enterprise-env-secret: {{ $entEnvSec := include (print $.Template.BasePath "/enterprise/env-secret.yaml") . | fromYaml }}{{ $entEnvSec.data | toYaml | sha256sum }}
+    checksum/web-env-configmap: {{ $webEnvCm := include (print $.Template.BasePath "/web/env-configmap.yaml") . | fromYaml }}{{ $webEnvCm.data | toYaml | sha256sum }}
+    checksum/web-env-secret: {{ $webEnvSec := include (print $.Template.BasePath "/web/env-secret.yaml") . | fromYaml }}{{ $webEnvSec.data | toYaml | sha256sum }}
   {{- with .Values.pod.annotations }}
   {{- toYaml . | nindent 4 }}
   {{- end }}

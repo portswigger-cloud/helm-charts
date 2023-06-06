@@ -40,10 +40,21 @@ spec:
       port: 53
   # BEGIN - portswigger.net static IPs
   - to:
+    # portswigger.net
     - ipBlock:
         cidr: 34.240.117.4/32
     - ipBlock:
         cidr: 34.249.63.188/32
+    # perfdata.portswigger.net
+    - ipBlock:
+        cidr: 54.194.236.24/32
+    - ipBlock:
+        cidr: 54.76.87.9/32
+    # analytics.portswigger.net
+    - ipBlock:
+        cidr: 52.210.108.3/32
+    - ipBlock:
+        cidr: 54.171.153.96/32
     ports:
     - protocol: TCP
       port: 443
