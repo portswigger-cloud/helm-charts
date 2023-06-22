@@ -3,6 +3,31 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: 2023.4-12551
+    created: "2023-06-22T09:56:03.542716617Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: 8803a1c929a894d90debbe0e2f2ee156a9042f5b67623d3abc3f7ca1c95f761f
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: james.hargreaves@portswigger.net
+      name: James Hargreaves
+    - email: tim.birkett@portswigger.net
+      name: Tim Birkett
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.0-alpha.21/burpsuite-0.0.0-alpha.21.tgz
+    version: 0.0.0-alpha.21
+  - apiVersion: v2
+    appVersion: 2023.4-12551
     created: "2023-06-06T14:23:34.786527029Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
@@ -501,4 +526,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.0-alpha.1/burpsuite-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-06-06T14:23:34.786817344Z"
+generated: "2023-06-22T09:56:03.54296332Z"
