@@ -41,7 +41,8 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          {{- range .paths }}
+          {{- $defaultPaths := list (dict "path" "") -}}
+          {{- range ( default $defaultPaths .paths ) }}
           - path: {{ default "/" .path }}
             {{- if semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
