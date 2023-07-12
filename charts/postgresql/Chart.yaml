@@ -1,14 +1,13 @@
 apiVersion: v2
-name: burpsuite
-description: Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
+name: postgresql
+description: Create a Postgresql database cluster on K8S using cloudnative-pg.io and any required supporting resources.
 type: application
-version: 0.0.0-alpha.22
+version: 0.0.0-alpha.1
 kubeVersion: ">=1.24.0-0"
 keywords:
-  - burpsuite
-  - dast
-  - security
-  - web
+  - postgresql
+  - database
+  - cloudnative-pg
 home: https://portswigger.net/
 sources:
   - https://github.com/portswigger-cloud/helm-charts/
@@ -16,4 +15,4 @@ maintainers:
   - name: Portswigger Cloud
     email: github-portswigger-cloud@portswigger.net
 
-appVersion: "2023.4-12551"
+appVersion: "0.0.1"
