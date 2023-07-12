@@ -574,6 +574,29 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.0-alpha.1/burpsuite-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
+  cloudnative-pg:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-07-12T10:25:29.00574095Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources via crossplane.io.
+    digest: 9bbebae852bc4889e35bcf75731a074f35a7e7ee61bd4ca3e046c7a65fef6d21
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.0-alpha.1/cloudnative-pg-0.0.0-alpha.1.tgz
+    version: 0.0.0-alpha.1
   postgresql:
   - apiVersion: v2
     appVersion: 0.0.1
@@ -619,4 +642,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-07-12T10:24:08.950899554Z"
+generated: "2023-07-12T10:25:29.006066551Z"
