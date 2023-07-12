@@ -597,4 +597,26 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-07-12T10:22:30.169213272Z"
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-07-12T10:24:08.950806153Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources.
+    digest: dccf418ad78d3f9756b94a55fa1fae62dfd20a4c0bd66b5358481458a560751f
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: postgresql
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
+    version: 0.0.0-alpha.1
+generated: "2023-07-12T10:24:08.950899554Z"
