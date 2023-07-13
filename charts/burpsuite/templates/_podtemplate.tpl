@@ -9,7 +9,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-  {{- include "burpsuite.labels" . | nindent 4 }}
+  {{- include "burpsuite.pod.labels" . | nindent 4 }}
   {{- with .Values.pod.labels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}

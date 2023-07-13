@@ -97,6 +97,15 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Pod labels
+*/}}
+{{- define "burpsuite.pod.labels" -}}
+{{ include "burpsuite.selectorLabels" . }}
+app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "burpsuite.serviceAccountName" -}}
