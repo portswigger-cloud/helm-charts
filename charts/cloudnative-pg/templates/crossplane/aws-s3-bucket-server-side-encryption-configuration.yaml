@@ -1,0 +1,18 @@
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: BucketServerSideEncryptionConfiguration
+metadata:
+  name: {{ .Release.Name}}
+  namespace: {{ .Release.Namespace}} 
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    region: {{ .Values.aws.region }}
+    bucket: {{ .Values.aws.s3.bucketPrefix }}-{{ .Release.Name }}
+    rule:
+      - applyServerSideEncryptionByDefault:
+          - kmsMasterKeyIdRef:
+              name: {{ .Release.Name}}
+          - sseAlgorithm: aws:kms
+        bucketKeyEnabled: True
+  providerConfigRef:
+    name: aws

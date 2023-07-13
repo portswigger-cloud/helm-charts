@@ -1,0 +1,14 @@
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }} 
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    policyArnRef:
+      name: {{ .Values.aws.iam.policyPrefix }}-{{ .Release.Name }}
+    roleRef:
+      name: {{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
+  providerConfigRef:
+    name: aws

@@ -1,0 +1,21 @@
+apiVersion: kms.aws.upbound.io/v1beta1
+kind: Key
+metadata:
+  name: {{ .Values.aws.kms.keyPrefix }}-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }} 
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    customerMasterKeySpec: SYMMETRIC_DEFAULT
+    keyUsage: ENCRYPT_DECRYPT
+    deletionWindowInDays: {{ .Values.aws.kms.deletionWindowInDays }}
+    enableKeyRotation: True
+    region: {{ .Values.aws.region }}
+    description: {{ .Release.Name }} s3 bucket encryption key 
+    tags:
+      stack-id: {{ .Release.Name }}
+    {{- with .Values.aws.kms.tags }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  providerConfigRef:
+    name: aws
