@@ -133,7 +133,7 @@ Fetch given field from existing enterprise secret or generate a new random value
 
 
 {{- define "burpsuite.database.url" -}}
-jdbc:h2:tcp://localhost:9092/mem:bsee
+jdbc:h2:tcp://localhost:9092/mem:bsee;DB_CLOSE_DELAY=-1
 {{/*
 {{- if .Values.postgres.enabled -}}
 {{ printf "jdbc:postgresql://%s-postgres.%s.svc.cluster.local:%v/%v" .Release.Name .Release.Namespace .Values.postgres.service.port .Values.postgres.userDatabase.name }}
