@@ -4,10 +4,10 @@
   name: enterprise
   resources:
     requests:
-      memory: 1.5Gi
+      memory: 1.8Gi
       cpu: 200m
     limits:
-      memory: 1.5Gi
+      memory: 1.8Gi
   ports:
     - name: ent-api
       containerPort: 8072
