@@ -1,0 +1,37 @@
+aws:
+  accountId: "123456789012" # must be string
+  iam:
+    rolePath: role-path
+    rolePrefix: role-prefix
+cluster:
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3@sha256:10fa87e8fbf7f1d7d6be3124ef364068e5844e825b17649bc0b2efbab4b54f69
+  instances: 2
+  primaryUpdateStrategy: unsupervised
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 1000m
+    limits:
+      memory: 1Gi
+      cpu: 2000m
+  database:
+    name: app
+    owner: app
+    postInitApplicationSQL: []
+  storage:
+    storageClass: gp3
+    size: 1Gi
+  walStorage:
+    storageClass: gp3
+    size: 1Gi
+  backup:
+    destinationPrefix: my-bucket
+  affinity: {} # https://cloudnative-pg.io/documentation/current/api_reference/#AffinityConfiguration
+  nodeMaintenanceWindow:
+    inProgress: true
+    reusePVC: true
+scheduledBackup:
+  immediate: True
+  schedule: "0 13 * * *" 
+  backupOwnerReference: self
+  target: prefer-standby

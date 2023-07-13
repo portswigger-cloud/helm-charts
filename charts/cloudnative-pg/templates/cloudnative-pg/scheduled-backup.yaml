@@ -1,0 +1,10 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ .Release.Name}}
+  namespace: {{ .Release.Namespace}} 
+spec:
+  immediate: {{ .Values.scheduledBackup.immediate }}
+  schedule: {{ .Values.scheduledBackup.schedule }}
+  backupOwnerReference: {{ .Values.scheduledBackup.backupOwnerReference }}
+  target: prefer-standby

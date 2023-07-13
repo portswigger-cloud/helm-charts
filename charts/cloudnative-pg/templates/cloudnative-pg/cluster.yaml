@@ -1,0 +1,58 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name}}
+  namespace: {{ .Release.Namespace}} 
+spec:
+  serviceAccountTemplate:
+    metadata:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.aws.accountId }}:role/{{ .Values.aws.iam.rolePath }}/{{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
+  imageName: {{ .Values.cluster.imageName }}
+  resources:
+    requests:
+      memory: {{ .Values.cluster.resources.requests.memory }}
+      cpu: {{ .Values.cluster.resources.requests.cpu }}
+    limits:
+      memory: {{ .Values.cluster.resources.limits.memory }}
+      cpu: {{ .Values.cluster.resources.limits.cpu }}
+  instances: {{ .Values.cluster.instances }}
+  primaryUpdateStrategy: {{ .Values.cluster.primaryUpdateStrategy }}
+  storage:
+    storageClass: {{ .Values.cluster.storage.storageClass }}
+    size: {{ .Values.cluster.storage.size }}
+  walStorage:
+    storageClass: {{ .Values.cluster.walStorage.storageClass }}
+    size: {{ .Values.cluster.walStorage.size }}
+  bootstrap:
+    initdb:
+      database: {{ .Values.cluster.database.name }}
+      owner: {{ .Values.cluster.database.owner }}
+      {{- with .Values.cluster.database.postInitApplicationSQL }}
+      postInitApplicationSQL:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  {{- with .Values.cluster.affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  nodeMaintenanceWindow:
+    inProgress: {{ .Values.cluster.nodeMaintenanceWindow.inProgress}}
+    reusePVC: {{ .Values.cluster.nodeMaintenanceWindow.reusePVC}}
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://{{ .Values.cluster.backup.destinationPrefix }}-{{ .Release.Name }}
+      s3Credentials:
+        inheritFromIAMRole: True
+      wal:
+        compression: gzip
+        encryption: "aws:kms"
+        maxParallel: 8
+      data:
+        compression: gzip
+        encryption: "aws:kms"
+        immediateCheckpoint: false
+        jobs: 2
+    retentionPolicy: "90d"
+  monitoring:
+    enablePodMonitor: True
