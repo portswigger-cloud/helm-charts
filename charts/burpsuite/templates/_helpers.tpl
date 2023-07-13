@@ -39,7 +39,7 @@ Create a default fully qualified enterprise app name.
 
 {{- define "burpsuite.web.image" -}}
 {{- if .Values.web.image.sha256 -}}
-{{- printf "%s/%s@sha256:%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository (trimPrefix "sha256:" .Values.web.image.sha256) }}
+{{- printf "%s/%s:%s@sha256:%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository (include "burpsuite.web.version" .) (trimPrefix "sha256:" .Values.web.image.sha256) }}
 {{- else -}}
 {{- printf "%s/%s:%s" (.Values.web.image.registry | default .Values.global.image.registry) .Values.web.image.repository (include "burpsuite.web.version" .) }}
 {{- end -}}
