@@ -10,9 +10,11 @@ spec:
     bucket: {{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}
     rule:
       - applyServerSideEncryptionByDefault:
-          - kmsMasterKeyIdRef:
-              name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
-          - sseAlgorithm: aws:kms
+        - kmsMasterKeyIdRef:
+            name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
+          sseAlgorithm: aws:kms
+
+
         bucketKeyEnabled: True
   providerConfigRef:
     name: aws
