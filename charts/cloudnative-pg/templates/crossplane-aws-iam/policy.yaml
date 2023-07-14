@@ -1,7 +1,7 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Policy
 metadata:
-  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
   namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
@@ -22,8 +22,8 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
-              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}",
-              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}/*"
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
             ]
           },
           {

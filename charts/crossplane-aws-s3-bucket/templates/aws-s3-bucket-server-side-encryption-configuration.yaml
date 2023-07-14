@@ -7,14 +7,12 @@ spec:
   deletionPolicy: Delete
   forProvider:
     region: {{ .Values.aws.region }}
-    bucket: {{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}
+    bucket: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
     rule:
       - applyServerSideEncryptionByDefault:
         - kmsMasterKeyIdRef:
-            name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
+            name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
           sseAlgorithm: aws:kms
-
-
         bucketKeyEnabled: True
   providerConfigRef:
     name: aws

@@ -1,7 +1,7 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Role
 metadata:
-  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
   namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
