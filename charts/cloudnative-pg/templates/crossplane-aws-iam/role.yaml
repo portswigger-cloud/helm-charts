@@ -1,14 +1,14 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Role
 metadata:
-  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
-  namespace: {{ .Release.Namespace }} 
+  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
   forProvider:
-    path: /{{ .Values.aws.iam.rolePath }}/
+    path: {{ .Values.aws.iam.rolePath }}
     permissionsBoundary: {{ .Values.aws.iam.permissionsBoundary }}
-    description: {{ .Release.Name }} database backup iam role
+    description: {{ .Values.stackId }} database backup iam role
     assumeRolePolicy: |
       {
           "Version": "2012-10-17",
@@ -22,7 +22,7 @@ spec:
                   "Condition": {
                       "StringEquals": {
                           "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:aud": "sts.amazonaws.com",
-                          "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}"
+                          "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Values.stackId }}:{{ .Values.stackId }}"
                       }
                   }
               }

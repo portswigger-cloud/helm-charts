@@ -1,13 +1,13 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: {{ .Release.Name}}
-  namespace: {{ .Release.Namespace}} 
+  name: {{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   serviceAccountTemplate:
     metadata:
       annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.aws.accountId }}:role/{{ .Values.aws.iam.rolePath }}/{{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
+        eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.aws.accountId }}:role{{ .Values.aws.iam.rolePath }}{{ .Values.aws.iam.rolePrefix }}-{{ .Values.stackId }}
   imageName: {{ .Values.cluster.imageName }}
   resources:
     requests:
@@ -41,7 +41,7 @@ spec:
     reusePVC: {{ .Values.cluster.nodeMaintenanceWindow.reusePVC}}
   backup:
     barmanObjectStore:
-      destinationPath: s3://{{ .Values.cluster.backup.destinationPrefix }}-{{ .Release.Name }}
+      destinationPath: s3://{{ .Values.cluster.backup.destinationPrefix }}-{{ .Values.stackId }}
       s3Credentials:
         inheritFromIAMRole: True
       wal:

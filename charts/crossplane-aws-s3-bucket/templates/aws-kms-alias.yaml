@@ -1,13 +1,13 @@
 apiVersion: kms.aws.upbound.io/v1beta1
 kind: Alias
 metadata:
-  name: {{ .Values.aws.kms.keyPrefix }}-{{ .Release.Name }}
-  namespace: {{ .Release.Namespace }} 
+  name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
   forProvider:
     region: {{ .Values.aws.region }}
     targetKeyIdRef:
-      name: {{ .Values.aws.kms.keyPrefix }}-{{ .Release.Name }}
+      name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
   providerConfigRef:
     name: aws

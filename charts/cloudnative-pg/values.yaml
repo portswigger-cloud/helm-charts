@@ -1,3 +1,4 @@
+stackId: my-stack-id
 aws:
   region: eu-west-1
   accountId: "123456789012"
@@ -10,8 +11,8 @@ aws:
     deletionWindowInDays: 7
     tags: {}
   iam:
-    rolePath: my-role-path
-    policyPath: my-policy-path
+    rolePath: /my-role-path/
+    policyPath: /my-policy-path/
     rolePrefix: role-prefix
     policyPrefix: policy-prefix
     permissionsBoundary:  arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name

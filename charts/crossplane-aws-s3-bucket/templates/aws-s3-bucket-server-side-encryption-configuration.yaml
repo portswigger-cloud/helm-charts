@@ -1,17 +1,17 @@
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: BucketServerSideEncryptionConfiguration
 metadata:
-  name: {{ .Release.Name}}
-  namespace: {{ .Release.Namespace}} 
+  name: {{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
   forProvider:
     region: {{ .Values.aws.region }}
-    bucket: {{ .Values.aws.s3.bucketPrefix }}-{{ .Release.Name }}
+    bucket: {{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}
     rule:
       - applyServerSideEncryptionByDefault:
           - kmsMasterKeyIdRef:
-              name: {{ .Release.Name}}
+              name: {{ .Values.aws.kms.keyPrefix }}-{{ .Values.stackId }}
           - sseAlgorithm: aws:kms
         bucketKeyEnabled: True
   providerConfigRef:

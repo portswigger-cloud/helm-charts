@@ -1,15 +1,15 @@
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: {{ .Values.aws.s3.bucketPrefix }}-{{ .Release.Name }}
-  namespace: {{ .Release.Namespace }} 
+  name: {{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
   forProvider:
     region: {{ .Values.aws.region }}
     forceDestroy: True
     tags:
-      stack-id: {{ .Release.Name }}
+      stack-id: {{ .Values.stackId }}
     {{- with .Values.aws.s3.tags }}
       {{- toYaml . | nindent 6 }}
     {{- end}}

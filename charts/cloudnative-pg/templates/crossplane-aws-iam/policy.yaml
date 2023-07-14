@@ -1,12 +1,12 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Policy
 metadata:
-  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Release.Name }}
-  namespace: {{ .Release.Namespace }} 
+  name: {{ .Values.aws.iam.rolePrefix }}-{{ .Values.stackId }}
+  namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete
   forProvider:
-    path: /{{ .Values.aws.iam.policyPath }}/
+    path: {{ .Values.aws.iam.policyPath }}
     policy: |
       {
         "Version": "2012-10-17",
@@ -22,8 +22,8 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
-              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Release.Name }}",
-              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Release.Name }}/*"
+              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}",
+              "arn:aws:s3:::crossplane-{{ .Values.aws.s3.bucketPrefix }}-{{ .Values.stackId }}/*"
             ]
           },
           {
@@ -38,6 +38,6 @@ spec:
           }
         ]
       }
-    description: {{ .Release.Name }} database backup iam policy
+    description: {{ .Values.stackId }} database backup iam policy
   providerConfigRef:
     name: aws
