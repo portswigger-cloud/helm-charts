@@ -1,7 +1,7 @@
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: BucketServerSideEncryptionConfiguration
 metadata:
-  name: {{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
   namespace: {{ .Values.stackId }}
 spec:
   deletionPolicy: Delete

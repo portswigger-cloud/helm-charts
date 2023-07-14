@@ -1,10 +1,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: {{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
   namespace: {{ .Values.stackId }}
 spec:
   immediate: {{ .Values.scheduledBackup.immediate }}
   schedule: {{ .Values.scheduledBackup.schedule }}
   backupOwnerReference: {{ .Values.scheduledBackup.backupOwnerReference }}
+  cluster:
+    name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
   target: prefer-standby
