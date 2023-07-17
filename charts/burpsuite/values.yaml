@@ -45,8 +45,9 @@ enterprise:
     tag: ""
     sha256: ""
 
-  resources: {}
-
+  resources:
+    cpu: 200m
+    memory: 1.8Gi
 
 ## @section Web Server settings
 ##
@@ -63,7 +64,9 @@ web:
     type: ClusterIP
     port: 80
     annotations: {}
-  resources: {}
+  resources:
+    cpu: 200m
+    memory: 1Gi
   ingress:
     enabled: false
     className: ""

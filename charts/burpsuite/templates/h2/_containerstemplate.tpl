@@ -15,6 +15,7 @@
     requests:
       memory: 128Mi
       cpu: 100m
+      ephemeral-storage: 32Mi
     limits:
       memory: 128Mi
   ports:

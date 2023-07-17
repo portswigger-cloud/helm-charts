@@ -4,10 +4,11 @@
   name: web
   resources:
     requests:
-      memory: 1Gi
-      cpu: 200m
+      memory: {{ .Values.web.resources.memory }}
+      cpu: {{ .Values.web.resources.cpu }}
+      ephemeral-storage: 1.5Gi
     limits:
-      memory: 1Gi
+      memory: {{ .Values.web.resources.memory }}
   ports:
   - name: web-http
     containerPort: 8080

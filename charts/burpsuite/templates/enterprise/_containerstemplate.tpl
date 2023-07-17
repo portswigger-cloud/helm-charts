@@ -4,10 +4,11 @@
   name: enterprise
   resources:
     requests:
-      memory: 1.8Gi
-      cpu: 200m
+      memory: {{ .Values.enterprise.resources.memory }}
+      cpu: {{ .Values.enterprise.resources.cpu }}
+      ephemeral-storage: 1.5Gi
     limits:
-      memory: 1.8Gi
+      memory: {{ .Values.enterprise.resources.memory }}
   ports:
     - name: ent-api
       containerPort: 8072
