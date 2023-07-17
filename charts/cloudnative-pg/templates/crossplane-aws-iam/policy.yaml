@@ -34,7 +34,12 @@ spec:
             "Effect": "Allow",
             "Resource": [
               "arn:aws:kms:{{ .Values.aws.region }}:{{ .Values.aws.accountId }}:key/*"
-            ]
+            ],
+            "Condition": {
+              "ForAnyValue:StringLike": {
+                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+              }
+            }
           }
         ]
       }

@@ -11,22 +11,22 @@ spec:
     description: {{ .Values.stackId }} database backup iam role
     assumeRolePolicy: |
       {
-          "Version": "2012-10-17",
-          "Statement": [
-              {
-                  "Effect": "Allow",
-                  "Principal": {
-                      "Federated": "arn:aws:iam::{{ .Values.aws.accountId }}:oidc-provider/oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}"
-                  },
-                  "Action": "sts:AssumeRoleWithWebIdentity",
-                  "Condition": {
-                      "StringEquals": {
-                          "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:aud": "sts.amazonaws.com",
-                          "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Values.stackId }}:{{ .Values.stackId }}"
-                      }
-                  }
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::{{ .Values.aws.accountId }}:oidc-provider/oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:aud": "sts.amazonaws.com",
+                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Values.stackId }}:{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
               }
-          ]
+            }
+          }
+        ]
       }
   providerConfigRef:
     name: aws
