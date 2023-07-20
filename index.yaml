@@ -891,6 +891,30 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.0-alpha.1/cloudnative-pg-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
+  crossplane-aws-s3-bucket:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-07-20T15:15:37.35642172Z"
+    description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
+      AWS provider
+    digest: 769cb4ea2dac296e845bf962840cbc50d93f93141c022d59736ae731be6af732
+    home: https://portswigger.net/
+    keywords:
+    - object storage
+    - s3
+    - aws
+    - crossplane
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: crossplane-aws-s3-bucket
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/crossplane-aws-s3-bucket-0.0.0-alpha.1/crossplane-aws-s3-bucket-0.0.0-alpha.1.tgz
+    version: 0.0.0-alpha.1
   postgresql:
   - apiVersion: v2
     appVersion: 0.0.1
@@ -936,4 +960,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-07-19T15:02:18.225856352Z"
+generated: "2023-07-20T15:15:37.356559722Z"
