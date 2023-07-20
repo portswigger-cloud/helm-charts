@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cloudnative-pg
+name: crossplane-aws-s3-bucket
 description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane AWS provider
 type: application
 version: 0.0.0-alpha.1
@@ -15,5 +15,4 @@ sources:
 maintainers:
   - name: Portswigger Cloud
     email: github-portswigger-cloud@portswigger.net
-
 appVersion: "0.0.1"
