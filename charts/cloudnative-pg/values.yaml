@@ -2,13 +2,8 @@ stackId: my-stack-id
 aws:
   region: eu-west-1
   accountId: "123456789012"
-  oidc_idp_id: "ABCDEF1234567890"
+  oidcIdpId: "ABCDEF1234567890"
   resourcePrefix: my-prefix-
-  s3:
-    tags: {}
-  kms:
-    deletionWindowInDays: 7
-    tags: {}
   iam:
     rolePath: /my-role-path/
     policyPath: /my-policy-path/
