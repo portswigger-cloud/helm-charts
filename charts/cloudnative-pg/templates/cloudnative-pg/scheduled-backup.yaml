@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.stackId }}
 spec:
   immediate: {{ .Values.scheduledBackup.immediate }}
-  schedule: "0 {{ randNumeric 1 }}{{ randNumeric 1 }} * * *"
+  schedule: {{ .Values.scheduledBackup.schedule }}
   backupOwnerReference: {{ .Values.scheduledBackup.backupOwnerReference }}
   cluster:
     name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
