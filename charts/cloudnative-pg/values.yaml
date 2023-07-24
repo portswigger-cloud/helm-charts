@@ -35,6 +35,6 @@ cluster:
     reusePVC: true
 scheduledBackup:
   immediate: True
-  schedule: "0 13 * * *" 
+  schedule: "0 0 0 * * *" 
   backupOwnerReference: self
   target: prefer-standby
