@@ -16,7 +16,7 @@ spec:
           {
             "Effect": "Allow",
             "Principal": {
-              "Federated": "arn:aws:iam::{{ .Values.aws.accountId }}:oidc-provider/oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}"
+              "Federated": "arn:aws:iam::{{ .Values.aws.account_id }}:oidc-provider/oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
