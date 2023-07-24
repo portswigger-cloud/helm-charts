@@ -1048,6 +1048,29 @@ entries:
   crossplane-aws-s3-bucket:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2023-07-24T09:52:35.172256317Z"
+    description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
+      AWS provider
+    digest: 91d20e792d39d7ccdb017817a7f75842f22a34f46d5b851e1a1b74f7ad92b6a7
+    home: https://portswigger.net/
+    keywords:
+    - object storage
+    - s3
+    - aws
+    - crossplane
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: crossplane-aws-s3-bucket
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/crossplane-aws-s3-bucket-0.0.0-alpha.3/crossplane-aws-s3-bucket-0.0.0-alpha.3.tgz
+    version: 0.0.0-alpha.3
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2023-07-21T13:40:12.406117278Z"
     description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
       AWS provider
@@ -1160,4 +1183,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-07-24T09:51:47.807202031Z"
+generated: "2023-07-24T09:52:35.172525522Z"
