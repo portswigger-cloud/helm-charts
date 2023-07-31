@@ -104,8 +104,9 @@ podMonitor:
 database:
   h2:
     enabled: false
-  # -- JDBC URL of an external database (only if postgresql.enabled=false)
-  externalUrl: ""
+
+  externalUrl: "jdbc:postgresql://postgres-rw:5432/burp_enterprise"
+  externalCredentials: false
 
   users:
     enterprise:
@@ -130,7 +131,6 @@ database:
 
   # -- (int) Maximum lifetime timeout (ms) for the database connection
   maxLifetimeTimeout: 120000
-
 
 networkPolicy:
   enabled: false

@@ -1,13 +1,6 @@
 {{- define "burpsuite.enterprise.initContainerTemplates" -}}
 - name: init-burp-download
   image: {{ include "burpsuite.enterprise.image" . }}
-  resources:
-    requests:
-      cpu:
-      memory:
-    limits:
-      cpu:
-      memory:
   envFrom:
     - configMapRef:
         name: enterprise-env

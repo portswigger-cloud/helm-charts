@@ -1,13 +1,6 @@
 {{- define "burpsuite.web.initContainerTemplates" -}}
 - name: init-web-server-keystore
   image: {{ include "burpsuite.web.image" . }}
-  resources:
-    limits:
-      cpu:
-      memory:
-    requests:
-      cpu:
-      memory:
   envFrom:
     - configMapRef:
         name: web-env
