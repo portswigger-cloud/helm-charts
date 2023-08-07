@@ -52,6 +52,10 @@
     {{- with .Values.enterprise.envFrom }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
+  {{- with .Values.enterprise.env }}
+  env:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   volumeMounts:
   - mountPath: /home/burpsuite
     name: home-burpsuite
