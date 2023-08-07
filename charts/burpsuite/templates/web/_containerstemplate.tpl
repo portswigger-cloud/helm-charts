@@ -54,7 +54,7 @@
     {{- end }}
   {{- with .Values.web.env }}
   env:
-  {{- toYaml . | nindent 4 }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
   volumeMounts:
   - mountPath: /home/burpsuite
