@@ -2,7 +2,7 @@ apiVersion: kms.aws.upbound.io/v1beta1
 kind: Key
 metadata:
   name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
-  namespace: {{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
 spec:
   deletionPolicy: Delete
   forProvider:
@@ -11,7 +11,7 @@ spec:
     deletionWindowInDays: {{ .Values.aws.kms.deletionWindowInDays }}
     enableKeyRotation: True
     region: {{ .Values.aws.region }}
-    description: {{ .Values.stackId }} s3 bucket encryption key 
+    description: {{ .Values.stackId }} s3 bucket encryption key
     tags:
       stack-id: {{ .Values.stackId }}
     {{- with .Values.aws.kms.tags }}

@@ -2,7 +2,7 @@ apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
   name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
-  namespace: {{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
 spec:
   deletionPolicy: Delete
   forProvider:
