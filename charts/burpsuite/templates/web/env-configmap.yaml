@@ -16,5 +16,6 @@ data:
   BSEE_DATA_PATH: /home/burpsuite/data
   BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
   BSEE_HTTP_PORT: "8080"
+  BSEE_SCIM_SERVER_HTTP_PORT: "8089"
   BSEE_HTTPS_REDIRECT_PORT: "443"
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs

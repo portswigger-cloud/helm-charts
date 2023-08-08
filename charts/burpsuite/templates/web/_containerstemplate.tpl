@@ -14,6 +14,8 @@
     containerPort: 8080
   - name: web-health
     containerPort: 8088
+  - name: web-scim
+    containerPort: 8089
   startupProbe:
     httpGet:
       port: web-health
