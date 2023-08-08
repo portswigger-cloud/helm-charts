@@ -17,8 +17,8 @@ data:
 {{- with .Values.database.maxLifetimeTimeout }}
   BSEE_DB_CONNECTION_MAX_LIFETIME_TIMEOUT: {{ . | quote }}
 {{- end }}
-  BSEE_INSTALLATION_ENVIRONMENT: KUBERNETES
-  BSEE_RUN_MODE: LICENSE_ONLY
+  BSEE_INSTALLATION_ENVIRONMENT: {{ .Values.installationEnvironment }}
+  BSEE_RUN_MODE: {{ .Values.runMode }}
   ENTERPRISE_SERVER_OPTS: -Xms1g -Xmx1g
   BSEE_BURP_JAVA_OPTS: -Xms256m -Xmx256m
   BSEE_HTTPS_KEYSTORE_LOCATION: /home/burpsuite/keystores/es.keystore
@@ -27,3 +27,6 @@ data:
   BSEE_DATA_PATH: /home/burpsuite/data
   BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
+{{- with .Values.web.ingress.hosts[0].host }}
+  BSEE_WEB_SERVER_URL: https://{{ . }}/
+{{- end -}}

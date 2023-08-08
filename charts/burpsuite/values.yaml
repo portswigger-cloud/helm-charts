@@ -16,6 +16,9 @@ nameOverride: ""
 fullnameOverride: ""
 namespaceOverride: ""
 
+runMode: LICENSE_ONLY
+installationEnvironment: KUBERNETES
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -98,6 +101,14 @@ podLogs:
 
 podMonitor:
   enabled: false
+
+email:
+  {}
+  # fromAddress: noreply@example.com
+  # smtpHost: mail.example.com
+  # smtpPort: "465"
+  # username: emailuser
+  # password: emailPassword
 
 ## @section Database settings
 ##
