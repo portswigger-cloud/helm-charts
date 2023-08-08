@@ -66,7 +66,7 @@ web:
     name: ""
     type: ClusterIP
     port: 80
-    scim-port: 8080
+    scimPort: 8089
     annotations: {}
   resources:
     cpu: 200m
