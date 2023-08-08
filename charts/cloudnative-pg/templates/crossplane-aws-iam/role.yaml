@@ -22,7 +22,7 @@ spec:
             "Condition": {
               "StringEquals": {
                 "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:aud": "sts.amazonaws.com",
-                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Values.stackId }}:{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": "system:serviceaccount:{{ .Values.stackId }}:postgres"
               }
             }
           }
