@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{include "burpsuite.web.fullname" .}}
-  namespace: {{.Release.Namespace}}
+  name: {{ include "burpsuite.web.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "burpsuite.labels" . | nindent 4}}
+    {{- include "burpsuite.labels" . | nindent 4 }}
 spec:
   type: {{.Values.web.service.type}}
   ports:
@@ -15,6 +15,6 @@ spec:
     - port: {{.Values.web.service.scim-port}}
       targetPort: web-scim
       protocol: TCP
-      name: http
+      name: scim-http
   selector:
-    {{- include "burpsuite.selectorLabels" . | nindent 4}}
+    {{- include "burpsuite.selectorLabels" . | nindent 4 }}
