@@ -3,7 +3,8 @@ kind: Service
 metadata:
   name: {{include "burpsuite.web.fullname" .}}
   namespace: {{.Release.Namespace}}
-  labels: {{- include "burpsuite.labels" . | nindent 4}}
+  labels:
+    {{- include "burpsuite.labels" . | nindent 4}}
 spec:
   type: {{.Values.web.service.type}}
   ports:
@@ -15,4 +16,5 @@ spec:
       targetPort: web-scim
       protocol: TCP
       name: http
-  selector: {{- include "burpsuite.selectorLabels" . | nindent 4}}
+  selector:
+    {{- include "burpsuite.selectorLabels" . | nindent 4}}
