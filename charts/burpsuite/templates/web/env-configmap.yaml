@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: web
 {{ include "burpsuite.labels" . | indent 4 }}
 data:
-  BSEE_INSTALLATION_ENVIRONMENT: {{ .values.installationEnvironment }}
+  BSEE_INSTALLATION_ENVIRONMENT: {{ .Values.installationEnvironment }}
   BSEE_RUN_MODE: {{ .Values.runMode }}
   BSEE_SERVER_URL: "https://localhost:8072"
   WEB_SERVER_OPTS: -Xms512m -Xmx512m

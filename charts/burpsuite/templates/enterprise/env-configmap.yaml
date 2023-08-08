@@ -27,6 +27,6 @@ data:
   BSEE_DATA_PATH: /home/burpsuite/data
   BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
-{{- with .Values.web.ingress.hosts[0].host }}
-  BSEE_WEB_SERVER_URL: https://{{ . }}/
+{{- with (last .Values.web.ingress.hosts) }}
+  BSEE_WEB_SERVER_URL: https://{{ .host }}/
 {{- end -}}
