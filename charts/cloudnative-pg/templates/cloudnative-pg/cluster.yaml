@@ -3,6 +3,12 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: postgres
+    data.portswigger.cloud/pii: "true"
+    data.portswigger.cloud/retention-period: subscription-lifetime
+    data.portswigger.cloud/data-type: customer
+    data.portswigger.cloud/data-classification: confidential
 spec:
   serviceAccountTemplate:
     metadata:
