@@ -37,11 +37,13 @@ pod:
 
   affinity: {}
 
+globalEnv:
+  scanningMachineApiKey: ""
+
 ## @section Enterprise Server settings
 ##
 enterprise:
   licenseKey: ""
-  scanningMachineApiKey: ""
   envFrom: []
   image:
     registry: ""
