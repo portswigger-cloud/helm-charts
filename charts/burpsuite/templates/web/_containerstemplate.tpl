@@ -54,8 +54,24 @@
     {{- with .Values.web.envFrom }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- with .Values.web.env }}
   env:
+    - name: KUBERNETES_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: KUBERNETES_POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: KUBERNETES_NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+    - name: KUBERNETES_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+  {{- with .Values.web.env }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
   volumeMounts:
