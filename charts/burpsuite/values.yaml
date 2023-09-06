@@ -57,6 +57,9 @@ enterprise:
 ##
 web:
   authenticationToken: ""
+  adminEmail: ""
+  adminName: ""
+  adminToken: ""
   envFrom: []
   image:
     registry: ""
