@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{include "burpsuite.fullname" .}}
+  namespace: {{.Release.Namespace}}
+  labels: {{- include "burpsuite.labels" . | nindent 4}}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: web-http
+      protocol: TCP
+      name: web-http
+    {{- if .Values.ingress.expose.scim }}
+    - port: 8089
+      targetPort: web-scim
+      protocol: TCP
+      name: web-scim
+    {{- end }}
+    {{- if .Values.ingress.expose.websocket }}
+    - port: 8072
+      targetPort: ent-api
+      protocol: TCP
+      name: ent-api
+    {{- end }}
+  selector: {{- include "burpsuite.selectorLabels" . | nindent 4}}
