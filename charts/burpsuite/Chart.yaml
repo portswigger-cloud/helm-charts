@@ -2,7 +2,7 @@ apiVersion: v2
 name: burpsuite
 description: Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
 type: application
-version: 0.0.5-alpha.1
+version: 0.0.4-alpha.7
 kubeVersion: ">=1.24.0-0"
 keywords:
   - burpsuite
@@ -16,4 +16,4 @@ maintainers:
   - name: Portswigger Cloud
     email: github-portswigger-cloud@portswigger.net
 
-appVersion: "2023.8-12910"
+appVersion: "2023.7-12901"
