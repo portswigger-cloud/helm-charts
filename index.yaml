@@ -3,6 +3,29 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: 2023.8-12910
+    created: "2023-09-27T14:41:28.361561443Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: 91016051f2b0dfd049ab57e6086ea7e99a6cfa5974e84f14d6f55215bef309e6
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.5-alpha.3/burpsuite-0.0.5-alpha.3.tgz
+    version: 0.0.5-alpha.3
+  - apiVersion: v2
+    appVersion: 2023.8-12910
     created: "2023-09-27T12:55:13.51740351Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
@@ -256,10 +279,10 @@ entries:
     version: 0.0.4-alpha.3
   - apiVersion: v2
     appVersion: 2023.7-12901
-    created: "2023-08-08T14:36:37.624327512Z"
+    created: "2023-08-08T14:35:57.136878221Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
-    digest: f9303bc2d814f87eb2e3cf0311d34b28d4bdf4ff5a29cf55a8e6b04fcbff4807
+    digest: 1e1185a821218cf7a4a43f0696d94ae8191193617f37d0569248ed97cd8be553
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -279,10 +302,10 @@ entries:
     version: 0.0.4-alpha.2
   - apiVersion: v2
     appVersion: 2023.7-12901
-    created: "2023-08-08T14:35:57.136878221Z"
+    created: "2023-08-08T14:36:37.624327512Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
-    digest: 1e1185a821218cf7a4a43f0696d94ae8191193617f37d0569248ed97cd8be553
+    digest: f9303bc2d814f87eb2e3cf0311d34b28d4bdf4ff5a29cf55a8e6b04fcbff4807
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -1731,4 +1754,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-09-27T12:55:13.518159506Z"
+generated: "2023-09-27T14:41:28.362348538Z"
