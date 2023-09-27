@@ -51,7 +51,7 @@ spec:
                 port:
                   number: {{ $svcPort }}
           {{- if $.Values.ingress.expose.websocket }}
-          - path: /agent/ws/
+          - path: /agent/ws
             pathType: ImplementationSpecific
             backend:
               service:
@@ -60,7 +60,7 @@ spec:
                   number: {{ $svcWebsocketPort }}
           {{- end }}
           {{- if $.Values.ingress.expose.scim }}
-          - path: /scim/v2/
+          - path: /scim/v2
             pathType: ImplementationSpecific
             backend:
               service:
