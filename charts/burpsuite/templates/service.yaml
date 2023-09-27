@@ -10,13 +10,13 @@ spec:
     - port: {{.Values.service.port}}
       targetPort: web-http
       protocol: TCP
-      name: http
+      name: http-web
     - port: {{.Values.service.scimPort}}
       targetPort: web-scim
       protocol: TCP
-      name: scim-http
+      name: http-scim
     - port: {{.Values.service.websocketPort}}
       targetPort: ent-api
       protocol: TCP
-      name: ws-http
+      name: https-ws
   selector: {{- include "burpsuite.selectorLabels" . | nindent 4}}
