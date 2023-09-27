@@ -1,20 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "burpsuite.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{- $svcScimPort := .Values.service.scimPort -}}
-{{- $svcWebsocketPort := .Values.service.websocketPort -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
-  {{- end }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -25,7 +11,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
   {{- if .Values.ingress.tls }}
@@ -49,7 +35,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcPort }}
+                  name: http-web
           {{- if $.Values.ingress.expose.websocket }}
           - path: /agent/ws
             pathType: ImplementationSpecific
@@ -57,7 +43,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcWebsocketPort }}
+                  name: https-ws
           {{- end }}
           {{- if $.Values.ingress.expose.scim }}
           - path: /scim/v2
@@ -66,7 +52,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcScimPort }}
+                  name: http-scim
           {{- end }}
     {{- end }}
 {{- end }}
