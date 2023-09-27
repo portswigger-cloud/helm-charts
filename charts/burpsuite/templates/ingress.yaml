@@ -51,7 +51,7 @@ spec:
                 port:
                   number: {{ $svcPort }}
           {{- if $.Values.ingress.expose.websocket }}
-          - path: /ws
+          - path: /agent/ws
             pathType: ImplementationSpecific
             backend:
               service:
