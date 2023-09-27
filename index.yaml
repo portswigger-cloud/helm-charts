@@ -3,10 +3,10 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: 2023.8-12910
-    created: "2023-09-27T11:03:34.137835771Z"
+    created: "2023-09-27T12:42:21.088348524Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
-    digest: c6473e001bd3b2f5116618c3b339417efcb5791420d1c3975082d2cd85b47fb3
+    digest: d0f1c5c704fe94c92d9c24a65215753c0544df75d0d77a6ff4147a2e04ea1ea8
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -53,6 +53,29 @@ entries:
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
     digest: 9a7760101bc2640e0e1a0128a93de0ba8dcaafb52654b27dc176df535528bdc7
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.5-alpha.1/burpsuite-0.0.5-alpha.1.tgz
+    version: 0.0.5-alpha.1
+  - apiVersion: v2
+    appVersion: 2023.8-12910
+    created: "2023-09-27T11:03:34.137835771Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: c6473e001bd3b2f5116618c3b339417efcb5791420d1c3975082d2cd85b47fb3
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -210,10 +233,10 @@ entries:
     version: 0.0.4-alpha.3
   - apiVersion: v2
     appVersion: 2023.7-12901
-    created: "2023-08-08T14:35:57.136878221Z"
+    created: "2023-08-08T14:36:37.624327512Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
-    digest: 1e1185a821218cf7a4a43f0696d94ae8191193617f37d0569248ed97cd8be553
+    digest: f9303bc2d814f87eb2e3cf0311d34b28d4bdf4ff5a29cf55a8e6b04fcbff4807
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -233,10 +256,10 @@ entries:
     version: 0.0.4-alpha.2
   - apiVersion: v2
     appVersion: 2023.7-12901
-    created: "2023-08-08T14:36:37.624327512Z"
+    created: "2023-08-08T14:35:57.136878221Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
-    digest: f9303bc2d814f87eb2e3cf0311d34b28d4bdf4ff5a29cf55a8e6b04fcbff4807
+    digest: 1e1185a821218cf7a4a43f0696d94ae8191193617f37d0569248ed97cd8be553
     home: https://portswigger.net/
     keywords:
     - burpsuite
@@ -1685,4 +1708,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-09-27T11:03:34.138624983Z"
+generated: "2023-09-27T12:42:21.089489403Z"
