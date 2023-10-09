@@ -12,6 +12,8 @@
   ports:
     - name: ent-api
       containerPort: 8072
+    - name: agent-ws
+      containerPort: 8073
     - name: ent-health
       containerPort: 8078
   startupProbe:

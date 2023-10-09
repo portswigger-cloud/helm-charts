@@ -20,7 +20,7 @@ spec:
       protocol: TCP
       name: http-scim
     - port: {{.Values.service.websocketPort}}
-      targetPort: ent-api
+      targetPort: agent-ws
       protocol: TCP
-      name: https-ws
+      name: http-agent-ws
   selector: {{- include "burpsuite.selectorLabels" . | nindent 4}}

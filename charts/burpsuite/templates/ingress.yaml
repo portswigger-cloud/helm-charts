@@ -43,7 +43,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  name: https-ws
+                  name: http-agent-ws
           {{- end }}
           {{- if $.Values.ingress.expose.scim }}
           - path: /scim/v2
