@@ -1869,4 +1869,15 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/postgresql-0.0.0-alpha.1/postgresql-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2023-10-09T08:28:55.803120531Z"
+  scan-controller:
+  - apiVersion: v2
+    appVersion: 2023.9-14019
+    created: "2023-10-10T13:34:37.306425321Z"
+    description: A Helm chart for Kubernetes
+    digest: 7294f76f168b85712f06eda967b21d16714a60bb53f004ab416bf604a4bd0bc6
+    name: scan-controller
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
+    version: 0.0.0-alpha.1
+generated: "2023-10-10T13:34:37.306661221Z"
