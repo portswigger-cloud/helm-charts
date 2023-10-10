@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "scan-controller.fullname" . }}
+  labels:
+    {{- include "scan-controller.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "scan-controller.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "scan-controller.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/controller-env-secret: {{ $controllerEnvSec := include (print $.Template.BasePath "/controller-env-secret.yaml") . | fromYaml }}{{ $controllerEnvSec.data | toYaml | sha256sum }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccount: {{ include "scan-controller.fullname" . }}
+      serviceAccountName: {{ include "scan-controller.fullname" . }}
+      securityContext:
+        fsGroup: 100000
+        fsGroupChangePolicy: OnRootMismatch
+      containers:
+        - name: scan-controller
+          securityContext:
+            runAsUser: 100000
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            capabilities:
+              drop:
+                - ALL
+          image: "{{ default .Values.global.image.registry .Values.controller.image.registry }}/{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
+          envFrom:
+            - secretRef:
+                name: {{ include "scan-controller.fullname" . }}-env
+          imagePullPolicy: {{ .Values.controller.image.pullPolicy }}
+          ports:
+            - name: management
+              containerPort: 8078
+              protocol: TCP
+          startupProbe:
+            httpGet:
+              port: management
+              path: /health/readiness
+            failureThreshold: 60
+            periodSeconds: 5
+            timeoutSeconds: 2
+          livenessProbe:
+            httpGet:
+              port: management
+              path: /health/liveness
+            failureThreshold: 3
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              port: management
+              path: /health/readiness
+            failureThreshold: 1
+            periodSeconds: 10
+            timeoutSeconds: 2
+            successThreshold: 1
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+      {{- with .Values.controller.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.controller.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.controller.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

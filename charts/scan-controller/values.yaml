@@ -1,0 +1,101 @@
+# Default values for scan-controller.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+global:
+  image:
+    registry: public.ecr.aws
+
+configuration:
+  apiKey: ""
+  enterpriseUrl: ""
+  maxConcurrency: "20"
+
+controller:
+  image:
+    registry: ""
+    repository: portswigger/scan-controller
+    pullPolicy: Always
+    tag: ""
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+scanner:
+  image:
+    registry: ""
+    repository: portswigger/portswigger-hosted-scan
+    tag: ""
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+  jobTemplate: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: scan
+      labels:
+        app.kubernetes.io/component: scanner
+        app.kubernetes.io/part-of: bsee
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 60
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: scanner
+            app.kubernetes.io/part-of: bsee
+          annotations:
+            cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+            karpenter.sh/do-not-evict: "true"
+        spec:
+          serviceAccount: {{ include "scan-controller.fullname" . }}-scanner
+          serviceAccountName: {{ include "scan-controller.fullname" . }}-scanner
+          automountServiceAccountToken: false
+          containers:
+            - name: scan-container
+              env:
+                - name: JAVA_OPTS
+                  value: -Xms512m -Xmx512m
+                - name: BURP_JAVA_OPTS
+                  value: -XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75
+              envFrom:
+                - secretRef:
+                    name: {{ include "scan-controller.fullname" . }}-scanner-env
+              image: "{{ default .Values.global.image.registry .Values.scanner.image.registry }}/{{ .Values.scanner.image.repository }}:{{ .Values.scanner.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: Always
+              resources:
+                limits:
+                  memory: 8Gi
+                requests:
+                  cpu: 2
+                  memory: 8Gi
+              securityContext:
+                runAsUser: 100000
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                privileged: false
+                capabilities:
+                  drop:
+                    - ALL
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          {{- with .Values.scanner.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.scanner.affinity }}
+          affinity:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.scanner.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+
+extraDeploy: []
