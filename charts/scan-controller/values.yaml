@@ -16,6 +16,7 @@ configuration:
   maxConcurrency: "20"
 
 controller:
+  replicaCount: 2
   image:
     registry: ""
     repository: portswigger/scan-controller
