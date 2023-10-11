@@ -69,10 +69,10 @@ spec:
             successThreshold: 1
           resources:
             limits:
-              memory: 128Mi
+              memory: 512Mi
             requests:
               cpu: 200m
-              memory: 128Mi
+              memory: 512Mi
       {{- with .Values.controller.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

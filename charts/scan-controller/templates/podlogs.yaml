@@ -1,0 +1,35 @@
+{{- if .Values.controller.podLogs }}
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: {{ include "scan-controller.fullname" . }}
+  labels:
+    {{- include "scan-controller.labels" . | nindent 4 }}
+spec:
+  pipelineStages:
+  - docker: {}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "scan-controller.selectorLabels" . | nindent 6 }}
+{{- end }}
+{{- if .Values.scanner.podLogs }}
+---
+apiVersion: monitoring.grafana.com/v1alpha1
+kind: PodLogs
+metadata:
+  name: {{ include "scan-controller.fullname" . }}-scanner
+  labels:
+    {{- include "scan-controller.labels" . | nindent 4 }}
+spec:
+  pipelineStages:
+  - docker: {}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "scan-controller.scanner.selectorLabels" . | nindent 8 }}
+{{- end }}

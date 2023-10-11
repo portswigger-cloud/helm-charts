@@ -50,6 +50,11 @@ app.kubernetes.io/name: {{ include "scan-controller.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "scan-controller.scanner.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "scan-controller.name" . }}-scanner
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{/*
 Renders a value that contains template.
 Usage:
