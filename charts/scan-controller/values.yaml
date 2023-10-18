@@ -16,7 +16,6 @@ configuration:
   maxConcurrency: "20"
 
 controller:
-  replicaCount: 2
   image:
     registry: ""
     repository: portswigger/scan-controller
@@ -42,6 +41,13 @@ scanner:
 
   podLogs: false
   podMonitor: false
+
+  resources:
+    limits:
+      memory: 14Gi
+    requests:
+      cpu: 2
+      memory: 14Gi
 
   jobTemplate: |
     apiVersion: batch/v1
@@ -76,12 +82,10 @@ scanner:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
               image: "{{ default .Values.global.image.registry .Values.scanner.image.registry }}/{{ .Values.scanner.image.repository }}:{{ .Values.scanner.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: Always
-              resources:
-                limits:
-                  memory: 14Gi
-                requests:
-                  cpu: 2
-                  memory: 14Gi
+              {{- with .Values.scanner.reources }}
+              reources:
+                {{- toYaml . | nindent 12 }}
+              {{- end }}
               securityContext:
                 runAsUser: 100000
                 readOnlyRootFilesystem: true
