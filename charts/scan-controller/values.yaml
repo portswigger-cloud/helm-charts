@@ -83,7 +83,7 @@ scanner:
               image: "{{ default .Values.global.image.registry .Values.scanner.image.registry }}/{{ .Values.scanner.image.repository }}:{{ .Values.scanner.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: Always
               {{- with .Values.scanner.resources }}
-              reources:
+              resources:
                 {{- toYaml . | nindent 12 }}
               {{- end }}
               securityContext:
