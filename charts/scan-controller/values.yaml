@@ -38,6 +38,17 @@ scanner:
     kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
+  dnsPolicy: ""
+  dnsConfig: {}
+  # nameservers:
+  #   - 192.0.2.1 # this is an example
+  # searches:
+  #   - ns1.svc.cluster-domain.example
+  #   - my.dns.search.suffix
+  # options:
+  #   - name: ndots
+  #     value: "2"
+  #   - name: edns0
 
   podLogs: false
   podMonitor: false
@@ -108,6 +119,13 @@ scanner:
                 sizeLimit: 512Mi
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
+          {{- with .Values.scanner.dnsPolicy }}
+          dnsPolicy: {{ . }}
+          {{- end }}
+          {{- with .Values.scanner.dnsConfig }}
+          dnsConfig:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
           {{- with .Values.scanner.nodeSelector }}
           nodeSelector:
             {{- toYaml . | nindent 8 }}
