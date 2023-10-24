@@ -33,9 +33,11 @@ spec:
     matchLabels:
       {{- include "scan-controller.scanner.selectorLabels" . | nindent 8 }}
   relabelings:
-  - source_labels:
+  - sourceLabels:
     - container
     regex: ^([a-z\-]+)-[0-9]+$
-    target_label: container
-    action: replace
+    targetLabel: task
+  - action: replace
+    replacement: scanner
+    targetLabel: container
 {{- end }}
