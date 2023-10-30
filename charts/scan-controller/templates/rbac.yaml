@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{include "scan-controller.fullname" .}}
+  name: scan-controller
 rules:
   - apiGroups: [""]
     resources: ["pods", "pods/log"]
@@ -23,12 +23,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{include "scan-controller.fullname" .}}
+  name: scan-controller
 subjects:
   - kind: ServiceAccount
-    name: {{include "scan-controller.fullname" .}}
+    name: scan-controller
     apiGroup: ""
 roleRef:
   kind: Role
-  name: {{include "scan-controller.fullname" .}}
+  name: scan-controller
   apiGroup: rbac.authorization.k8s.io

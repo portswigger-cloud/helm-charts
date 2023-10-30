@@ -78,8 +78,8 @@ scanner:
             cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
             karpenter.sh/do-not-evict: "true"
         spec:
-          serviceAccount: {{ include "scan-controller.fullname" . }}-scanner
-          serviceAccountName: {{ include "scan-controller.fullname" . }}-scanner
+          serviceAccount: scanner
+          serviceAccountName: scanner
           automountServiceAccountToken: false
           containers:
             - name: scan-container
