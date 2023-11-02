@@ -67,3 +67,27 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
+
+{{- define "scan-controller.controller.version" -}}
+{{- coalesce .Values.controller.image.tag .Values.global.image.tag .Chart.AppVersion }}
+{{- end -}}
+
+{{- define "scan-controller.controller.image" -}}
+{{- if .Values.controller.image.sha256 -}}
+{{- printf "%s/%s:%s@sha256:%s" (.Values.controller.image.registry | default .Values.global.image.registry) .Values.controller.image.repository (include "scan-controller.controller.version" .) (trimPrefix "sha256:" .Values.controller.image.sha256) }}
+{{- else -}}
+{{- printf "%s/%s:%s" (.Values.controller.image.registry | default .Values.global.image.registry) .Values.controller.image.repository (include "scan-controller.controller.version" .) }}
+{{- end -}}
+{{- end -}}
+
+{{- define "scan-controller.scanner.version" -}}
+{{- coalesce .Values.scanner.image.tag .Values.global.image.tag .Chart.AppVersion }}
+{{- end -}}
+
+{{- define "scan-controller.scanner.image" -}}
+{{- if .Values.scanner.image.sha256 -}}
+{{- printf "%s/%s:%s@sha256:%s" (.Values.scanner.image.registry | default .Values.global.image.registry) .Values.scanner.image.repository (include "scan-controller.scanner.version" .) (trimPrefix "sha256:" .Values.scanner.image.sha256) }}
+{{- else -}}
+{{- printf "%s/%s:%s" (.Values.scanner.image.registry | default .Values.global.image.registry) .Values.scanner.image.repository (include "scan-controller.scanner.version" .) }}
+{{- end -}}
+{{- end -}}

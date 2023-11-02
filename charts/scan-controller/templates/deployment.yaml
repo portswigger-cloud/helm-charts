@@ -35,7 +35,7 @@ spec:
             capabilities:
               drop:
                 - ALL
-          image: "{{ default .Values.global.image.registry .Values.controller.image.registry }}/{{ .Values.controller.image.repository }}:{{ .Values.controller.image.tag | default .Chart.AppVersion }}"
+          image: {{ include "scan-controller.controller.image" . }}
           envFrom:
             - secretRef:
                 name: {{ include "scan-controller.fullname" . }}-env
