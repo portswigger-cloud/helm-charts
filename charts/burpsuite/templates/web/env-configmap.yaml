@@ -19,3 +19,4 @@ data:
   BSEE_SCIM_SERVER_HTTP_PORT: "8089"
   BSEE_HTTPS_REDIRECT_PORT: "443"
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
+  BSEE_SAAS_IP_RANGES_URL: {{ .Values.web.ipRangesAppUrl }}
