@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/component: enterprise
 {{ include "burpsuite.labels" . | indent 4 }}
 data:
+  BSEE_SAAS_PHSM_MAX_CONCURRENT_SCANS: {{ .Values.enterprise.phsmMaxConcurrentScan }}
+  BSEE_SAAS_PHSM_MAX_CONCURRENT_CONNECTION_CHECKS: {{ .Values.enterprise.phsmMaxConcurrentConnectionChecks }}
 {{- with include "burpsuite.database.url" . }}
   BSEE_ADMIN_REPOSITORY_URL: {{ . }}
   BSEE_AGENT_REPOSITORY_URL: {{ . }}
@@ -30,5 +32,3 @@ data:
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
 {{- end -}}
-  BSEE_SAAS_PHSM_MAX_CONCURRENT_SCANS: {{ .Values.enterprise.phsmMaxConcurrentScan }}
-  BSEE_SAAS_PHSM_MAX_CONCURRENT_CONNECTION_CHECKS: {{ .Values.enterprise.phsmMaxConcurrentConnectionChecks }}
