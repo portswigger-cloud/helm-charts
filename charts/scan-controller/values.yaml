@@ -71,7 +71,7 @@ scanner:
         {{- include "scan-controller.labels" . | nindent 8 }}
     spec:
       backoffLimit: 0
-      ttlSecondsAfterFinished: 60
+      ttlSecondsAfterFinished: 3600
       template:
         metadata:
           labels:
