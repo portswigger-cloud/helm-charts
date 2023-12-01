@@ -112,6 +112,10 @@ scanner:
                   name: home-burpsuite
                 - mountPath: /tmp
                   name: tmp
+            - name: sleep-container
+              image: busybox
+              command: ["/bin/sh"]
+              args: ["-c", "sleep 10m"]
           volumes:
             - name: home-burpsuite
               emptyDir:
