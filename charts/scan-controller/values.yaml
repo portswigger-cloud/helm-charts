@@ -79,6 +79,7 @@ scanner:
           annotations:
             cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
             karpenter.sh/do-not-evict: "true"
+            karpenter.sh/do-not-disrupt: "true"
         spec:
           serviceAccount: scanner
           serviceAccountName: scanner
@@ -112,10 +113,6 @@ scanner:
                   name: home-burpsuite
                 - mountPath: /tmp
                   name: tmp
-            - name: sleep-container
-              image: busybox
-              command: ["/bin/sh"]
-              args: ["-c", "sleep 10m"]
           volumes:
             - name: home-burpsuite
               emptyDir:
