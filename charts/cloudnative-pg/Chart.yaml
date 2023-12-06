@@ -2,7 +2,7 @@ apiVersion: v2
 name: cloudnative-pg
 description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io and any required AWS resources via crossplane.io.
 type: application
-version: 0.0.0-alpha.12
+version: 0.0.0-alpha.13
 kubeVersion: ">=1.24.0-0"
 keywords:
   - postgresql

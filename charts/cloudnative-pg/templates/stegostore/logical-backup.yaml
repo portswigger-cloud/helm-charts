@@ -19,6 +19,9 @@ spec:
           serviceAccountName: postgres
           nodeSelector:
             NodeType: customer-db
+          tolerations:
+            - key: portswigger.cloud/customer
+              operator: Exists
           containers:
           - name: stegostore
             image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
