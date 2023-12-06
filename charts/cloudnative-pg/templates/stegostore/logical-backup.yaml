@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: stegostore
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: stegostore
+    data.portswigger.cloud/pii: "true"
+    data.portswigger.cloud/retention-period: subscription-lifetime
+    data.portswigger.cloud/data-type: customer
+    data.portswigger.cloud/data-classification: confidential
+spec:
+  schedule: {{.Values.stegostore.schedule}}
+  concurrencyPolicy: {{.Values.stegostore.concurrencyPolicy}}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: postgres
+          containers:
+          - name: stegostore
+            image: {{ .Values.account_id }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: dbname
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: password
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: username
+            - name: PGPORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-app
+                  key: port
+            - name: S3PATH
+              value: "s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore/"
+            - name: PGHOST
+              value: "postgres-ro"
+          restartPolicy: OnFailure

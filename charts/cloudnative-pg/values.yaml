@@ -38,3 +38,8 @@ scheduledBackup:
   schedule: "0 0 0 * * *" 
   backupOwnerReference: self
   target: prefer-standby
+stegostore:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  imageName: portswigger-cloud/stegostore
+  imageDigest: sha256:a74453561c7f82175efe818878e4d9b80be636eea557a5ab7beab4505c0cde2f
