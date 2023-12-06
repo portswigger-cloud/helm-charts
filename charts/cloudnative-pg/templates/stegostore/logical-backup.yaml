@@ -15,10 +15,10 @@ spec:
   jobTemplate:
     spec:
       template:
-        nodeSelector:
-          NodeType: customer-db
         spec:
           serviceAccountName: postgres
+          nodeSelector:
+            NodeType: customer-db
           containers:
           - name: stegostore
             image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
