@@ -19,7 +19,7 @@ spec:
           serviceAccountName: postgres
           containers:
           - name: stegostore
-            image: {{ .Values.account_id }}.dkr.ecr.{{ .Values.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
+            image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
             imagePullPolicy: IfNotPresent
             env:
             - name: POSTGRES_DB
