@@ -7,7 +7,7 @@ aws:
   iam:
     rolePath: /my-role-path/
     policyPath: /my-policy-path/
-    permissionsBoundary:  arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name
+    permissionsBoundary: arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name
 cluster:
   imageName: ghcr.io/cloudnative-pg/postgresql:15.3@sha256:10fa87e8fbf7f1d7d6be3124ef364068e5844e825b17649bc0b2efbab4b54f69
   instances: 2
@@ -35,11 +35,11 @@ cluster:
     reusePVC: true
 scheduledBackup:
   immediate: True
-  schedule: "0 0 0 * * *" 
+  schedule: "0 0 0 * * *"
   backupOwnerReference: self
   target: prefer-standby
 stegostore:
   schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   imageName: portswigger-cloud/stegostore
-  imageDigest: sha256:a74453561c7f82175efe818878e4d9b80be636eea557a5ab7beab4505c0cde2f
+  imageDigest: sha256:b0d67634114407b91271d97810de403db0d80fafbcee14cc45a32fb7df46bcf9
