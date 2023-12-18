@@ -6,14 +6,17 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Can only be 1 or 0
+replicaCount: 1
+
 global:
   image:
     registry: public.ecr.aws
 
 configuration:
-  apiKey: ""
-  enterpriseUrl: ""
-  maxConcurrency: "20"
+  apiKey: "not-an-api-key"
+  enterpriseUrl: "https://not-a-server.url"
+  maxConcurrency: 20
 
 controller:
   image:

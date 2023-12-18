@@ -1,65 +1,65 @@
 suite: Deployment configuration
 templates:
-  - deployment.yaml
-  # load configmap and secret templates for checksums
-  - enterprise/env-configmap.yaml
-  - enterprise/env-secret.yaml
-  - web/env-configmap.yaml
-  - web/env-secret.yaml
+    - deployment.yaml
+    # load configmap and secret templates for checksums
+    - enterprise/env-configmap.yaml
+    - enterprise/env-secret.yaml
+    - web/env-configmap.yaml
+    - web/env-secret.yaml
 tests:
-  - it: should create Deployment with default values
-    template: deployment.yaml
-    asserts:
-      # Deployment assertions
-      - isKind:
-          of: Deployment
-      - equal:
-          path: metadata.name
-          value: RELEASE-NAME-burpsuite
-      - equal:
-          path: metadata.namespace
-          value: NAMESPACE
-      - equal:
-          path: spec.replicas
-          value: 1
-      - equal:
-          path: spec.strategy
-          value:
-            type: Recreate
-      # Pod value assertions
-      - exists:
-          path: spec.template.metadata.annotations.checksum/enterprise-env-configmap
-      - exists:
-          path: spec.template.metadata.annotations.checksum/enterprise-env-secret
-      - exists:
-          path: spec.template.metadata.annotations.checksum/web-env-configmap
-      - exists:
-          path: spec.template.metadata.annotations.checksum/web-env-secret
-      - notExists:
-          path: spec.template.metadata.labels["helm.sh/chart"]
-      # Enterprise container value assertions
-      - matchRegex:
-          path: spec.template.spec.containers[?(@.name == "enterprise")].image
-          pattern: "^public\\.ecr\\.aws/portswigger/enterprise-server"
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "enterprise")].securityContext
-          value:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-      # Web container value assertions
-      - matchRegex:
-          path: spec.template.spec.containers[?(@.name == "web")].image
-          pattern: "^public\\.ecr\\.aws/portswigger/web-server"
-      - equal:
-          path: spec.template.spec.containers[?(@.name == "web")].securityContext
-          value:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
+    - it: should create Deployment with default values
+      template: deployment.yaml
+      asserts:
+          # Deployment assertions
+          - isKind:
+                of: Deployment
+          - equal:
+                path: metadata.name
+                value: RELEASE-NAME-burpsuite
+          - equal:
+                path: metadata.namespace
+                value: NAMESPACE
+          - equal:
+                path: spec.replicas
+                value: 1
+          - equal:
+                path: spec.strategy
+                value:
+                    type: Recreate
+          # Pod value assertions
+          - exists:
+                path: spec.template.metadata.annotations.checksum/enterprise-env-configmap
+          - exists:
+                path: spec.template.metadata.annotations.checksum/enterprise-env-secret
+          - exists:
+                path: spec.template.metadata.annotations.checksum/web-env-configmap
+          - exists:
+                path: spec.template.metadata.annotations.checksum/web-env-secret
+          - notExists:
+                path: spec.template.metadata.labels["helm.sh/chart"]
+          # Enterprise container value assertions
+          - matchRegex:
+                path: spec.template.spec.containers[?(@.name == "enterprise")].image
+                pattern: "^public\\.ecr\\.aws/portswigger/enterprise-server"
+          - equal:
+                path: spec.template.spec.containers[?(@.name == "enterprise")].securityContext
+                value:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                        drop:
+                            - ALL
+                    readOnlyRootFilesystem: true
+                    runAsNonRoot: true
+          # Web container value assertions
+          - matchRegex:
+                path: spec.template.spec.containers[?(@.name == "web")].image
+                pattern: "^public\\.ecr\\.aws/portswigger/web-server"
+          - equal:
+                path: spec.template.spec.containers[?(@.name == "web")].securityContext
+                value:
+                    allowPrivilegeEscalation: false
+                    capabilities:
+                        drop:
+                            - ALL
+                    readOnlyRootFilesystem: true
+                    runAsNonRoot: true

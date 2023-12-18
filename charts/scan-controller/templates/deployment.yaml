@@ -2,10 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "scan-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ min .Values.replicaCount 1 }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "scan-controller.selectorLabels" . | nindent 6 }}
@@ -28,6 +31,7 @@ spec:
       containers:
         - name: scan-controller
           securityContext:
+            runAsNonRoot: true
             runAsUser: 100000
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false

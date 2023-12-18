@@ -3,6 +3,7 @@ apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
   name: {{ include "scan-controller.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
