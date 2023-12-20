@@ -91,7 +91,7 @@ scanner:
             - name: scan-container
               env:
                 - name: JAVA_OPTS
-                  value: -Xms512m -Xmx512m
+                  value: -Xms2048m -Xmx2048m
                 - name: BURP_JAVA_OPTS
                   value: -XX:InitialRAMPercentage=75 -XX:MaxRAMPercentage=75
               envFrom:
