@@ -10,8 +10,8 @@ spec:
   pipelineStages:
   - docker: {}
   - multiline:
-      firstline: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
-      max_wait_time: 1s
+      firstLine: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
+      maxWaitTime: 1s
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
