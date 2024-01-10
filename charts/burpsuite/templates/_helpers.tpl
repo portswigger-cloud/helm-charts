@@ -140,6 +140,31 @@ Fetch given field from existing enterprise secret or generate a new random value
 {{- end -}}
 {{- end -}}
 
+{{/*
+Fetch given field from existing web secret or generate a new random value
+*/}}
+{{- define "burpsuite.web.fetchOrCreateSecretField" -}}
+{{- $context := index . 0 -}}
+{{- $secretFieldName := index . 1 -}}
+
+{{- $secretObj := (lookup "v1" "Secret" $context.Release.Namespace  "web-env") | default dict }}
+{{- $secretData := (get $secretObj "data") | default dict }}
+{{- $secretFieldValue := (get $secretData $secretFieldName) | default (randAlphaNum 30 | b64enc) }}
+{{- $secretFieldValue -}}
+{{- end -}}
+
+{{- define "burpsuite.web.secretValue" -}}
+{{- $context := index . 0 -}}
+{{- $suppliedValue := index . 1 -}}
+{{- $secretFieldName := index . 2 -}}
+{{- if $suppliedValue -}}
+{{ $suppliedValue | b64enc }}
+{{- else -}}
+{{ include "burpsuite.web.fetchOrCreateSecretField"  (list $context $secretFieldName) }}
+{{- end -}}
+{{- end -}}
+
+
 
 {{- define "burpsuite.database.url" -}}
 {{- if .Values.database.h2.enabled -}}

@@ -11,7 +11,7 @@ spec:
   - docker: {}
   - multiline:
       firstLine: 'stdout F \d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} '
-      maxWaitTime: 1s
+      maxWaitTime: 2s
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
