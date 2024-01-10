@@ -14,6 +14,9 @@ spec:
     metadata:
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.aws.account_id }}:role{{ .Values.aws.iam.rolePath }}{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+        {{- with .Values.cluster.annotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
   imageName: {{ .Values.cluster.imageName }}
   resources:
     requests:

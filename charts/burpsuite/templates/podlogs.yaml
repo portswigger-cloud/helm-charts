@@ -10,7 +10,7 @@ spec:
   pipelineStages:
   - docker: {}
   - multiline:
-      firstLine: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}'
+      firstLine: 'stdout F \d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} '
       maxWaitTime: 1s
   namespaceSelector:
     matchNames:
