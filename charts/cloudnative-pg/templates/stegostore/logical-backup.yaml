@@ -1,3 +1,4 @@
+{{- if .Values.stegostore.enabled }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -55,3 +56,4 @@ spec:
             - name: PGHOST
               value: "postgres-ro"
           restartPolicy: OnFailure
+{{- end }}
