@@ -1520,6 +1520,28 @@ entries:
   cloudnative-pg:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2024-01-11T14:58:46.139150785Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources via crossplane.io.
+    digest: b7ab54b8198271b442a193ea5422bfc696893f15a8f30e56c326beeeb4d746c3
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.0-alpha.20/cloudnative-pg-0.0.0-alpha.20.tgz
+    version: 0.0.0-alpha.20
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2024-01-11T13:37:12.451576647Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
@@ -1718,10 +1740,10 @@ entries:
     version: 0.0.0-alpha.12
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2023-12-06T13:53:08.562883797Z"
+    created: "2023-12-06T14:02:35.995059978Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
-    digest: 98a80c81cd8f4dfd50c08c3ab0b8015510e66bc7fca5f8c9f6b2bda79e0b1839
+    digest: 68ff30bc46ce914497159a7de7d7c9cf0b63bccafed4d70094b60bc69ff657d5
     home: https://portswigger.net/
     keywords:
     - postgresql
@@ -1740,10 +1762,10 @@ entries:
     version: 0.0.0-alpha.11
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2023-12-06T14:02:35.995059978Z"
+    created: "2023-12-06T13:53:08.562883797Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
-    digest: 68ff30bc46ce914497159a7de7d7c9cf0b63bccafed4d70094b60bc69ff657d5
+    digest: 98a80c81cd8f4dfd50c08c3ab0b8015510e66bc7fca5f8c9f6b2bda79e0b1839
     home: https://portswigger.net/
     keywords:
     - postgresql
@@ -2004,33 +2026,10 @@ entries:
     version: 0.0.0-alpha.2
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2023-07-14T15:25:23.318729754Z"
-    description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
-      AWS provider
-    digest: ae1746fa99e137d5511506b708ac4091990ecc90daef730d7aa560ba16b681a1
-    home: https://portswigger.net/
-    keywords:
-    - object storage
-    - s3
-    - aws
-    - crossplane
-    kubeVersion: '>=1.24.0-0'
-    maintainers:
-    - email: github-portswigger-cloud@portswigger.net
-      name: Portswigger Cloud
-    name: cloudnative-pg
-    sources:
-    - https://github.com/portswigger-cloud/helm-charts/
-    type: application
-    urls:
-    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.0-alpha.1/cloudnative-pg-0.0.0-alpha.1.tgz
-    version: 0.0.0-alpha.1
-  - apiVersion: v2
-    appVersion: 0.0.1
-    created: "2023-07-21T13:32:55.001092638Z"
+    created: "2023-07-13T12:58:29.357109249Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
-    digest: 15473d91d60508e3717e0a640b89178107011308a350bbb18aee232c17539c0f
+    digest: c965ac7683a8df173b045b8545725bf712b18ffa332fc4fff6bdb00d39ee4b26
     home: https://portswigger.net/
     keywords:
     - postgresql
@@ -2094,10 +2093,10 @@ entries:
     version: 0.0.0-alpha.1
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2023-07-13T12:58:29.357109249Z"
+    created: "2023-07-21T13:32:55.001092638Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
-    digest: c965ac7683a8df173b045b8545725bf712b18ffa332fc4fff6bdb00d39ee4b26
+    digest: 15473d91d60508e3717e0a640b89178107011308a350bbb18aee232c17539c0f
     home: https://portswigger.net/
     keywords:
     - postgresql
@@ -2258,6 +2257,29 @@ entries:
     - postgresql
     - database
     - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.0-alpha.1/cloudnative-pg-0.0.0-alpha.1.tgz
+    version: 0.0.0-alpha.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-07-14T15:25:23.318729754Z"
+    description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
+      AWS provider
+    digest: ae1746fa99e137d5511506b708ac4091990ecc90daef730d7aa560ba16b681a1
+    home: https://portswigger.net/
+    keywords:
+    - object storage
+    - s3
+    - aws
+    - crossplane
     kubeVersion: '>=1.24.0-0'
     maintainers:
     - email: github-portswigger-cloud@portswigger.net
@@ -2641,4 +2663,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2024-01-11T13:37:12.570354394Z"
+generated: "2024-01-11T14:58:46.139721498Z"
