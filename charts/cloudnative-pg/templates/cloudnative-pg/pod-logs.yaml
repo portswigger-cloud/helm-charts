@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: postgres
 spec:
   pipelineStages:
-  - docker: {}
+  - cri: {}
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}

@@ -26,7 +26,7 @@ metadata:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
   pipelineStages:
-  - docker: {}
+  - cri: {}
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}

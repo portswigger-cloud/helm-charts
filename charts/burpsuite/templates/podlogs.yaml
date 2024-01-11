@@ -8,9 +8,9 @@ metadata:
     {{- include "burpsuite.labels" . | nindent 4 }}
 spec:
   pipelineStages:
-  - docker: {}
+  - cri: {}
   - multiline:
-      firstLine: 'stdout F \d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} '
+      firstLine: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} '
       maxWaitTime: 2s
   namespaceSelector:
     matchNames:
