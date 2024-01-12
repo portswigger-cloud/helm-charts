@@ -36,7 +36,7 @@ spec:
             - name: S3_PREFIX
               value: stegostore
             - name: DAYS_RETENTION
-              value: {{ Values.stegosweep.daysRetention }}
+              value: {{ .Values.stegosweep.daysRetention }}
             - name: DRY_RUN
               value: {{ Values.stegosweep.dryRun }}
           restartPolicy: OnFailure
