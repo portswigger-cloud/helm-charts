@@ -38,6 +38,6 @@ spec:
             - name: DAYS_RETENTION
               value: {{ .Values.stegosweep.daysRetention }}
             - name: DRY_RUN
-              value: {{ Values.stegosweep.dryRun }}
+              value: {{ .Values.stegosweep.dryRun }}
           restartPolicy: OnFailure
 {{- end }}
