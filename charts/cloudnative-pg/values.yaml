@@ -50,5 +50,5 @@ stegosweep:
   schedule: "30 1 * * *"
   concurrencyPolicy: Forbid
   daysRetention: 30
-  dryRun: true
+  dryRun: false
 
