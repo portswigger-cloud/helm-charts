@@ -1,0 +1,43 @@
+{{- if .Values.stegostore.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: stegosweep
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: stegosweep
+    data.portswigger.cloud/pii: "true"
+    data.portswigger.cloud/retention-period: subscription-lifetime
+    data.portswigger.cloud/data-type: customer
+    data.portswigger.cloud/data-classification: confidential
+spec:
+  schedule: {{.Values.stegosweep.schedule}}
+  concurrencyPolicy: {{.Values.stegosweep.concurrencyPolicy}}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: stegosweep
+        spec:
+          nodeSelector:
+            NodeType: customer-db
+          tolerations:
+            - key: portswigger.cloud/customer
+              operator: Exists
+          containers:
+          - name: stegostore
+            image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
+            imagePullPolicy: IfNotPresent
+            command: ["bash", "/stegosweep.sh"]
+            env:
+            - name: S3_BUCKET_NAME
+              value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+            - name: S3_PREFIX
+              value: stegostore
+            - name: DAYS_RETENTION
+              value: {{ Values.stegosweep.daysRetention }}
+            - name: DRY_RUN
+              value: {{ Values.stegosweep.dryRun }}
+          restartPolicy: OnFailure
+{{- end }}
