@@ -34,10 +34,10 @@ spec:
             - name: S3_BUCKET_NAME
               value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
             - name: S3_PREFIX
-              value: stegostore
+              value: "stegostore"
             - name: DAYS_RETENTION
-              value: {{ .Values.stegosweep.daysRetention }}
+              value: {{ .Values.stegosweep.daysRetention | quote }}
             - name: DRY_RUN
-              value: {{ .Values.stegosweep.dryRun }}
+              value: {{ .Values.stegosweep.dryRun | quote  }}
           restartPolicy: OnFailure
 {{- end }}
