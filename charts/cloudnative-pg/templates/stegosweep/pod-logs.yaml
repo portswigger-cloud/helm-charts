@@ -1,10 +1,10 @@
 apiVersion: monitoring.grafana.com/v1alpha1
 kind: PodLogs
 metadata:
-  name: stegostore
+  name: stegosweep
   namespace: {{ .Release.Namespace }}
   labels:
-    app.kubernetes.io/name: stegostore
+    app.kubernetes.io/name: stegosweep
 spec:
   pipelineStages:
   - cri: {}
@@ -13,4 +13,4 @@ spec:
     - {{ .Release.Namespace }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: stegostore
+      app.kubernetes.io/name: stegosweep
