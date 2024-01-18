@@ -51,7 +51,7 @@ spec:
                 name: {{ $fullName }}
                 port:
                   name: http-agent-ws
-          - path: /agent/updates
+          - path: /agent/update
             pathType: ImplementationSpecific
             backend:
               service:
