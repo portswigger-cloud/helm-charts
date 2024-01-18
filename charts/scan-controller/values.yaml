@@ -148,20 +148,20 @@ scanner:
                 - containerPort: {{ .Values.scanner.jmxMetrics.prometheusExporterPort }}
                   name: metrics
                   protocol: TCP
-                resources:
-                  limits:
-                    memory: 128Mi
-                  requests:
-                    cpu: 100m
-                    memory: 128Mi
-                securityContext:
-                  runAsNonRoot: true
-                  runAsUser: 1001
-                terminationMessagePath: /dev/termination-log
-                terminationMessagePolicy: File
-                volumeMounts:
-                  - mountPath: /etc/jmx
-                    name: jmx-config
+              resources:
+                limits:
+                  memory: 128Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 1001
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              volumeMounts:
+                - mountPath: /etc/jmx
+                  name: jmx-config
             {{- end }}
           volumes:
             - name: home-burpsuite
