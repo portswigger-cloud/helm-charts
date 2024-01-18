@@ -37,35 +37,14 @@ spec:
                 port:
                   name: http-web
           {{- if $.Values.ingress.expose.websocket }}
-          - path: /scan_controller/ws
+          - path: /scan-controller/
             pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ $fullName }}
                 port:
                   name: http-agent-ws
-          - path: /agent/ws
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  name: http-agent-ws
-          - path: /agent/update
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  name: http-agent-ws
-          - path: /agent/api/v1/license_activation
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: {{ $fullName }}
-                port:
-                  name: http-agent-ws
-          - path: /agent/api/v1/scanning-machine/logs
+          - path: /agent/
             pathType: ImplementationSpecific
             backend:
               service:
