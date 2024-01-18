@@ -109,6 +109,8 @@ scanner:
                     -Dcom.sun.management.jmxremote.authenticate=false
                     -Dcom.sun.management.jmxremote.port={{ .Values.scanner.jmxMetrics.jmxPort }}
                     -Dcom.sun.management.jmxremote.rmi.port={{ .Values.scanner.jmxMetrics.rmiPort }}
+                    --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+                    --add-opens=java.management/sun.management=ALL-UNNAMED
                     {{- end }}
               envFrom:
                 - secretRef:
