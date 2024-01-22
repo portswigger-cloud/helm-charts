@@ -16,7 +16,7 @@
       mkdir -p /tmp/logs
       mkdir -p /tmp/data/tmp
 
-      cp -n /home/burpsuite/burp/burpsuite_pro_v*.jar /tmp/burp/ || echo Unable to copy Scanner JAR to volume mount
+      cp -n /home/burpsuite/burp/* /tmp/burp/ || echo Unable to copy Scanner JAR to volume mount
   volumeMounts:
     - name: home-burpsuite
       mountPath: /tmp
