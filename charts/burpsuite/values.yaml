@@ -56,6 +56,8 @@ enterprise:
     memory: 1.8Gi
   phsmMaxConcurrentScan: 300
   phsmMaxConcurrentConnectionChecks: 50
+  serverJavaOpts: -Xms1g -Xmx1g
+  burpJavaOpts: -Xms256m -Xmx256m
 
 service:
   name: ""
@@ -103,6 +105,7 @@ web:
     cpu: 200m
     memory: 1Gi
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
+  serverJavaOpts: -Xms512m -Xmx512m
 
 ## @section Ephemeral Agent settings
 ##

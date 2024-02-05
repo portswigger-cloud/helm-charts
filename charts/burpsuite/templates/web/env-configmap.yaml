@@ -10,7 +10,7 @@ data:
   BSEE_INSTALLATION_ENVIRONMENT: {{ .Values.installationEnvironment }}
   BSEE_RUN_MODE: {{ .Values.runMode }}
   BSEE_SERVER_URL: "https://localhost:8072"
-  WEB_SERVER_OPTS: -Xms512m -Xmx512m
+  WEB_SERVER_OPTS: {{ .Values.web.serverJavaOpts }}
   BSEE_CLIENT_KEYSTORE_LOCATION: /home/burpsuite/keystores/webserver.keystore
   BSEE_CLIENT_TRUSTSTORE_LOCATION: /home/burpsuite/keystores/webserver.keystore
   BSEE_DATA_PATH: /home/burpsuite/data

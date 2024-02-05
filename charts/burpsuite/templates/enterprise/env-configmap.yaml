@@ -21,8 +21,8 @@ data:
 {{- end }}
   BSEE_INSTALLATION_ENVIRONMENT: {{ .Values.installationEnvironment }}
   BSEE_RUN_MODE: {{ .Values.runMode }}
-  ENTERPRISE_SERVER_OPTS: -Xms1g -Xmx1g
-  BSEE_BURP_JAVA_OPTS: -Xms256m -Xmx256m
+  ENTERPRISE_SERVER_OPTS: {{ .Values.enterprise.serverJavaOpts }}
+  BSEE_BURP_JAVA_OPTS: {{ .Values.enterprise.burpJavaOpts }}
   BSEE_HTTPS_KEYSTORE_LOCATION: /home/burpsuite/keystores/es.keystore
   BSEE_HTTPS_PORT: "8072"
   BSEE_LINUX_PREFS_STORE_PATH: /home/burpsuite/prefs
