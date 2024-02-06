@@ -12,16 +12,11 @@ data:
     lowercaseOutputName: true
     lowercaseOutputLabelNames: true
     ssl: false
-    # whitelistObjectNames: ["java.lang:*","SonarQube:*","Tomcat:*"]
+    whitelistObjectNames: ["java.lang:*"]
     rules:
-    - pattern: ".*"
-    #- pattern: java.lang<type=(.+), name=(.+)><(.+)>(\w+)
-    #  name: java_lang_$1_$4_$3_$2
-    #- pattern: java.lang<type=(.+), name=(.+)><>(\w+)
-    #  name: java_lang_$1_$3_$2
-    #- pattern: java.lang<type=(.*)>
-    #- pattern: SonarQube<name=(.+)><>(\w+)
-    #  name: sonarqube_$1_$2
-    #- pattern: Tomcat<type=(.+), name=(.+)><>(\w+)
-    #  name: tomcat_$1_$3_$2
+    - pattern: java.lang<type=(.+), name=(.+)><(.+)>(\w+)
+      name: java_lang_$1_$4_$3_$2
+    - pattern: java.lang<type=(.+), name=(.+)><>(\w+)
+      name: java_lang_$1_$3_$2
+
 {{- end }}

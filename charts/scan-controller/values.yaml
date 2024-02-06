@@ -98,10 +98,10 @@ scanner:
             - name: scan-container
               env:
                 - name: JAVA_OPTS
-                  value: -Xms512m -Xmx512m
+                  value: -Xms128m -Xmx512m
                 - name: BSEE_BURP_JAVA_OPTS
                   value: >-
-                    -XX:InitialRAMPercentage=60
+                    -Xms1g
                     -XX:MaxRAMPercentage=60
                     {{- if .Values.scanner.jmxMetrics.enabled }}
                     -Dcom.sun.management.jmxremote
