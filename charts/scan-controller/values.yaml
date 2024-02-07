@@ -66,8 +66,7 @@ scanner:
     prometheusExporterPort: 10445
 
   resources:
-    limits:
-      memory: 14Gi
+    limits: {}
     requests:
       cpu: 2
       memory: 14Gi
