@@ -168,10 +168,10 @@ scanner:
           volumes:
             - name: home-burpsuite
               emptyDir:
-                sizeLimit: 10Gi
+                sizeLimit: 20Gi
             - name: tmp
               emptyDir:
-                sizeLimit: 512Mi
+                sizeLimit: 1Gi
             {{- if .Values.scanner.jmxMetrics.enabled }}
             - configMap:
                 defaultMode: 420
