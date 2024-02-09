@@ -12,6 +12,7 @@ metadata:
     data.portswigger.cloud/data-classification: confidential
 spec:
   schedule: {{.Values.stegostore.schedule}}
+  successfulJobsHistoryLimit: 0
   concurrencyPolicy: {{.Values.stegostore.concurrencyPolicy}}
   jobTemplate:
     spec:
