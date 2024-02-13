@@ -41,5 +41,5 @@ spec:
               value: {{ .Values.stegosweep.daysRetention | quote }}
             - name: DRY_RUN
               value: {{ .Values.stegosweep.dryRun | quote  }}
-          restartPolicy: OnFailure
+          restartPolicy: Never
 {{- end }}

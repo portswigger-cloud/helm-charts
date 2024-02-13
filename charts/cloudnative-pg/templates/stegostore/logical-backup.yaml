@@ -56,5 +56,5 @@ spec:
               value: "s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore/"
             - name: PGHOST
               value: "postgres-ro"
-          restartPolicy: OnFailure
+          restartPolicy: Never
 {{- end }}
