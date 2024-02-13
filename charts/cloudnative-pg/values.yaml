@@ -45,7 +45,7 @@ stegostore:
   schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   imageName: portswigger-cloud/stegostore
-  imageDigest: sha256:1958154f59918cf7b8e1c2a86179e5f10a13d62bef48d66a1e7cf549e331f46e
+  imageDigest: sha256:978ecafc86d76a508e6b480919fb2d6571b77fdbfadfa73da7691b7296fdaf99
 stegosweep:
   enabled: true
   schedule: "30 1 * * *"
