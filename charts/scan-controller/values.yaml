@@ -100,7 +100,7 @@ scanner:
                 - name: BSEE_BURP_JAVA_OPTS
                   value: >-
                     -Xms1g
-                    -XX:MaxRAMPercentage=75
+                    -XX:MaxRAMPercentage=50
                     {{- if .Values.scanner.jmxMetrics.enabled }}
                     -Dcom.sun.management.jmxremote
                     -Dcom.sun.management.jmxremote.ssl=false
