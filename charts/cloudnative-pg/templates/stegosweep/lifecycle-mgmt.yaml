@@ -37,8 +37,10 @@ spec:
               value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
             - name: S3_PREFIX
               value: "stegostore"
-            - name: DAYS_RETENTION
-              value: {{ .Values.stegosweep.daysRetention | quote }}
+            - name: DAYS_RETENTION_DAILY
+              value: {{ .Values.stegosweep.daysRetentionDaily | quote }}
+            - name: DAYS_RETENTION_HOURLY
+              value: {{ .Values.stegosweep.daysRetentionHourly | quote }}
             - name: DRY_RUN
               value: {{ .Values.stegosweep.dryRun | quote  }}
           restartPolicy: Never
