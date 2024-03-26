@@ -1658,6 +1658,28 @@ entries:
   cloudnative-pg:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2024-03-26T13:52:55.070813058Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources via crossplane.io.
+    digest: 8efedd2560126fcfd931ba9fe3e6930b2e090814a956a8c2ca60b40cfc53e607
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.0.5/cloudnative-pg-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2024-02-13T13:40:24.81272502Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
@@ -3209,4 +3231,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2024-03-14T09:53:08.105532406Z"
+generated: "2024-03-26T13:52:55.071294229Z"
