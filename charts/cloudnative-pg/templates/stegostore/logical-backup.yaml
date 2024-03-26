@@ -55,6 +55,6 @@ spec:
             - name: S3PATH
               value: "s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore/"
             - name: PGHOST
-              value: "postgres-ro"
+              value: "postgres-rw"
           restartPolicy: Never
 {{- end }}
