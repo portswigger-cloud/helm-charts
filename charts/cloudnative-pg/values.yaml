@@ -52,4 +52,4 @@ stegosweep:
   concurrencyPolicy: Forbid
   daysRetentionDaily: 30
   daysRetentionHourly: 7
-  dryRun: true
+  dryRun: false
