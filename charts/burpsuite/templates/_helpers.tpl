@@ -84,7 +84,7 @@ Common labels
 {{- define "burpsuite.labels" -}}
 helm.sh/chart: {{ include "burpsuite.chart" . }}
 {{ include "burpsuite.selectorLabels" . }}
-app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | quote }}
+app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | replace "+" "_" | trunc 63 | trimSuffix "-" | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -101,7 +101,7 @@ Pod labels
 */}}
 {{- define "burpsuite.pod.labels" -}}
 {{ include "burpsuite.selectorLabels" . }}
-app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | quote }}
+app.kubernetes.io/version: {{ (include "burpsuite.enterprise.version" .) | replace "+" "_" | trunc 63 | trimSuffix "-" | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
