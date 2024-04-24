@@ -8,6 +8,8 @@ aws:
     rolePath: /my-role-path/
     policyPath: /my-policy-path/
     permissionsBoundary: arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name
+  s3:
+    backupBucketName: my-backup-bucket
 cluster:
   imageName: ghcr.io/cloudnative-pg/postgresql:15.3@sha256:10fa87e8fbf7f1d7d6be3124ef364068e5844e825b17649bc0b2efbab4b54f69
   instances: 2

@@ -22,6 +22,25 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
+              "arn:aws:s3:::{{.Values.aws.s3.backupBucketName}}",
+            ],
+            "Condition": {
+              "StringLike": {
+                "s3:prefix": "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
+              }
+            }
+          },
+          {
+            "Action": [
+              "s3:GetObject",
+              "s3:GetObjectVersion",
+              "s3:PutObject",
+              "s3:PutObjectAcl",
+              "s3:ListBucket",
+              "s3:DeleteObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
               "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
               "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
             ]
@@ -37,12 +56,15 @@ spec:
             ],
             "Condition": {
               "ForAnyValue:StringLike": {
-                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+                "kms:ResourceAliases": [
+                  "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
+                  "alias/database-backup-bucket-key
+                ]
               }
             }
           }
-        ]
-      }
-    description: {{ .Values.stackId }} database backup iam policy
+    ]
+  }
+  description: {{ .Values.stackId }} database backup iam policy
   providerConfigRef:
     name: aws
