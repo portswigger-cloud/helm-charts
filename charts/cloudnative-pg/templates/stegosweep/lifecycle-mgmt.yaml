@@ -34,11 +34,9 @@ spec:
             command: ["bash", "/stegosweep.sh"]
             env:
             - name: S3_BUCKET_NAME
-              value: "{{ .Values.aws.s3.backupBucketName }}"
+              value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
             - name: S3_PREFIX
-              value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore"
-            - name: KMS_KEY_ID
-              value: "arn:aws:kms:{{ .Values.aws.region }}:{{ .Values.aws.account_id }}:alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+              value: "stegostore"
             - name: DAYS_RETENTION_DAILY
               value: {{ .Values.stegosweep.daysRetentionDaily | quote }}
             - name: DAYS_RETENTION_HOURLY
