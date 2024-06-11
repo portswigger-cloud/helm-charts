@@ -58,13 +58,6 @@ scanner:
   podLogs: false
   podMonitor: false
 
-  jmxMetrics:
-    enabled: true
-    image: docker.io/bitnami/jmx-exporter:0.20.0-debian-11-r2
-    jmxPort: 10443
-    rmiPort: 10444
-    prometheusExporterPort: 10445
-
   resources:
     requests:
       cpu: 2
@@ -101,20 +94,15 @@ scanner:
                   value: >-
                     -Xms1g
                     -XX:MaxRAMPercentage=50
-                    {{- if .Values.scanner.jmxMetrics.enabled }}
-                    -Dcom.sun.management.jmxremote
-                    -Dcom.sun.management.jmxremote.ssl=false
-                    -Dcom.sun.management.jmxremote.authenticate=false
-                    -Dcom.sun.management.jmxremote.port={{ .Values.scanner.jmxMetrics.jmxPort }}
-                    -Dcom.sun.management.jmxremote.rmi.port={{ .Values.scanner.jmxMetrics.rmiPort }}
-                    -Dcom.sun.management.jmxremote.local.only=false
-                    -Djava.rmi.server.hostname=localhost
-                    {{- end }}
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
               image: {{ include "scan-controller.scanner.image" . }}
               imagePullPolicy: Always
+              ports:
+                - name: management
+                  containerPort: 8098
+                  protocol: TCP
               {{- with .Values.scanner.resources }}
               resources:
                 {{- toYaml . | nindent 12 }}
@@ -132,37 +120,6 @@ scanner:
                   name: home-burpsuite
                 - mountPath: /tmp
                   name: tmp
-            {{- if .Values.scanner.jmxMetrics.enabled }}
-            - name: jmx-exporter
-              image: {{ .Values.scanner.jmxMetrics.image }}
-              imagePullPolicy: Always
-              command:
-                - java
-                - -XX:MaxRAMPercentage=90
-                - -XshowSettings:vm
-                - -jar
-                - jmx_prometheus_httpserver.jar
-                - "10445"
-                - /etc/jmx/burpscanner-prometheus.yaml
-              ports:
-                - containerPort: {{ .Values.scanner.jmxMetrics.prometheusExporterPort }}
-                  name: metrics
-                  protocol: TCP
-              resources:
-                limits:
-                  memory: 128Mi
-                requests:
-                  cpu: 100m
-                  memory: 128Mi
-              securityContext:
-                runAsNonRoot: true
-                runAsUser: 1001
-              terminationMessagePath: /dev/termination-log
-              terminationMessagePolicy: File
-              volumeMounts:
-                - mountPath: /etc/jmx
-                  name: jmx-config
-            {{- end }}
           volumes:
             - name: home-burpsuite
               emptyDir:
@@ -170,12 +127,6 @@ scanner:
             - name: tmp
               emptyDir:
                 sizeLimit: 1Gi
-            {{- if .Values.scanner.jmxMetrics.enabled }}
-            - configMap:
-                defaultMode: 420
-                name: burpscanner-jmx-conf
-              name: jmx-config
-            {{- end }}
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
           {{- with .Values.scanner.dnsPolicy }}

@@ -21,3 +21,27 @@ spec:
     matchLabels:
       {{- include "scan-controller.selectorLabels" . | nindent 6 }}
 {{- end }}
+{{- if .Values.scanner.podMonitor }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "scan-controller.fullname" . }}-scanner
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "scan-controller.labels" . | nindent 4 }}
+spec:
+  jobLabel: {{ include "scan-controller.fullname" . }}-scanner
+  namespaceSelector:
+    matchNames:
+    -  {{ .Release.Namespace }}
+  podMetricsEndpoints:
+  - interval: 15s
+    path: /metrics
+    port: management
+  podTargetLabels:
+  - app.kubernetes.io/version
+  selector:
+    matchLabels:
+      {{- include "scan-controller.scanner.selectorLabels" . | nindent 6 }}
+{{- end }}
