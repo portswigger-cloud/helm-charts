@@ -39,6 +39,7 @@ pod:
 
 globalEnv:
   scanningMachineApiKey: ""
+  idleTimeBeforePause: 3600
 
 ## @section Enterprise Server settings
 ##
