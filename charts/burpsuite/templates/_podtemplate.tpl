@@ -31,8 +31,8 @@ spec:
     {{- include "burpsuite.enterprise.initContainerTemplates" . | nindent 4 }}
     {{- include "burpsuite.web.initContainerTemplates" . | nindent 4 }}
   containers:
-    {{- if .Values.database.h2.enabled -}}
-    {{- include "burpsuite.h2db.containerTemplate" . | nindent 4 }}
+    {{- if .Values.database.useEmbedded -}}
+    {{- include "burpsuite.database.containerTemplate" . | nindent 4 }}
     {{- end -}}
     {{- include "burpsuite.enterprise.containerTemplate" . | nindent 4 }}
     {{- include "burpsuite.web.containerTemplate" . | nindent 4 }}
@@ -59,4 +59,9 @@ spec:
   - name: tmp
     emptyDir:
       sizeLimit: 1Gi
+  {{- if .Values.database.useEmbedded }}
+  - name: database-vol
+    secret:
+      secretName: database-vol
+  {{- end }}
 {{- end }}

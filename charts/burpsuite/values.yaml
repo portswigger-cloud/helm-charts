@@ -133,8 +133,13 @@ email:
 ## @section Database settings
 ##
 database:
-  h2:
-    enabled: false
+  useEmbedded: false
+
+  image:
+    registry: ""
+    repository: "docker/internal/postgres"
+    tag: "16"
+    sha256: ""
 
   externalUrl: "jdbc:postgresql://postgres-rw:5432/burp_enterprise"
   externalCredentials: false
