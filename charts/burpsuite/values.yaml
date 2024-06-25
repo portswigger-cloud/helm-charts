@@ -137,7 +137,7 @@ database:
 
   image:
     registry: ""
-    repository: "docker/internal/postgres"
+    repository: "docker/library/postgres"
     tag: "16"
     sha256: ""
 
