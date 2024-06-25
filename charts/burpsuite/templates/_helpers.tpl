@@ -164,11 +164,58 @@ Fetch given field from existing web secret or generate a new random value
 {{- end -}}
 {{- end -}}
 
+{{/*
+Fetch given field from existing enterprise secret or generate a new random value
+*/}}
+{{- define "burpsuite.database.fetchOrCreateSecretField" -}}
+{{- $context := index . 0 -}}
+{{- $secretFieldName := index . 1 -}}
 
+{{- $secretObj := (lookup "v1" "Secret" $context.Release.Namespace  "database-env") | default dict }}
+{{- $secretData := (get $secretObj "data") | default dict }}
+{{- $secretFieldValue := (get $secretData $secretFieldName) | default (randAlphaNum 30 | b64enc) }}
+{{- $secretFieldValue -}}
+{{- end -}}
+
+{{- define "burpsuite.database.secretValue" -}}
+{{- $context := index . 0 -}}
+{{- $suppliedValue := index . 1 -}}
+{{- $secretFieldName := index . 2 -}}
+{{- if $suppliedValue -}}
+{{ $suppliedValue | b64enc }}
+{{- else -}}
+{{ include "burpsuite.database.fetchOrCreateSecretField"  (list $context $secretFieldName) }}
+{{- end -}}
+{{- end -}}
+
+{{- define "burpsuite.database.image" -}}
+{{- if .Values.database.image.sha256 -}}
+{{- printf "%s/%s:%s@sha256:%s" (.Values.database.image.registry | default .Values.global.image.registry) .Values.database.image.repository .Values.database.image.tag (trimPrefix "sha256:" .Values.database.image.sha256) }}
+{{- else -}}
+{{- printf "%s/%s:%s" (.Values.database.image.registry | default .Values.global.image.registry) .Values.database.image.repository .Values.database.image.tag }}
+{{- end -}}
+{{- end -}}
+
+{{- define "burpsuite.database.init" -}}
+{{- $enterpriseUserPassword := include "burpsuite.enterprise.secretValue" (list . .Values.database.users.enterprise.password "BSEE_ADMIN_REPOSITORY_PASSWORD") -}}
+{{- $scannerUserPassword := include "burpsuite.enterprise.secretValue" (list . .Values.database.users.scanner.password "BSEE_AGENT_REPOSITORY_PASSWORD") }}
+CREATE USER {{ .Values.database.users.enterprise.username }} PASSWORD '{{ $enterpriseUserPassword }}';
+CREATE USER {{ .Values.database.users.scanner.username }} PASSWORD '{{ $scannerUserPassword }}';
+
+CREATE DATABASE burp_enterprise;
+ALTER DATABASE burp_enterprise OWNER TO {{ .Values.database.users.enterprise.username }};
+GRANT ALL ON DATABASE burp_enterprise TO {{ .Values.database.users.enterprise.username }};
+
+\c burp_enterprise
+
+CREATE SCHEMA burp_enterprise AUTHORIZATION {{ .Values.database.users.enterprise.username }};
+GRANT USAGE ON SCHEMA burp_enterprise TO {{ .Values.database.users.scanner.username }};
+ALTER USER {{ .Values.database.users.scanner.username }} SET search_path = "burp_enterprise";
+{{- end -}}
 
 {{- define "burpsuite.database.url" -}}
-{{- if .Values.database.h2.enabled -}}
-jdbc:h2:tcp://localhost:9092/mem:bsee;DB_CLOSE_DELAY=-1
+{{- if .Values.database.useEmbedded -}}
+jdbc:postgresql://localhost:5432/burp_enterprise
 {{- else -}}
 {{ .Values.database.externalUrl }}
 {{- end -}}
