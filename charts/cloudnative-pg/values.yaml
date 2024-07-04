@@ -40,6 +40,7 @@ scheduledBackup:
   schedule: "0 0 0 * * *"
   backupOwnerReference: self
   target: prefer-standby
+  suspend: false
 stegostore:
   enabled: true
   schedule: "0 * * * *"
