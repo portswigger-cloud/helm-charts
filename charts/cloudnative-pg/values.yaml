@@ -32,9 +32,7 @@ cluster:
     storageClass: gp3
     size: 1Gi
   affinity: {} # https://cloudnative-pg.io/documentation/current/api_reference/#AffinityConfiguration
-  nodeMaintenanceWindow:
-    inProgress: true
-    reusePVC: true
+  enablePDB: true
 scheduledBackup:
   immediate: True
   schedule: "0 0 0 * * *"

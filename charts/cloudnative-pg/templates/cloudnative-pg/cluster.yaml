@@ -47,9 +47,7 @@ spec:
   affinity:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  nodeMaintenanceWindow:
-    inProgress: {{ .Values.cluster.nodeMaintenanceWindow.inProgress}}
-    reusePVC: {{ .Values.cluster.nodeMaintenanceWindow.reusePVC}}
+  enablePDB: {{ .Values.cluster.enablePDB }}
   backup:
     barmanObjectStore:
       destinationPath: s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
