@@ -34,7 +34,7 @@ spec:
             command: ["bash", "/stegosweep.sh"]
             env:
             - name: S3_BUCKET_NAME
-              value: {{ .Values.aws.s3.backupBucketName }}
+              value: {{ .Values.aws.s3Backups.bucketName }}
             - name: S3_PREFIX
               value: "{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore"
             - name: DAYS_RETENTION_DAILY
