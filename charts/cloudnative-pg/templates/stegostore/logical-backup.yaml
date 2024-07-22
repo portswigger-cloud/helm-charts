@@ -53,7 +53,9 @@ spec:
                   name: postgres-app
                   key: port
             - name: S3PATH
-              value: "s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore/"
+              value: "s3://{{.Values.aws.s3Backups.bucketName}}/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/stegostore/"
+            - name: KMS_KEY_ID
+              value: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
             - name: PGHOST
               value: "postgres-rw"
           restartPolicy: Never
