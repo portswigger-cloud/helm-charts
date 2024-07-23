@@ -22,8 +22,10 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
-              "arn:aws:s3:::{{ .Values.aws.s3Backups.bucketName }}",
-              "arn:aws:s3:::{{ .Values.aws.s3Backups.bucketName }}/{{.Values.aws.resourcePrefix}}{{.Values.stackId}}"
+              "arn:aws:s3:::{{.Values.aws.resourcePrefix}}{{.Values.stackId}}"
+              "arn:aws:s3:::{{.Values.aws.resourcePrefix}}{{.Values.stackId}}/*"
+              "arn:aws:s3:::{{.Values.aws.s3Backups.bucketName}}",
+              "arn:aws:s3:::{{.Values.aws.s3Backups.bucketName}}/{{.Values.aws.resourcePrefix}}{{.Values.stackId}}/*"
             ]
           },
           {
@@ -39,7 +41,6 @@ spec:
               "ForAnyValue:StringLike": {
                 "kms:ResourceAliases": [
                   "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
-                  "alias/{{ .Values.aws.s3Backups.bucketKmsKeyAlias }}"
                 ]
               }
             }
