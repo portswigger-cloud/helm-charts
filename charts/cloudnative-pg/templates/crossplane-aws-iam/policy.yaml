@@ -22,8 +22,8 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
-              "arn:aws:s3:::{{.Values.aws.resourcePrefix}}{{.Values.stackId}}"
-              "arn:aws:s3:::{{.Values.aws.resourcePrefix}}{{.Values.stackId}}/*"
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
               "arn:aws:s3:::{{.Values.aws.s3Backups.bucketName}}",
               "arn:aws:s3:::{{.Values.aws.s3Backups.bucketName}}/{{.Values.aws.resourcePrefix}}{{.Values.stackId}}/*"
             ]
@@ -39,9 +39,7 @@ spec:
             ],
             "Condition": {
               "ForAnyValue:StringLike": {
-                "kms:ResourceAliases": [
-                  "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
-                ]
+                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
               }
             }
           }
