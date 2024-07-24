@@ -8,6 +8,9 @@ aws:
     rolePath: /my-role-path/
     policyPath: /my-policy-path/
     permissionsBoundary: arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name
+  s3Backups:
+    bucketName: backup-bucket-name
+    bucketKmsKeyAlias: database-backup-bucket-key
 cluster:
   imageName: ghcr.io/cloudnative-pg/postgresql:15.3@sha256:10fa87e8fbf7f1d7d6be3124ef364068e5844e825b17649bc0b2efbab4b54f69
   instances: 2
@@ -44,7 +47,7 @@ stegostore:
   schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   imageName: portswigger-cloud/stegostore
-  imageDigest: sha256:c3ee6874873ad41081e95eae17322c6b9424503098262ca0641cf1aa21bf7c08
+  imageDigest: sha256:ab831be05edb2753e6106735ea23afa717ecb1f9c1e61ac847e1c95933309de2
 stegosweep:
   enabled: true
   schedule: "30 1 * * *"
