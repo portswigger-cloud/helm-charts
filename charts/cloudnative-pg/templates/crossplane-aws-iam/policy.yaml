@@ -39,7 +39,7 @@ spec:
             ],
             "Condition": {
               "ForAnyValue:StringLike": {
-                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+                "kms:ResourceAliases": ["alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}", "alias/{{ .Values.aws.s3Backups.bucketKmsKeyAlias }}"
               }
             }
           }
