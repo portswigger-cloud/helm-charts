@@ -50,24 +50,17 @@ spec:
   enablePDB: {{ .Values.cluster.enablePDB }}
   backup:
     barmanObjectStore:
-      destinationPath: s3://{{ .Values.aws.s3Backups.bucketName }}/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+      destinationPath: s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
       s3Credentials:
         inheritFromIAMRole: True
       wal:
         compression: gzip
+        encryption: "aws:kms"
         maxParallel: 8
-{{/*    Once CNPG upgraded to 1.23.3 or 1.24, uncomment: */}}
-{{/*        encryption: "aws:kms"*/}}
-{{/*    additionalArchiveCommandArgs:*/}}
-{{/*    - "--sse-kms-key-id"*/}}
-{{/*    - "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"*/}}
       data:
         compression: gzip
         encryption: "aws:kms"
         immediateCheckpoint: false
-        additionalCommandArgs:
-          - "--sse-kms-key-id"
-          - "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
         jobs: 2
     retentionPolicy: "90d"
   monitoring:
