@@ -33,6 +33,7 @@ cluster:
     size: 1Gi
   affinity: {} # https://cloudnative-pg.io/documentation/current/api_reference/#AffinityConfiguration
   enablePDB: true
+  postgresql: {} # https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-PostgresConfiguration
 scheduledBackup:
   immediate: True
   schedule: "0 0 0 * * *"

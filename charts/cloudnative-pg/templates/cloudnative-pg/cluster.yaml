@@ -47,6 +47,10 @@ spec:
   affinity:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.cluster.postgresql }}
+  postgresql:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   enablePDB: {{ .Values.cluster.enablePDB }}
   backup:
     barmanObjectStore:
