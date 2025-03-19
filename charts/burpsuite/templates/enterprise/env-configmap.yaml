@@ -29,7 +29,7 @@ data:
   BSEE_DATA_PATH: /home/burpsuite/data
   BSEE_BURP_DOWNLOAD_PATH: /home/burpsuite/burp
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
-  BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote}}
+  BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote }}
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
 {{- end -}}
