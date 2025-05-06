@@ -1,5 +1,5 @@
 {{- if .Values.controller.podLogs }}
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: {{ include "scan-controller.fullname" . }}
@@ -7,38 +7,71 @@ metadata:
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
-  pipelineStages:
-  - docker: {}
   namespaceSelector:
-    matchNames:
-    - {{ .Release.Namespace }}
+    matchLabels:
+      kubernetes.io/metadata.name: {{ .Release.Namespace }}
   selector:
     matchLabels:
       {{- include "scan-controller.selectorLabels" . | nindent 6 }}
+  relabelings:
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_container_name
+      targetLabel: container
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_name
+      targetLabel: pod
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_namespace
+      targetLabel: namespace
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_container_id
+      targetLabel: tmp_container_id
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_uid
+      targetLabel: pod_uid
 {{- end }}
 {{- if .Values.scanner.podLogs }}
 ---
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: {{ include "scan-controller.fullname" . }}-scanner
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
-  pipelineStages:
-  - cri: {}
   namespaceSelector:
-    matchNames:
-    - {{ .Release.Namespace }}
+    matchLabels:
+      kubernetes.io/metadata.name: {{ .Release.Namespace }}
   selector:
     matchLabels:
-      {{- include "scan-controller.scanner.selectorLabels" . | nindent 8 }}
+      {{- include "scan-controller.scanner.selectorLabels" . | nindent 6 }}
   relabelings:
-  - sourceLabels:
-    - container
-    regex: ^([a-z\-]+)-[0-9]+$
-    targetLabel: task
-  - action: replace
-    replacement: scanner
-    targetLabel: container
+    - sourceLabels:
+      - container
+      regex: ^([a-z\-]+)-[0-9]+$
+      targetLabel: task
+    - action: replace
+      replacement: scanner
+      targetLabel: container
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_name
+      targetLabel: pod
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_namespace
+      targetLabel: namespace
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_container_id
+      targetLabel: tmp_container_id
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_uid
+      targetLabel: pod_uid
 {{- end }}
