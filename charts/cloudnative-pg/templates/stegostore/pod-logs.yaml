@@ -10,7 +10,8 @@ spec:
     matchLabels:
       kubernetes.io/metadata.name: {{ .Release.Namespace }}
   selector:
-    matchLabels: stegostore
+    matchLabels:
+      app.kubernetes.io/name: stegostore
   relabelings:
     - action: replace
       sourceLabels:
