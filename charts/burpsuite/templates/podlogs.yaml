@@ -1,5 +1,5 @@
 {{- if .Values.podLogs.enabled }}
-apiVersion: monitoring.grafana.com/v1alpha1
+apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
   name: {{ include "burpsuite.fullname" . }}
@@ -7,15 +7,38 @@ metadata:
   labels:
     {{- include "burpsuite.labels" . | nindent 4 }}
 spec:
-  pipelineStages:
-  - cri: {}
-  - multiline:
-      firstLine: '^\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2} '
-      maxWaitTime: 2s
   namespaceSelector:
-    matchNames:
-    - {{ .Release.Namespace }}
+    matchLabels:
+      kubernetes.io/metadata.name: {{ .Release.Namespace }}
   selector:
     matchLabels:
       {{- include "burpsuite.selectorLabels" . | nindent 6 }}
+  relabelings:
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_container_name
+      targetLabel: container
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_name
+      targetLabel: pod
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_namespace
+      targetLabel: namespace
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_container_id
+      targetLabel: tmp_container_id
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_uid
+      targetLabel: pod_uid
+    - action: replace
+      sourceLabels:
+        - __meta_kubernetes_pod_uid
+      targetLabel: pod_uid
+    - action: replace
+      replacement: "true"
+      targetLabel: multiline
 {{- end }}
