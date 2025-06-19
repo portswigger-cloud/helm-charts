@@ -1,59 +1,78 @@
 suite: Deployment configuration
+
 templates:
-    - deployment.yaml
-    # Load secret for checksum
-    - controller-env-secret.yaml
+  - deployment.yaml
+  # Load secret for checksum
+  - controller-env-secret.yaml
+
 tests:
-    - it: should create Deployment with default values
-      template: deployment.yaml
-      asserts:
-          # Deployment assertions
-          - isKind:
-                of: Deployment
-          - equal:
-                path: metadata.name
-                value: RELEASE-NAME-scan-controller
-          - equal:
-                path: metadata.namespace
-                value: NAMESPACE
-          - equal:
-                path: spec.replicas
-                value: 1
-          - equal:
-                path: spec.strategy
-                value:
-                    type: Recreate
-          # Pod value assertions
-          - exists:
-                path: spec.template.metadata.annotations.checksum/controller-env-secret
-          # Web container value assertions
-          - matchRegex:
-                path: spec.template.spec.containers[?(@.name == "scan-controller")].image
-                pattern: "^public\\.ecr\\.aws/portswigger/scan-controller"
-          - equal:
-                path: spec.template.spec.containers[?(@.name == "scan-controller")].securityContext
-                value:
-                    allowPrivilegeEscalation: false
-                    capabilities:
-                        drop:
-                            - ALL
-                    privileged: false
-                    readOnlyRootFilesystem: true
-                    runAsNonRoot: true
-                    runAsUser: 100000
-    - it: should have a max of one replicas
-      template: deployment.yaml
-      set:
-          replicaCount: 5
-      asserts:
-          - equal:
-                path: spec.replicas
-                value: 1
-    - it: should have a zero replicas when configured
-      template: deployment.yaml
-      set:
-          replicaCount: 0
-      asserts:
-          - equal:
-                path: spec.replicas
-                value: 0
+- it: should create Deployment with default values
+
+  template: deployment.yaml
+
+  asserts:
+    # Deployment assertions
+    - isKind:
+        of: Deployment
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-scan-controller
+    - equal:
+        path: metadata.namespace
+        value: NAMESPACE
+    - equal:
+        path: spec.replicas
+        value: 1
+    - equal:
+        path: spec.strategy
+        value:
+          type: Recreate
+    # Pod value assertions
+    - exists:
+        path: spec.template.metadata.annotations.checksum/controller-env-secret
+    # Web container value assertions
+    - matchRegex:
+        path: spec.template.spec.containers[?(@.name == "scan-controller")].image
+        pattern: "^public\\.ecr\\.aws/portswigger/scan-controller"
+    - equal:
+        path: spec.template.spec.containers[?(@.name == "scan-controller")].securityContext
+        value:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 100000
+- it: should have a max of one replicas
+  template: deployment.yaml
+  set:
+    replicaCount: 5
+  asserts:
+    - equal:
+        path: spec.replicas
+        value: 1
+- it: should have a zero replicas when configured
+  template: deployment.yaml
+  set:
+    replicaCount: 0
+  asserts:
+    - equal:
+        path: spec.replicas
+        value: 0
+- it: should have a envFrom set when configured
+  template: deployment.yaml
+  set:
+    controller:
+      envFrom:
+        - secretRef:
+            name: custom-env
+  asserts:
+    - equal:
+        path: spec.template.spec.containers[?(@.name == "scan-controller")].envFrom
+        value:
+          - secretRef:
+              name: RELEASE-NAME-scan-controller-env
+          - secretRef:
+              name: custom-env

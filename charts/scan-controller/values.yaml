@@ -29,6 +29,7 @@ controller:
     kubernetes.io/arch: amd64
   tolerations: []
   affinity: {}
+  envFrom: []
 
   podLogs: false
   podMonitor: false
