@@ -9,10 +9,9 @@ spec:
       name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
     region: {{ .Values.aws.region }}
     rule:
-      - id: keep-2-noncurrent-versions
+      - id: keep-2-days-of-noncurrent-versions
         status: Enabled
         noncurrentVersionExpiration:
-          newerNoncurrentVersions: "2"
-          noncurrentDays: 30
+          noncurrentDays: 2
   providerConfigRef:
     name: aws
