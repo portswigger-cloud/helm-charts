@@ -9,6 +9,6 @@ spec:
       name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
     region: {{ .Values.aws.region }}
     versioningConfiguration:
-      - status: Enabled
+      status: Enabled
   providerConfigRef:
     name: aws
