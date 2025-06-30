@@ -14,3 +14,5 @@ spec:
         noncurrentVersionExpiration:
           - newerNoncurrentVersions: "2"
           - noncurrentDays: 30
+  providerConfigRef:
+    name: aws

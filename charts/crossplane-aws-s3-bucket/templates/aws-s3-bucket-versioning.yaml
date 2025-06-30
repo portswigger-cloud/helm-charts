@@ -10,3 +10,5 @@ spec:
     region: {{ .Values.aws.region }}
     versioningConfiguration:
       - status: Enabled
+  providerConfigRef:
+    name: aws
