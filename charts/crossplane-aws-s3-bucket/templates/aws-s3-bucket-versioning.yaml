@@ -1,0 +1,12 @@
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: BucketVersioning
+metadata:
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  forProvider:
+    bucketRef:
+      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+    region: {{ .Values.aws.region }}
+    versioningConfiguration:
+      - status: Enabled

@@ -1,0 +1,16 @@
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: BucketLifecycleConfiguration
+metadata:
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  forProvider:
+    bucketRef:
+      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+    region: {{ .Values.aws.region }}
+    rule:
+      - id: keep-2-noncurrent-versions
+        status: Enabled
+        noncurrentVersionExpiration:
+          - newerNoncurrentVersions: "2"
+          - noncurrentDays: 30
