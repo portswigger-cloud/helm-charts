@@ -2,7 +2,7 @@ apiVersion: v2
 name: crossplane-aws-s3-bucket
 description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane AWS provider
 type: application
-version: "0.0.4"
+version: "0.0.5"
 kubeVersion: ">=1.24.0-0"
 keywords:
   - object storage

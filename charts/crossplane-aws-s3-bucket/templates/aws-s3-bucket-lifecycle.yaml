@@ -12,6 +12,7 @@ spec:
       - id: keep-2-days-of-noncurrent-versions
         status: Enabled
         noncurrentVersionExpiration:
-          noncurrentDays: 2
+          newerNoncurrentVersions: "2"
+          noncurrentDays: 35
   providerConfigRef:
     name: aws
