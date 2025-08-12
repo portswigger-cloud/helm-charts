@@ -22,3 +22,4 @@ data:
   BSEE_SAAS_IP_RANGES_URL: {{ .Values.web.ipRangesAppUrl }}
   BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote }}
   OTEL_ENVIRONMENT: {{ .Values.globalEnv.otelEnvironment | quote }}
+  AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
