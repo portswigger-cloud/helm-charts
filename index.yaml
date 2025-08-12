@@ -3,6 +3,29 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: "2024.1"
+    created: "2025-08-12T08:42:01.869243336Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: b6aeacb5b6a18e8694e0c45375af7efd82c6a603b87924bc6043710a1dba029c
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.2.1/burpsuite-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "2024.1"
     created: "2025-05-07T13:05:19.953469901Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
@@ -1794,6 +1817,28 @@ entries:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.0.0-alpha.1/burpsuite-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
   cloudnative-pg:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2025-08-12T08:42:02.003561388Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources via crossplane.io.
+    digest: efd73af4821025f46b6c4642b242f6efab0a1f97b1aecae17b478e1611a245c2
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.2.3/cloudnative-pg-0.2.3.tgz
+    version: 0.2.3
   - apiVersion: v2
     appVersion: 0.0.1
     created: "2025-06-16T13:28:21.046209911Z"
@@ -3943,4 +3988,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2025-06-30T14:00:02.644500617Z"
+generated: "2025-08-12T08:42:02.004235976Z"
