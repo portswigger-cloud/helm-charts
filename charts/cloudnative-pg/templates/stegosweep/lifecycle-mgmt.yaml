@@ -29,7 +29,7 @@ spec:
               operator: Exists
           containers:
           - name: stegostore
-            image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
+            image: {{ .Values.aws.account_id }}.dkr.ecr.{{ .Values.stegostore.imageRegion }}.amazonaws.com/{{ .Values.stegostore.imageName }}@{{ .Values.stegostore.imageDigest }}
             imagePullPolicy: IfNotPresent
             command: ["bash", "/stegosweep.sh"]
             env:

@@ -41,6 +41,7 @@ globalEnv:
   scanningMachineApiKey: ""
   idleTimeBeforePause: 3600
   otelEnvironment: "prod"
+  awsRegion: "eu-west-1"
 
 ## @section Enterprise Server settings
 ##

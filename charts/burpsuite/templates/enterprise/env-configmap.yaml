@@ -31,6 +31,7 @@ data:
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
   BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote }}
   OTEL_ENVIRONMENT: {{ .Values.globalEnv.otelEnvironment | quote }}
+  AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
 {{- end -}}
