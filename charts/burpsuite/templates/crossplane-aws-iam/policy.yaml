@@ -2,7 +2,7 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Policy
 metadata:
-  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
 spec:
   deletionPolicy: Delete
@@ -21,8 +21,8 @@ spec:
             ],
             "Effect": "Allow",
             "Resource": [
-              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
-              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}",
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}/*"
             ]
           },
           {
@@ -36,13 +36,13 @@ spec:
             ],
             "Condition": {
               "ForAnyValue:StringLike": {
-                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}"
               }
             }
           }
         ]
       }
-    description: {{ .Values.stackId }} burpsuite iam policy
+    description: {{ .Release.Namespace }} burpsuite iam policy
   providerConfigRef:
     name: aws
 {{- end }}

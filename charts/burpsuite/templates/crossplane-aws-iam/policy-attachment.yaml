@@ -2,15 +2,15 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: RolePolicyAttachment
 metadata:
-  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  name: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   namespace: {{ .Release.Namespace }}
 spec:
   deletionPolicy: Delete
   forProvider:
     policyArnRef:
-      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+      name: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
     roleRef:
-      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+      name: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   providerConfigRef:
     name: aws
 {{- end }}
