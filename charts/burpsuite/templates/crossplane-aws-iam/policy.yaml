@@ -1,0 +1,48 @@
+{{- if .Values.aws.s3.enabled }}
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Policy
+metadata:
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    path: {{ .Values.aws.iam.policyPath }}
+    policy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": [
+              "s3:GetObject",
+              "s3:PutObject",
+              "s3:ListBucket",
+              "s3:DeleteObject"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}",
+              "arn:aws:s3:::{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}/*"
+            ]
+          },
+          {
+            "Action": [
+              "kms:Decrypt",
+              "kms:GenerateDataKey"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+              "arn:aws:kms:{{ .Values.aws.region }}:{{ .Values.aws.account_id }}:key/*"
+            ],
+            "Condition": {
+              "ForAnyValue:StringLike": {
+                "kms:ResourceAliases": "alias/{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}"
+              }
+            }
+          }
+        ]
+      }
+    description: {{ .Values.stackId }} burpsuite iam policy
+  providerConfigRef:
+    name: aws
+{{- end }}

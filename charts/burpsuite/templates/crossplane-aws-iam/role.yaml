@@ -1,0 +1,36 @@
+{{- if .Values.aws.s3.enabled }}
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Role
+metadata:
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    path: {{ .Values.aws.iam.rolePath }}
+    permissionsBoundary: {{ .Values.aws.iam.permissionsBoundary }}
+    description: {{ .Values.stackId }} burpsuite iam role
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Federated": "arn:aws:iam::{{ .Values.aws.account_id }}:oidc-provider/oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+              "StringEquals": {
+                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:aud": "sts.amazonaws.com",
+                "oidc.eks.{{ .Values.aws.region }}.amazonaws.com/id/{{ .Values.aws.oidc_idp_id }}:sub": [
+                  "system:serviceaccount:{{ .Values.stackId }}:{{ include "burpsuite.serviceAccountName" . }}"
+                ]
+              }
+            }
+          }
+        ]
+      }
+  providerConfigRef:
+    name: aws
+{{- end }}

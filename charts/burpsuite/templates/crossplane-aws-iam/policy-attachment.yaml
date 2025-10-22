@@ -1,0 +1,16 @@
+{{- if .Values.aws.s3.enabled }}
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+  name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    policyArnRef:
+      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+    roleRef:
+      name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+  providerConfigRef:
+    name: aws
+{{- end }}

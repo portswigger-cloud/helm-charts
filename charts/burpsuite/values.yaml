@@ -193,4 +193,16 @@ networkPolicy:
 
   httpsEgress: true
 
+aws:
+  region: eu-west-1
+  account_id: "123456789012"
+  oidc_idp_id: "ABCDEF1234567890"
+  resourcePrefix: my-prefix-
+  iam:
+    rolePath: /my-role-path/
+    policyPath: /my-policy-path/
+    permissionsBoundary: arn:aws:iam::123456789012:policy/my-policy-path/my-policy-name
+  s3:
+    enabled: false
+
 extraDeploy: []
