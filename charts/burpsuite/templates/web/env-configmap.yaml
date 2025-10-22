@@ -23,3 +23,6 @@ data:
   BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote }}
   OTEL_ENVIRONMENT: {{ .Values.globalEnv.otelEnvironment | quote }}
   AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
+{{- if .Values.aws.s3.enabled }}
+  BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
+{{- end }}
