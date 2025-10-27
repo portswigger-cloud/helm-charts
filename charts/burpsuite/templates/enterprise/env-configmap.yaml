@@ -34,6 +34,7 @@ data:
   AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
 {{- if .Values.aws.s3.enabled }}
   BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
+  ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
 {{- end }}
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
