@@ -11,3 +11,6 @@ spec:
   cluster:
     name: postgres
   target: prefer-standby
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

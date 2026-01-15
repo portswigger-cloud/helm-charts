@@ -52,20 +52,10 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   enablePDB: {{ .Values.cluster.enablePDB }}
-  backup:
-    barmanObjectStore:
-      destinationPath: s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
-      s3Credentials:
-        inheritFromIAMRole: True
-      wal:
-        compression: gzip
-        encryption: "aws:kms"
-        maxParallel: 8
-      data:
-        compression: gzip
-        encryption: "aws:kms"
-        immediateCheckpoint: false
-        jobs: 2
-    retentionPolicy: "90d"
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: {{ .Values.stackId }}-backup
+        serverName: postgres
   monitoring:
     enablePodMonitor: True

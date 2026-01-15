@@ -1,0 +1,27 @@
+apiVersion: barman-cloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: {{ .Values.stackId }}-backup
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: postgres
+    data.portswigger.cloud/pii: "true"
+    data.portswigger.cloud/retention-period: subscription-lifetime
+    data.portswigger.cloud/data-type: customer
+    data.portswigger.cloud/data-classification: confidential
+spec:
+  configuration:
+    destinationPath: s3://{{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
+    s3Credentials:
+      inheritFromIAMRole: true
+    wal:
+      compression: gzip
+      encryption: "aws:kms"
+      maxParallel: 8
+    data:
+      compression: gzip
+      encryption: "aws:kms"
+      immediateCheckpoint: false
+      jobs: 2
+  retentionPolicy: "90d"
+
