@@ -56,6 +56,5 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: {{ .Values.stackId }}-backup
-        serverName: postgres
   monitoring:
     enablePodMonitor: True
