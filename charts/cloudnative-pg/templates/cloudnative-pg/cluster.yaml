@@ -54,6 +54,7 @@ spec:
   enablePDB: {{ .Values.cluster.enablePDB }}
   plugins:
     - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
       parameters:
         barmanObjectName: {{ .Values.stackId }}-backup
   monitoring:
