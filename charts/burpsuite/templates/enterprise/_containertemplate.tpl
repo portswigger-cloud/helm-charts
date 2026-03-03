@@ -29,7 +29,7 @@
       path: /health/liveness
     failureThreshold: 3
     periodSeconds: 10
-    timeoutSeconds: 2
+    timeoutSeconds: 5
     successThreshold: 1
   readinessProbe:
     httpGet:
