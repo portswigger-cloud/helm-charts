@@ -59,6 +59,8 @@ enterprise:
     memory: 1.8Gi
   phsmMaxConcurrentScan: 300
   phsmMaxConcurrentConnectionChecks: 50
+  phsmMaxConcurrentBurpAiJobs: 500
+  shsmMaxConcurrentBurpAiJobs: 1
   serverJavaOpts: -Xms1g -Xmx1g
   burpJavaOpts: -Xms256m -Xmx256m
 

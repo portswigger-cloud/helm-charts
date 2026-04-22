@@ -9,6 +9,8 @@ metadata:
 data:
   BSEE_SAAS_PHSM_MAX_CONCURRENT_SCANS: {{ .Values.enterprise.phsmMaxConcurrentScan | quote }}
   BSEE_SAAS_PHSM_MAX_CONCURRENT_CONNECTION_CHECKS: {{ .Values.enterprise.phsmMaxConcurrentConnectionChecks | quote }}
+  BSEE_SAAS_PHSM_MAX_CONCURRENT_BURP_AI_JOBS: {{ .Values.enterprise.phsmMaxConcurrentBurpAiJobs | quote }}
+  BSEE_SHSM_MAX_CONCURRENT_BURP_AI_JOBS: {{ .Values.enterprise.shsmMaxConcurrentBurpAiJobs | quote }}
 {{- with include "burpsuite.database.url" . }}
   BSEE_ADMIN_REPOSITORY_URL: {{ . }}
   BSEE_AGENT_REPOSITORY_URL: {{ . }}
