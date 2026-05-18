@@ -20,6 +20,7 @@ data:
   BSEE_HTTPS_REDIRECT_PORT: "443"
   BSEE_LOGS_DIRECTORY: /home/burpsuite/logs
   BSEE_SAAS_IP_RANGES_URL: {{ .Values.web.ipRangesAppUrl }}
+  BSEE_MCP_ENABLED: {{ .Values.web.mcpEnabled | quote }}
   BSEE_SAAS_IDLE_TIME_BEFORE_PAUSE: {{ .Values.globalEnv.idleTimeBeforePause | quote }}
   OTEL_ENVIRONMENT: {{ .Values.globalEnv.otelEnvironment | quote }}
   AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
