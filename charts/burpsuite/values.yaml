@@ -108,7 +108,6 @@ web:
     cpu: 200m
     memory: 1Gi
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
-  mcpEnabled: true
   serverJavaOpts: -Xms512m -Xmx512m
   mcpEnabled: false
 
