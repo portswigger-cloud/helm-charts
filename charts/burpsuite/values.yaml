@@ -111,6 +111,7 @@ web:
     memory: 1Gi
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
   serverJavaOpts: -Xms512m -Xmx512m
+  mcpEnabled: false
 
 ## @section Ephemeral Agent settings
 ##
