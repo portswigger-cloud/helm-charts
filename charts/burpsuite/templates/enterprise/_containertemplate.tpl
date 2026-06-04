@@ -21,7 +21,7 @@
       port: ent-health
       path: /health/readiness
     failureThreshold: 60
-    periodSeconds: 5
+    periodSeconds: 10
     timeoutSeconds: 2
   livenessProbe:
     httpGet:
