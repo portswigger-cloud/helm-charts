@@ -1,5 +1,6 @@
 name: helm-charts
 slug: portswigger-cloud-helm-charts
+description: 'Helm charts for Burp Enterprise used on-prem and in the cloud'
 configVersion: 1
 typeId: CLOUD_RESOURCE
 ownerId: 'ari:cloud:identity::team/793aa195-1b2d-44e4-8fd5-6aa1f3c273e9'
