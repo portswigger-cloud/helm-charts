@@ -3,6 +3,29 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: 2025.9.0.1
+    created: "2026-08-12T12:11:46.730767141Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: 1574ea7dbabdb0e523f6f2670fee8157d33ab66697f6477794bb8cb1c977a19d
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.3.4/burpsuite-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 2025.9.0.1
     created: "2026-06-04T12:21:57.558335981Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
@@ -4213,4 +4236,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2026-06-04T12:21:57.558873891Z"
+generated: "2026-08-12T12:11:46.731374026Z"
