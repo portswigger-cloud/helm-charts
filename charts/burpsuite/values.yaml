@@ -57,6 +57,12 @@ enterprise:
   resources:
     cpu: 200m
     memory: 1.8Gi
+
+  startupProbe:
+    failureThreshold: 60
+    periodSeconds: 10
+    timeoutSeconds: 2
+
   phsmMaxConcurrentScan: 300
   phsmMaxConcurrentConnectionChecks: 50
   phsmMaxConcurrentBurpAiJobs: 500
@@ -109,6 +115,12 @@ web:
   resources:
     cpu: 200m
     memory: 1Gi
+
+  startupProbe:
+    failureThreshold: 60
+    periodSeconds: 5
+    timeoutSeconds: 2
+
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
   serverJavaOpts: -Xms512m -Xmx512m
 

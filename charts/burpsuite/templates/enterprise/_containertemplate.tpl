@@ -20,9 +20,9 @@
     httpGet:
       port: ent-health
       path: /health/readiness
-    failureThreshold: 60
-    periodSeconds: 10
-    timeoutSeconds: 2
+    failureThreshold: {{ .Values.enterprise.startupProbe.failureThreshold }}
+    periodSeconds: {{ .Values.enterprise.startupProbe.periodSeconds }}
+    timeoutSeconds: {{ .Values.enterprise.startupProbe.timeoutSeconds }}
   livenessProbe:
     httpGet:
       port: ent-health
