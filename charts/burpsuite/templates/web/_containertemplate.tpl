@@ -20,9 +20,9 @@
     httpGet:
       port: web-health
       path: /health/readiness
-    failureThreshold: 60
-    periodSeconds: 5
-    timeoutSeconds: 2
+    failureThreshold: {{ .Values.web.startupProbe.failureThreshold }}
+    periodSeconds: {{ .Values.web.startupProbe.periodSeconds }}
+    timeoutSeconds: {{ .Values.web.startupProbe.timeoutSeconds }}
   livenessProbe:
     httpGet:
       port: web-health
