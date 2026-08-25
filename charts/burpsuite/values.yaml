@@ -118,7 +118,7 @@ web:
 
   startupProbe:
     failureThreshold: 60
-    periodSeconds: 5
+    periodSeconds: 10
     timeoutSeconds: 2
 
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
