@@ -150,4 +150,98 @@ scanner:
             {{- toYaml . | nindent 8 }}
           {{- end }}
 
+burpAtToolbox:
+  # Provisions the toolbox job template for the scan controller. Off by default: with it unset the
+  # controller starts normally and refuses toolbox launches, so a chart upgrade cannot enable the
+  # feature in an environment that has not asked for it.
+  enabled: false
+
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  tolerations: []
+  affinity: {}
+  dnsPolicy: ""
+  dnsConfig: {}
+
+  podLogs: false
+
+  resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+
+  jobTemplate: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: burp-at-toolbox
+      labels:
+        {{- include "scan-controller.labels" . | nindent 8 }}
+    spec:
+      backoffLimit: 0
+      # A toolbox never completes on its own, so without a deadline an abandoned one runs
+      # forever and ttlSecondsAfterFinished — which only starts once a job finishes — never applies.
+      activeDeadlineSeconds: 86400
+      ttlSecondsAfterFinished: 3600
+      template:
+        metadata:
+          labels:
+            {{- include "scan-controller.burpAtToolbox.selectorLabels" . | nindent 8 }}
+          annotations:
+            cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+            karpenter.sh/do-not-evict: "true"
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          serviceAccount: scanner
+          serviceAccountName: scanner
+          automountServiceAccountToken: false
+          containers:
+            - name: burp-at-toolbox-container
+              command: ["sleep", "infinity"]
+              image: {{ include "scan-controller.scanner.image" . }}
+              imagePullPolicy: Always
+              resources:
+                {{- toYaml (.Values.burpAtToolbox.resources | default dict) | nindent 12 }}
+              securityContext:
+                runAsUser: 100000
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                privileged: false
+                capabilities:
+                  drop:
+                    - ALL
+              volumeMounts:
+                - mountPath: /home/burpsuite/
+                  name: home-burpsuite
+                - mountPath: /tmp
+                  name: tmp
+          volumes:
+            - name: home-burpsuite
+              emptyDir:
+                sizeLimit: 20Gi
+            - name: tmp
+              emptyDir:
+                sizeLimit: 1Gi
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          {{- with .Values.burpAtToolbox.dnsPolicy }}
+          dnsPolicy: {{ . }}
+          {{- end }}
+          {{- with .Values.burpAtToolbox.dnsConfig }}
+          dnsConfig:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.burpAtToolbox.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.burpAtToolbox.affinity }}
+          affinity:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.burpAtToolbox.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+
 extraDeploy: []
