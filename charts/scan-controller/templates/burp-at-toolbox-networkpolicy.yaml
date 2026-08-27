@@ -1,0 +1,49 @@
+{{- if (.Values.burpAtToolbox | default dict).networkPolicy }}
+{{- if .Values.burpAtToolbox.networkPolicy.enabled }}
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "scan-controller.fullname" . }}-burp-at-toolbox
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "scan-controller.labels" . | nindent 4 }}
+spec:
+  # Toolbox pods carry their own labels, so neither the controller nor the scanner policy
+  # selects them. Without this they would match no policy at all and default to unrestricted
+  # egress — broader than the scanners they sit beside, while running Burp against customer
+  # targets.
+  endpointSelector:
+    matchLabels:
+      {{- include "scan-controller.burpAtToolbox.selectorLabels" . | nindent 6 }}
+  ingress:
+  # Metrics endpoints
+  - fromEndpoints:
+    - matchLabels:
+        app.kubernetes.io/name: alloy
+        k8s:io.kubernetes.pod.namespace: observability
+    toPorts:
+    - ports:
+      - port: "8098"
+        protocol: TCP
+  egress:
+  # SCANNER-DNS
+  - toEndpoints:
+    - matchLabels:
+        app.kubernetes.io/instance: scanner-dns
+        k8s:io.kubernetes.pod.namespace: scanner-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: ANY
+  # WWW - Non-RFC1918 / link-local address ranges. Covers the MCP bridge, which the toolbox
+  # dials on a public address, and the web server it reports readiness to.
+  - toCIDRSet:
+    - cidr: 0.0.0.0/0
+      except:
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 100.64.0.0/10
+      - 169.254.0.0/16
+{{- end }}
+{{- end }}

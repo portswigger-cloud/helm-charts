@@ -165,9 +165,17 @@ burpAtToolbox:
 
   podLogs: false
 
+  # Requires Cilium, so off by default for installations that do not run it.
+  networkPolicy:
+    enabled: false
+
+  activeDeadlineSeconds: 86400
+
   resources:
     requests:
       cpu: 1
+      memory: 4Gi
+    limits:
       memory: 4Gi
 
   jobTemplate: |
@@ -181,7 +189,7 @@ burpAtToolbox:
       backoffLimit: 0
       # A toolbox never completes on its own, so without a deadline an abandoned one runs
       # forever and ttlSecondsAfterFinished — which only starts once a job finishes — never applies.
-      activeDeadlineSeconds: 86400
+      activeDeadlineSeconds: {{ .Values.burpAtToolbox.activeDeadlineSeconds }}
       ttlSecondsAfterFinished: 3600
       template:
         metadata:
@@ -197,7 +205,14 @@ burpAtToolbox:
           automountServiceAccountToken: false
           containers:
             - name: burp-at-toolbox-container
-              command: ["sleep", "infinity"]
+              env:
+                - name: JAVA_OPTS
+                  value: -Xms128m -Xmx512m
+                - name: BSEE_BURP_JAVA_OPTS
+                  value: -XX:MaxRAMPercentage=50
+              envFrom:
+                - secretRef:
+                    name: {{ include "scan-controller.fullname" . }}-scanner-env
               image: {{ include "scan-controller.scanner.image" . }}
               imagePullPolicy: Always
               resources:

@@ -75,7 +75,7 @@ spec:
         - __meta_kubernetes_pod_uid
       targetLabel: pod_uid
 {{- end }}
-{{- if .Values.burpAtToolbox.podLogs }}
+{{- if (.Values.burpAtToolbox | default dict).podLogs }}
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
