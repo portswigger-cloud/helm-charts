@@ -169,6 +169,18 @@ burpAtToolbox:
   networkPolicy:
     enabled: false
 
+  # Which Burp AT estate the toolbox trusts. Must name the same estate the bridge URL points at: it
+  # selects the gateway signing keys, and a mismatch is not an error — the toolbox reconnects
+  # endlessly with nothing logged. Empty leaves the build's own default in place.
+  burpAiEnvironment: ""
+
+  # Secret holding the bearer the bridge's public edge requires, under the key "credential". Taken
+  # from a Secret rather than a Java option because the scan controller logs the Burp options string
+  # in full, so a credential passed that way would reach the logs. Marked optional on the pod, so a
+  # cluster without the Secret still launches and connects unauthenticated — which the bridge's
+  # internal surface accepts and its public surface rejects.
+  mcpCredentialSecret: ""
+
   activeDeadlineSeconds: 86400
 
   resources:
@@ -208,8 +220,22 @@ burpAtToolbox:
               env:
                 - name: JAVA_OPTS
                   value: -Xms128m -Xmx512m
+                # Read back by the controller and prefixed to the bridge options it adds, so this is
+                # merged rather than replaced.
                 - name: BSEE_BURP_JAVA_OPTS
                   value: -XX:MaxRAMPercentage=50
+                {{- with .Values.burpAtToolbox.burpAiEnvironment }}
+                - name: BURPAI_ENVIRONMENT
+                  value: {{ . | quote }}
+                {{- end }}
+                {{- with .Values.burpAtToolbox.mcpCredentialSecret }}
+                - name: BURPAI_ENTERPRISE_MCP_CREDENTIAL
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ . | quote }}
+                      key: credential
+                      optional: true
+                {{- end }}
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
