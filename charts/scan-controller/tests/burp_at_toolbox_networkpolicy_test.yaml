@@ -1,0 +1,56 @@
+suite: Burp AT toolbox network policy
+templates:
+  - burp-at-toolbox-networkpolicy.yaml
+tests:
+  - it: should not create a policy with default values
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not create a policy when the toolbox is off but the policy is on
+    set:
+      burpAtToolbox:
+        enabled: false
+        networkPolicy:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not create a policy when the toolbox is on but the policy is off
+    set:
+      burpAtToolbox:
+        enabled: true
+        networkPolicy:
+          enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not create a policy when the toolbox is on and the policy is unset
+    set:
+      burpAtToolbox:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should create a policy selecting toolbox pods when both are on
+    set:
+      burpAtToolbox:
+        enabled: true
+        networkPolicy:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: CiliumNetworkPolicy
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-scan-controller-burp-at-toolbox
+      - equal:
+          path: spec.endpointSelector.matchLabels["app.kubernetes.io/component"]
+          value: scan-controller-burp-at-toolbox
+  - it: should tolerate a null toolbox key
+    set:
+      burpAtToolbox: null
+    asserts:
+      - hasDocuments:
+          count: 0
