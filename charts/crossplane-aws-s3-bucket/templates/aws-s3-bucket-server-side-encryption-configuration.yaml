@@ -14,5 +14,14 @@ spec:
             name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
           sseAlgorithm: aws:kms
         bucketKeyEnabled: True
+  # Pre-populate the AWS-defaulted leaf that late-init can't merge into the
+  # atomic `rule` list (no x-kubernetes-list-type on the CRD), so there's no
+  # perpetual diff for it to loop on, flooding AWS with PutBucketEncryption
+  # calls. See https://github.com/crossplane-contrib/provider-upjet-aws/issues/2074
+  # and https://portswigger.atlassian.net/browse/PLAT-813
+  initProvider:
+    rule:
+      - blockedEncryptionTypes:
+          - SSE-C
   providerConfigRef:
     name: aws
