@@ -3641,6 +3641,29 @@ entries:
   crossplane-aws-s3-bucket:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2026-09-07T14:34:09.806414279Z"
+    description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
+      AWS provider
+    digest: fe718d30b2fb616dbae8995dd0972d4c525d3ac45aad0b5f7896e716d6b21636
+    home: https://portswigger.net/
+    keywords:
+    - object storage
+    - s3
+    - aws
+    - crossplane
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: crossplane-aws-s3-bucket
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/crossplane-aws-s3-bucket-0.0.8/crossplane-aws-s3-bucket-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2026-09-07T13:51:09.885172821Z"
     description: Create an AWS S3 bucket encrypted with an AWS KMS CMK using the crossplane
       AWS provider
@@ -4311,4 +4334,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2026-09-07T13:51:09.885539231Z"
+generated: "2026-09-07T14:34:09.806827993Z"
