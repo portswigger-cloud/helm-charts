@@ -2010,6 +2010,35 @@ entries:
         - Updated Cluster and ScheduledBackup templates for plugin support
     apiVersion: v2
     appVersion: 0.0.1
+    created: "2026-09-07T13:20:57.875415481Z"
+    description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
+      and any required AWS resources via crossplane.io.
+    digest: 00b8edea7fe8efeb687a0a7b606470f4faef8c6f338ecc193ca6f17fd41216fa
+    home: https://portswigger.net/
+    keywords:
+    - postgresql
+    - database
+    - cloudnative-pg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: cloudnative-pg
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/cloudnative-pg-0.3.3/cloudnative-pg-0.3.3.tgz
+    version: 0.3.3
+  - annotations:
+      changelog: |
+        v0.3.0:
+        - Added support for Barman Cloud Plugin (CloudNativePG 1.26+ migration)
+        - Backward compatible via backup.usePlugin flag (default: false)
+        - New ObjectStore resource template
+        - Updated Cluster and ScheduledBackup templates for plugin support
+    apiVersion: v2
+    appVersion: 0.0.1
     created: "2026-01-21T11:07:35.790383843Z"
     description: Create a Postgresql database cluster on AWS EKS using cloudnative-pg.io
       and any required AWS resources via crossplane.io.
@@ -4259,4 +4288,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2026-08-25T12:51:44.629609767Z"
+generated: "2026-09-07T13:20:57.875986537Z"
