@@ -55,6 +55,11 @@ app.kubernetes.io/component: {{ include "scan-controller.name" . }}-scanner
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "scan-controller.burpAtToolbox.selectorLabels" -}}
+app.kubernetes.io/component: {{ include "scan-controller.name" . }}-burp-at-toolbox
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{/*
 Renders a value that contains template.
 Usage:
