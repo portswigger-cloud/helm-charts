@@ -1,5 +1,5 @@
 {{- $toolbox := .Values.burpAtToolbox | default dict }}
-{{- if and $toolbox.enabled ($toolbox.networkPolicy | default dict).enabled }}
+{{- if $toolbox.enabled }}
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:

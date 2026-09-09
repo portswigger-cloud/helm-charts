@@ -165,10 +165,6 @@ burpAtToolbox:
 
   podLogs: false
 
-  # Requires Cilium, so off by default for installations that do not run it.
-  networkPolicy:
-    enabled: false
-
   # Which Burp AT estate the toolbox trusts. Must name the same estate the bridge URL points at: it
   # selects the gateway signing keys, and a mismatch is not an error — the toolbox reconnects
   # endlessly with nothing logged. Empty leaves the build's own default in place.

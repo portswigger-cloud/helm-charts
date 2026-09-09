@@ -6,37 +6,17 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
-  - it: should not create a policy when the toolbox is off but the policy is on
+  - it: should not create a policy when the toolbox is off
     set:
       burpAtToolbox:
         enabled: false
-        networkPolicy:
-          enabled: true
     asserts:
       - hasDocuments:
           count: 0
-  - it: should not create a policy when the toolbox is on but the policy is off
+  - it: should create a policy selecting toolbox pods when the toolbox is on
     set:
       burpAtToolbox:
         enabled: true
-        networkPolicy:
-          enabled: false
-    asserts:
-      - hasDocuments:
-          count: 0
-  - it: should not create a policy when the toolbox is on and the policy is unset
-    set:
-      burpAtToolbox:
-        enabled: true
-    asserts:
-      - hasDocuments:
-          count: 0
-  - it: should create a policy selecting toolbox pods when both are on
-    set:
-      burpAtToolbox:
-        enabled: true
-        networkPolicy:
-          enabled: true
     asserts:
       - hasDocuments:
           count: 1
