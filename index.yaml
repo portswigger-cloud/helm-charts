@@ -4038,6 +4038,16 @@ entries:
   scan-controller:
   - apiVersion: v2
     appVersion: 2024.1-15620
+    created: "2026-09-11T09:44:05.192204733Z"
+    description: A Helm chart for Kubernetes
+    digest: 4dd39eaa9ada0bb440ef8cd7605b66871de2b647867f02bc5478d38de83b483f
+    name: scan-controller
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.4.1/scan-controller-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 2024.1-15620
     created: "2025-06-19T09:48:06.468097805Z"
     description: A Helm chart for Kubernetes
     digest: 210cd675c7490e83bf12c14457da27f76a997bc97fef4c374de78dc6d05f7c8e
@@ -4386,4 +4396,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2026-09-07T15:51:48.203379404Z"
+generated: "2026-09-11T09:44:05.192917738Z"
