@@ -106,6 +106,8 @@ web:
   adminEmail: ""
   adminName: ""
   adminToken: ""
+  auth0ClientId: ""
+  auth0ClientSecret: ""
   envFrom: []
   image:
     registry: ""
