@@ -170,13 +170,6 @@ burpAtToolbox:
   # endlessly with nothing logged. Empty leaves the build's own default in place.
   burpAiEnvironment: ""
 
-  # Secret holding the bearer the bridge's public edge requires, under the key "credential". Taken
-  # from a Secret rather than a Java option because the scan controller logs the Burp options string
-  # in full, so a credential passed that way would reach the logs. Marked optional on the pod, so a
-  # cluster without the Secret still launches and connects unauthenticated — which the bridge's
-  # internal surface accepts and its public surface rejects.
-  mcpCredentialSecret: ""
-
   # Auth0 client credentials for the toolbox. Rendered into the -burp-at-toolbox-env Secret, which
   # only toolbox pods mount, so ordinary scanner pods never see them. Unset keys are omitted.
   auth0ClientId: ""
@@ -228,14 +221,6 @@ burpAtToolbox:
                 {{- with .Values.burpAtToolbox.burpAiEnvironment }}
                 - name: BURPAI_ENVIRONMENT
                   value: {{ . | quote }}
-                {{- end }}
-                {{- with .Values.burpAtToolbox.mcpCredentialSecret }}
-                - name: BURPAI_ENTERPRISE_MCP_CREDENTIAL
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ . | quote }}
-                      key: credential
-                      optional: true
                 {{- end }}
               envFrom:
                 - secretRef:
