@@ -170,11 +170,6 @@ burpAtToolbox:
   # endlessly with nothing logged. Empty leaves the build's own default in place.
   burpAiEnvironment: ""
 
-  # Auth0 client credentials for the toolbox. Rendered into the -burp-at-toolbox-env Secret, which
-  # only toolbox pods mount, so ordinary scanner pods never see them. Unset keys are omitted.
-  auth0ClientId: ""
-  auth0ClientSecret: ""
-
   activeDeadlineSeconds: 86400
 
   resources:
@@ -225,8 +220,6 @@ burpAtToolbox:
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
-                - secretRef:
-                    name: {{ include "scan-controller.fullname" . }}-burp-at-toolbox-env
               image: {{ include "scan-controller.scanner.image" . }}
               imagePullPolicy: Always
               resources:

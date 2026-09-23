@@ -47,6 +47,8 @@ globalEnv:
 ##
 enterprise:
   licenseKey: ""
+  burpAtToolboxAuth0ClientId: ""
+  burpAtToolboxAuth0ClientSecret: ""
   envFrom: []
   image:
     registry: ""
