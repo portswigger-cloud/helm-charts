@@ -47,6 +47,12 @@ globalEnv:
 ##
 enterprise:
   licenseKey: ""
+  # Auth0 client credentials for the enterprise server itself.
+  auth0ClientId: ""
+  auth0ClientSecret: ""
+  # Auth0 client credentials the enterprise server hands to Burp AT toolboxes. Separate from its own.
+  burpAtToolboxAuth0ClientId: ""
+  burpAtToolboxAuth0ClientSecret: ""
   envFrom: []
   image:
     registry: ""
@@ -106,6 +112,8 @@ web:
   adminEmail: ""
   adminName: ""
   adminToken: ""
+  auth0ClientId: ""
+  auth0ClientSecret: ""
   envFrom: []
   image:
     registry: ""
