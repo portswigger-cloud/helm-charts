@@ -27,3 +27,15 @@ data:
   BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
 {{- end }}
+{{- if (.Values.agenticTesting | default dict).enabled }}
+{{- with include "burpsuite.burpAtSettings" . | fromYaml }}
+  BSEE_AT_INSTANCE_GATEWAY_URL: {{ .instance.gatewayUrl | quote }}
+  BSEE_AT_INSTANCE_M2M_AUDIENCE: {{ .instance.m2mAudience | quote }}
+{{- if .instance.m2mAuthTokenUrl }}
+  BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .instance.m2mAuthTokenUrl | quote }}
+{{- end }}
+{{- end }}
+{{- else }}
+  # The hosted dashboard profile turns agentic testing on; off here, it stays off.
+  DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
+{{- end }}

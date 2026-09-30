@@ -165,17 +165,10 @@ burpAtToolbox:
 
   podLogs: false
 
-  # Which Burp AT estate the toolbox trusts. Must name the same estate the bridge URL points at: it
-  # selects the gateway signing keys, and a mismatch is not an error — the toolbox reconnects
-  # endlessly with nothing logged. Empty leaves the build's own default in place.
-  burpAiEnvironment: ""
-
-  # Secret holding the bearer the bridge's public edge requires, under the key "credential". Taken
-  # from a Secret rather than a Java option because the scan controller logs the Burp options string
-  # in full, so a credential passed that way would reach the logs. Marked optional on the pod, so a
-  # cluster without the Secret still launches and connects unauthenticated — which the bridge's
-  # internal surface accepts and its public surface rejects.
-  mcpCredentialSecret: ""
+  # The Secret holding the toolbox's scanner-machine machine-to-machine client, keys client-id and
+  # client-secret. Not the instance client the web and enterprise servers use, which is a different
+  # pair. REQUIRED once enabled: with it missing the toolbox pod does not start.
+  m2mClientSecret: toolbox-m2m-client
 
   activeDeadlineSeconds: 86400
 
@@ -220,18 +213,19 @@ burpAtToolbox:
                 # merged rather than replaced.
                 - name: BSEE_BURP_JAVA_OPTS
                   value: -XX:MaxRAMPercentage=50
-                {{- with .Values.burpAtToolbox.burpAiEnvironment }}
-                - name: BURPAI_ENVIRONMENT
-                  value: {{ . | quote }}
-                {{- end }}
-                {{- with .Values.burpAtToolbox.mcpCredentialSecret }}
-                - name: BURPAI_ENTERPRISE_MCP_CREDENTIAL
+                # The scanner-machine OAuth client the toolbox hands Burp in the bootstrap body. From a
+                # Secret so it never appears in the Job spec, the scan controller's log of the task
+                # definition, or Burp's command line.
+                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_ID
                   valueFrom:
                     secretKeyRef:
-                      name: {{ . | quote }}
-                      key: credential
-                      optional: true
-                {{- end }}
+                      name: {{ .Values.burpAtToolbox.m2mClientSecret | quote }}
+                      key: client-id
+                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.burpAtToolbox.m2mClientSecret | quote }}
+                      key: client-secret
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
