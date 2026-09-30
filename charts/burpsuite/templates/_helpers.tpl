@@ -234,31 +234,16 @@ Usage:
     {{- end }}
 {{- end -}}
 
-{{/* The Burp AT preset atEnvironment selects, with atOverrides merged over it, as YAML. */}}
-{{- define "burpsuite.burpAtSettings" -}}
-{{- $preset := index .Values.atEnvironments .Values.atEnvironment -}}
-{{- if not $preset -}}
-{{- fail (printf "atEnvironment %q is not one of: %s" (toString .Values.atEnvironment) (keys .Values.atEnvironments | sortAlpha | join ", ")) -}}
-{{- end -}}
-{{- mergeOverwrite (deepCopy $preset) (deepCopy (.Values.atOverrides | default dict)) | toYaml -}}
-{{- end -}}
-
-{{/*
-The instance machine-to-machine client, for the web and enterprise containers. Required exactly when
-a token URL is configured, since the servers refuse one without the other.
-*/}}
-{{- define "burpsuite.atInstance.m2mClientEnv" -}}
-{{- $optional := not (include "burpsuite.burpAtSettings" . | fromYaml).instance.m2mAuthTokenUrl -}}
+{{/* The instance machine-to-machine client, for the web and enterprise containers. */}}
+{{- define "burpsuite.agenticTesting.m2mClientEnv" -}}
 - name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_ID
   valueFrom:
     secretKeyRef:
-      name: {{ .Values.atInstance.m2mClientSecret }}
+      name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
       key: client-id
-      optional: {{ $optional }}
 - name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_SECRET
   valueFrom:
     secretKeyRef:
-      name: {{ .Values.atInstance.m2mClientSecret }}
+      name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
       key: client-secret
-      optional: {{ $optional }}
 {{- end -}}

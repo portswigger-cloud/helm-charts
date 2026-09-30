@@ -221,69 +221,34 @@ aws:
 
 ## @section Agentic testing (Burp AT) settings
 ##
+# The production Burp AI services. Every SaaS instance, dev included, talks to these.
 agenticTesting:
   # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
   # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match burpAtToolbox.enabled on the scan-controller release.
   enabled: false
-
-atInstance:
-  # The Secret holding this DAST instance's Auth0 "instance" machine-to-machine client, with keys
-  # client-id and client-secret. Read by the web server and the enterprise server; never the
-  # toolbox's scanner-machine pair, which is a different client. Required or optional as
-  # instance.m2mAuthTokenUrl in the selected atEnvironments preset is set or empty.
-  m2mClientSecret: at-instance-m2m-client
-
-# Which Burp AI platform this deployment talks to: development or production. It selects one of the
-# presets in atEnvironments, so every URL and audience moves together. Mixing them breaks things
-# late and quietly: the two servers must share a gateway or session lookups fail, and a toolbox given
-# a bridge from one platform and a platform API from the other is dropped after the handshake.
-atEnvironment: production
-
-# Any key set here replaces the same key in the selected preset, for example
-#   atOverrides:
-#     toolbox:
-#       mcpBridgeUrl: https://my-bridge.example
-atOverrides: {}
-
-# Keys in each preset:
-#   instance      read by the web server and the enterprise server.
-#     gatewayUrl       the Hakawai gateway both servers call.
-#     mcpServerUrl     the DAST MCP server the enterprise server registers with Hakawai, which Hakawai
-#                      then calls. Inside the platform cluster, so the same address on both platforms.
-#     m2mAudience      the aud claim Hakawai's ForwardAuth checks on the instance bearer.
-#     m2mAuthTokenUrl  the Auth0 endpoint the instance client mints its bearer at. Set, the atInstance
-#                      Secret is REQUIRED and the servers do not start without it. Empty, machine
-#                      authentication is off and the Secret is optional.
-#   toolbox       read by the enterprise server and handed to each toolbox in its bootstrap request.
-#                 Every value is REQUIRED (the enterprise server refuses to start without one), and
-#                 Burp allowlists the hosts, so only the values below are accepted.
-atEnvironments:
-  development:
-    instance:
-      # The V1-forwardauth host, which accepts the licence activation token alone.
-      gatewayUrl: https://hakawai-v1.platform-dev.portswigger.io
-      mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
-      m2mAudience: https://ai.portswigger.net
-      m2mAuthTokenUrl: ""
-    toolbox:
-      m2mTokenEndpoint: https://login.portswigger.net/oauth/token
-      mcpBridgeUrl: https://enterprise-mcp-bridge.platform-dev.portswigger.io
-      mcpBridgeAudience: https://ai.portswigger.net
-      platformApiUrl: https://hakawai.platform-dev.portswigger.io
-      platformApiAudience: https://ai.portswigger.net
-  production:
-    instance:
-      # Rejects a request without both the licence and a machine bearer, hence the token URL.
-      gatewayUrl: https://ai.portswigger.net
-      mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
-      m2mAudience: https://ai.portswigger.net
-      m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
-    toolbox:
-      m2mTokenEndpoint: https://login.portswigger.net/oauth/token
-      mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io
-      mcpBridgeAudience: https://ai.portswigger.net
-      platformApiUrl: https://ai.portswigger.net
-      platformApiAudience: https://ai.portswigger.net
+  # Read by the web server and the enterprise server.
+  instance:
+    # The Secret holding this DAST instance's Auth0 "instance" machine-to-machine client, with keys
+    # client-id and client-secret. Never the toolbox's scanner-machine pair, which is a different
+    # client. REQUIRED once enabled: the servers do not start without it.
+    m2mClientSecret: at-instance-m2m-client
+    # The Hakawai gateway both servers call. Rejects a request without both the licence and a
+    # machine bearer.
+    gatewayUrl: https://ai.portswigger.net
+    # The DAST MCP server the enterprise server registers with Hakawai, which Hakawai then calls.
+    mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
+    # The aud claim Hakawai's ForwardAuth checks on the instance bearer.
+    m2mAudience: https://ai.portswigger.net
+    # The Auth0 endpoint the instance client mints its bearer at.
+    m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
+  # Read by the enterprise server and handed to each toolbox in its bootstrap request. Every value is
+  # REQUIRED (the enterprise server refuses to start without one), and Burp allowlists the hosts.
+  toolbox:
+    m2mTokenEndpoint: https://login.portswigger.net/oauth/token
+    mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io
+    mcpBridgeAudience: https://ai.portswigger.net
+    platformApiUrl: https://ai.portswigger.net
+    platformApiAudience: https://ai.portswigger.net
 
 extraDeploy: []

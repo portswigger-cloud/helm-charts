@@ -39,20 +39,18 @@ data:
   ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
 {{- end }}
 {{- if (.Values.agenticTesting | default dict).enabled }}
-{{- with include "burpsuite.burpAtSettings" . | fromYaml }}
-  BSEE_AT_INSTANCE_GATEWAY_URL: {{ .instance.gatewayUrl | quote }}
-{{- if .instance.mcpServerUrl }}
-  BSEE_AT_INSTANCE_MCP_SERVER_URL: {{ .instance.mcpServerUrl | quote }}
+{{- with .Values.agenticTesting.instance }}
+  BSEE_AT_INSTANCE_GATEWAY_URL: {{ .gatewayUrl | quote }}
+  BSEE_AT_INSTANCE_MCP_SERVER_URL: {{ .mcpServerUrl | quote }}
+  BSEE_AT_INSTANCE_M2M_AUDIENCE: {{ .m2mAudience | quote }}
+  BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
 {{- end }}
-  BSEE_AT_INSTANCE_M2M_AUDIENCE: {{ .instance.m2mAudience | quote }}
-{{- if .instance.m2mAuthTokenUrl }}
-  BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .instance.m2mAuthTokenUrl | quote }}
-{{- end }}
-  BSEE_AT_TOOLBOX_M2M_TOKEN_ENDPOINT: {{ .toolbox.m2mTokenEndpoint | quote }}
-  BSEE_AT_TOOLBOX_MCP_BRIDGE_URL: {{ .toolbox.mcpBridgeUrl | quote }}
-  BSEE_AT_TOOLBOX_MCP_BRIDGE_AUDIENCE: {{ .toolbox.mcpBridgeAudience | quote }}
-  BSEE_AT_TOOLBOX_PLATFORM_API_URL: {{ .toolbox.platformApiUrl | quote }}
-  BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE: {{ .toolbox.platformApiAudience | quote }}
+{{- with .Values.agenticTesting.toolbox }}
+  BSEE_AT_TOOLBOX_M2M_TOKEN_ENDPOINT: {{ .m2mTokenEndpoint | quote }}
+  BSEE_AT_TOOLBOX_MCP_BRIDGE_URL: {{ .mcpBridgeUrl | quote }}
+  BSEE_AT_TOOLBOX_MCP_BRIDGE_AUDIENCE: {{ .mcpBridgeAudience | quote }}
+  BSEE_AT_TOOLBOX_PLATFORM_API_URL: {{ .platformApiUrl | quote }}
+  BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE: {{ .platformApiAudience | quote }}
 {{- end }}
 {{- else }}
   # The hosted dashboard profile turns agentic testing on, and the enterprise server then refuses to

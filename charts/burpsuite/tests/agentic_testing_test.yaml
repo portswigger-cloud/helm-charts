@@ -38,7 +38,7 @@ tests:
       - equal:
           path: data.DISABLED_PROFILE_FEATURES
           value: SUPPORTS_AGENTIC_TESTING
-  - it: should give the web server the production instance settings when enabled
+  - it: should give the web server the instance settings when enabled
     template: web/env-configmap.yaml
     set:
       agenticTesting:
@@ -55,7 +55,7 @@ tests:
       - equal:
           path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
           value: https://login.portswigger.net/oauth/token
-  - it: should give the enterprise server the production instance and toolbox settings when enabled
+  - it: should give the enterprise server the instance and toolbox settings when enabled
     template: enterprise/env-configmap.yaml
     set:
       agenticTesting:
@@ -87,7 +87,7 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai.portswigger.net
-  - it: should require the instance client on both servers when a token URL is set
+  - it: should give both servers the instance client when enabled
     template: deployment.yaml
     set:
       agenticTesting:
@@ -101,7 +101,6 @@ tests:
               secretKeyRef:
                 name: at-instance-m2m-client
                 key: client-id
-                optional: false
       - contains:
           path: spec.template.spec.containers[?(@.name == "enterprise")].env
           content:
@@ -110,56 +109,3 @@ tests:
               secretKeyRef:
                 name: at-instance-m2m-client
                 key: client-secret
-                optional: false
-  - it: should make the instance client optional when the preset has no token URL
-    template: deployment.yaml
-    set:
-      agenticTesting:
-        enabled: true
-      atEnvironment: development
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "enterprise")].env
-          content:
-            name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: at-instance-m2m-client
-                key: client-id
-                optional: true
-  - it: should leave out the token URL when the preset has none
-    template: enterprise/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
-      atEnvironment: development
-    asserts:
-      - notExists:
-          path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
-      - equal:
-          path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
-          value: https://enterprise-mcp-bridge.platform-dev.portswigger.io
-  - it: should apply an override over the selected preset
-    template: enterprise/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
-      atOverrides:
-        toolbox:
-          mcpBridgeUrl: https://my-bridge.example
-    asserts:
-      - equal:
-          path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
-          value: https://my-bridge.example
-      - equal:
-          path: data.BSEE_AT_TOOLBOX_PLATFORM_API_URL
-          value: https://ai.portswigger.net
-  - it: should refuse an unknown environment
-    template: web/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
-      atEnvironment: staging
-    asserts:
-      - failedTemplate:
-          errorPattern: 'atEnvironment "staging" is not one of: development, production'

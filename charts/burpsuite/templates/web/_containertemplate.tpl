@@ -72,7 +72,7 @@
         fieldRef:
           fieldPath: status.podIP
   {{- if (.Values.agenticTesting | default dict).enabled }}
-    {{- include "burpsuite.atInstance.m2mClientEnv" . | nindent 4 }}
+    {{- include "burpsuite.agenticTesting.m2mClientEnv" . | nindent 4 }}
   {{- end }}
   {{- with .Values.web.env }}
     {{- toYaml . | nindent 4 }}
