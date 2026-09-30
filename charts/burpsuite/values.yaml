@@ -219,13 +219,13 @@ aws:
   s3:
     enabled: false
 
-## @section Agentic testing (Burp AT) settings
+## @section Agentic testing settings
 ##
 # The production Burp AI services. Every SaaS instance, dev included, talks to these.
 agenticTesting:
   # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
   # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
-  # has not asked for it. Must match burpAtToolbox.enabled on the scan-controller release.
+  # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
   # Read by the web server and the enterprise server.
   instance:

@@ -75,12 +75,12 @@ spec:
         - __meta_kubernetes_pod_uid
       targetLabel: pod_uid
 {{- end }}
-{{- if (.Values.burpAtToolbox | default dict).podLogs }}
+{{- if (.Values.toolbox | default dict).podLogs }}
 ---
 apiVersion: monitoring.grafana.com/v1alpha2
 kind: PodLogs
 metadata:
-  name: {{ include "scan-controller.fullname" . }}-burp-at-toolbox
+  name: {{ include "scan-controller.fullname" . }}-toolbox
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
 spec:
@@ -89,10 +89,10 @@ spec:
       kubernetes.io/metadata.name: {{ .Release.Namespace }}
   selector:
     matchLabels:
-      {{- include "scan-controller.burpAtToolbox.selectorLabels" . | nindent 6 }}
+      {{- include "scan-controller.toolbox.selectorLabels" . | nindent 6 }}
   relabelings:
     - action: replace
-      replacement: burp-at-toolbox
+      replacement: toolbox
       targetLabel: container
     - action: replace
       sourceLabels:

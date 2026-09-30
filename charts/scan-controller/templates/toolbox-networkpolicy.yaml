@@ -1,9 +1,9 @@
-{{- $toolbox := .Values.burpAtToolbox | default dict }}
+{{- $toolbox := .Values.toolbox | default dict }}
 {{- if $toolbox.enabled }}
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: {{ include "scan-controller.fullname" . }}-burp-at-toolbox
+  name: {{ include "scan-controller.fullname" . }}-toolbox
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "scan-controller.labels" . | nindent 4 }}
@@ -14,7 +14,7 @@ spec:
   # targets.
   endpointSelector:
     matchLabels:
-      {{- include "scan-controller.burpAtToolbox.selectorLabels" . | nindent 6 }}
+      {{- include "scan-controller.toolbox.selectorLabels" . | nindent 6 }}
   ingress:
   # Metrics endpoints
   - fromEndpoints:
