@@ -52,10 +52,6 @@ data:
   BSEE_AT_TOOLBOX_PLATFORM_API_URL: {{ .platformApiUrl | quote }}
   BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE: {{ .platformApiAudience | quote }}
 {{- end }}
-{{- else }}
-  # The hosted dashboard profile turns agentic testing on, and the enterprise server then refuses to
-  # start without the toolbox settings above; off here, it stays off.
-  DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
 {{- end }}
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
