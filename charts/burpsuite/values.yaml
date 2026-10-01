@@ -223,9 +223,9 @@ aws:
 ##
 # The production Burp AI services. Every SaaS instance, dev included, talks to these.
 agenticTesting:
-  # Off by default: none of the settings below are rendered, so a chart upgrade cannot configure the
-  # feature in an environment that has not asked for it. Must match toolbox.enabled on the
-  # scan-controller release.
+  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
+  # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
+  # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
   # Read by the web server and the enterprise server.
   instance:

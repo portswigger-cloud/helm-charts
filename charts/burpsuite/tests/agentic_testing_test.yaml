@@ -6,14 +6,20 @@ templates:
   - web/env-configmap.yaml
   - web/env-secret.yaml
 tests:
-  - it: should not configure agentic testing on the web server by default
+  - it: should disable agentic testing on the web server by default
     template: web/env-configmap.yaml
     asserts:
+      - equal:
+          path: data.DISABLED_PROFILE_FEATURES
+          value: SUPPORTS_AGENTIC_TESTING
       - notExists:
           path: data.BSEE_AT_INSTANCE_GATEWAY_URL
-  - it: should not configure agentic testing on the enterprise server by default
+  - it: should disable agentic testing on the enterprise server by default
     template: enterprise/env-configmap.yaml
     asserts:
+      - equal:
+          path: data.DISABLED_PROFILE_FEATURES
+          value: SUPPORTS_AGENTIC_TESTING
       - notExists:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
   - it: should not reference the instance client by default
@@ -29,14 +35,17 @@ tests:
     set:
       agenticTesting: null
     asserts:
-      - notExists:
-          path: data.BSEE_AT_INSTANCE_GATEWAY_URL
+      - equal:
+          path: data.DISABLED_PROFILE_FEATURES
+          value: SUPPORTS_AGENTIC_TESTING
   - it: should give the web server the instance settings when enabled
     template: web/env-configmap.yaml
     set:
       agenticTesting:
         enabled: true
     asserts:
+      - notExists:
+          path: data.DISABLED_PROFILE_FEATURES
       - equal:
           path: data.BSEE_AT_INSTANCE_GATEWAY_URL
           value: https://ai.portswigger.net
@@ -52,6 +61,8 @@ tests:
       agenticTesting:
         enabled: true
     asserts:
+      - notExists:
+          path: data.DISABLED_PROFILE_FEATURES
       - equal:
           path: data.BSEE_AT_INSTANCE_GATEWAY_URL
           value: https://ai.portswigger.net
