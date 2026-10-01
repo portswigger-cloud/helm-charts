@@ -233,17 +233,3 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
-
-{{/* The instance machine-to-machine client, for the web and enterprise containers. */}}
-{{- define "burpsuite.agenticTesting.m2mClientEnv" -}}
-- name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_ID
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
-      key: client-id
-- name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_SECRET
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
-      key: client-secret
-{{- end -}}

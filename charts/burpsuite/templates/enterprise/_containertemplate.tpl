@@ -72,7 +72,16 @@
         fieldRef:
           fieldPath: status.podIP
   {{- if (.Values.agenticTesting | default dict).enabled }}
-    {{- include "burpsuite.agenticTesting.m2mClientEnv" . | nindent 4 }}
+    - name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
+          key: client-id
+    - name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: {{ .Values.agenticTesting.instance.m2mClientSecret }}
+          key: client-secret
   {{- end }}
   {{- with .Values.enterprise.env }}
     {{- toYaml . | nindent 4 }}
