@@ -150,4 +150,129 @@ scanner:
             {{- toYaml . | nindent 8 }}
           {{- end }}
 
+toolbox:
+  # Provisions the toolbox job template for the scan controller. Off by default: with it unset the
+  # controller starts normally and refuses toolbox launches, so a chart upgrade cannot enable the
+  # feature in an environment that has not asked for it.
+  enabled: false
+
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  tolerations: []
+  affinity: {}
+  dnsPolicy: ""
+  dnsConfig: {}
+
+  podLogs: false
+
+  # The Secret holding the toolbox's scanner-machine machine-to-machine client, keys client-id and
+  # client-secret. Not the instance client the web and enterprise servers use, which is a different
+  # pair. REQUIRED once enabled: with it missing the toolbox pod does not start.
+  m2mClientSecret: toolbox-m2m-client
+
+  activeDeadlineSeconds: 86400
+
+  resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+    limits:
+      memory: 4Gi
+
+  jobTemplate: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: toolbox
+      labels:
+        {{- include "scan-controller.labels" . | nindent 8 }}
+    spec:
+      backoffLimit: 0
+      # A toolbox never completes on its own, so without a deadline an abandoned one runs
+      # forever and ttlSecondsAfterFinished — which only starts once a job finishes — never applies.
+      activeDeadlineSeconds: {{ .Values.toolbox.activeDeadlineSeconds }}
+      ttlSecondsAfterFinished: 3600
+      template:
+        metadata:
+          labels:
+            {{- include "scan-controller.toolbox.selectorLabels" . | nindent 8 }}
+          annotations:
+            cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
+            karpenter.sh/do-not-evict: "true"
+            karpenter.sh/do-not-disrupt: "true"
+        spec:
+          serviceAccount: scanner
+          serviceAccountName: scanner
+          automountServiceAccountToken: false
+          containers:
+            - name: toolbox-container
+              env:
+                - name: JAVA_OPTS
+                  value: -Xms128m -Xmx512m
+                # Read back by the controller and prefixed to the bridge options it adds, so this is
+                # merged rather than replaced.
+                - name: BSEE_BURP_JAVA_OPTS
+                  value: -XX:MaxRAMPercentage=50
+                # The scanner-machine OAuth client the toolbox hands Burp in the bootstrap body. From a
+                # Secret so it never appears in the Job spec, the scan controller's log of the task
+                # definition, or Burp's command line.
+                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.toolbox.m2mClientSecret | quote }}
+                      key: client-id
+                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.toolbox.m2mClientSecret | quote }}
+                      key: client-secret
+              envFrom:
+                - secretRef:
+                    name: {{ include "scan-controller.fullname" . }}-scanner-env
+              image: {{ include "scan-controller.scanner.image" . }}
+              imagePullPolicy: Always
+              resources:
+                {{- toYaml (.Values.toolbox.resources | default dict) | nindent 12 }}
+              securityContext:
+                runAsUser: 100000
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                privileged: false
+                capabilities:
+                  drop:
+                    - ALL
+              volumeMounts:
+                - mountPath: /home/burpsuite/
+                  name: home-burpsuite
+                - mountPath: /tmp
+                  name: tmp
+          volumes:
+            - name: home-burpsuite
+              emptyDir:
+                sizeLimit: 20Gi
+            - name: tmp
+              emptyDir:
+                sizeLimit: 1Gi
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          {{- with .Values.toolbox.dnsPolicy }}
+          dnsPolicy: {{ . }}
+          {{- end }}
+          {{- with .Values.toolbox.dnsConfig }}
+          dnsConfig:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.toolbox.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.toolbox.affinity }}
+          affinity:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+          {{- with .Values.toolbox.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
+
 extraDeploy: []

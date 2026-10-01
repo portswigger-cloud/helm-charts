@@ -219,4 +219,23 @@ aws:
   s3:
     enabled: false
 
+agenticTesting:
+  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
+  # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
+  # has not asked for it. Must match toolbox.enabled on the scan-controller release.
+  enabled: false
+  # Read by the web server and the enterprise server.
+  instance:
+    m2mClientSecret: at-instance-m2m-client
+    gatewayUrl: https://ai.portswigger.net
+    mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
+    m2mAudience: https://ai.portswigger.net
+    m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
+  toolbox:
+    m2mTokenEndpoint: https://login.portswigger.net/oauth/token
+    mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io
+    mcpBridgeAudience: https://ai.portswigger.net
+    platformApiUrl: https://ai.portswigger.net
+    platformApiAudience: https://ai.portswigger.net
+
 extraDeploy: []
