@@ -34,6 +34,6 @@ data:
   BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
 {{- end }}
 {{- else }}
-  # The hosted dashboard profile turns agentic testing on; off here, it stays off.
+  # The hosted dashboard profile turns agentic testing on, disable it by default
   DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
 {{- end }}

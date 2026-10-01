@@ -54,7 +54,7 @@ data:
 {{- end }}
 {{- else }}
   # The hosted dashboard profile turns agentic testing on, and the enterprise server then refuses to
-  # start without the toolbox settings above; off here, it stays off.
+  # start without the toolbox settings above, disable it by default
   DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
 {{- end }}
 {{- with (last .Values.ingress.hosts) }}
