@@ -224,7 +224,8 @@ agenticTesting:
   # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
-  # Read by the web server and the enterprise server.
+  # Read by the web server and the enterprise server. The two m2mClientSecret Secrets (keys client-id
+  # and client-secret) are optional: the servers store a pair from them only when none is stored yet.
   instance:
     m2mClientSecret: at-instance-m2m-client
     gatewayUrl: https://ai.portswigger.net
@@ -232,6 +233,7 @@ agenticTesting:
     m2mAudience: https://ai.portswigger.net
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
   toolbox:
+    m2mClientSecret: toolbox-m2m-client
     m2mTokenEndpoint: https://login.portswigger.net/oauth/token
     mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io
     mcpBridgeAudience: https://ai.portswigger.net
