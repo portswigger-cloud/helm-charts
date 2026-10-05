@@ -3,6 +3,29 @@ entries:
   burpsuite:
   - apiVersion: v2
     appVersion: 2025.9.0.1
+    created: "2026-10-05T10:54:21.785578723Z"
+    description: Scan it all. With the enterprise-enabled dynamic web vulnerability
+      scanner.
+    digest: 117f24f7a0b945773a428aaa216ee8c6a8c89cca0dc88e252e1dd5c205d6106c
+    home: https://portswigger.net/
+    keywords:
+    - burpsuite
+    - dast
+    - security
+    - web
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: github-portswigger-cloud@portswigger.net
+      name: Portswigger Cloud
+    name: burpsuite
+    sources:
+    - https://github.com/portswigger-cloud/helm-charts/
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/burpsuite-0.4.1/burpsuite-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 2025.9.0.1
     created: "2026-10-01T09:41:36.630443866Z"
     description: Scan it all. With the enterprise-enabled dynamic web vulnerability
       scanner.
@@ -4061,6 +4084,16 @@ entries:
   scan-controller:
   - apiVersion: v2
     appVersion: 2024.1-15620
+    created: "2026-10-05T10:54:22.08918961Z"
+    description: A Helm chart for Kubernetes
+    digest: d39748e443b519098fa00201b41cc25b25a6ef98a0f86bfb35428764bce15881
+    name: scan-controller
+    type: application
+    urls:
+    - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.4.4/scan-controller-0.4.4.tgz
+    version: 0.4.4
+  - apiVersion: v2
+    appVersion: 2024.1-15620
     created: "2026-10-01T09:41:36.809560494Z"
     description: A Helm chart for Kubernetes
     digest: 8807d2e799477b0fdb710a11a7e6d9d3a8559cee33590b9a827817bc5e03a6a2
@@ -4439,4 +4472,4 @@ entries:
     urls:
     - https://github.com/portswigger-cloud/helm-charts/releases/download/scan-controller-0.0.0-alpha.1/scan-controller-0.0.0-alpha.1.tgz
     version: 0.0.0-alpha.1
-generated: "2026-10-01T09:41:36.81050344Z"
+generated: "2026-10-05T10:54:22.089914667Z"
