@@ -220,8 +220,8 @@ aws:
     enabled: false
 
 agenticTesting:
-  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
-  # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
+  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and, apart from the
+  # provisioning token settings, none of the settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
   # Read by the web server and the enterprise server. Once enabled, both m2mClientSecret Secrets (keys
@@ -233,6 +233,24 @@ agenticTesting:
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
     m2mAudience: https://ai.portswigger.net
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
+    # Read by the web server whether or not agenticTesting is enabled: it accepts credential pushes
+    # only when signed by this issuer's key. Defaults to the production auth product registry.
+    provisioningTokenIssuer: https://auth-product-registry.platform-prod.portswigger.io/
+    provisioningTokenPublicKey: |
+      -----BEGIN PUBLIC KEY-----
+      MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAjJY5EPpYVHs2OF7NPoSM
+      2AkovGqtONI57oi9kwvkb73CMGRs5ElHUeBAee/1tuX8bwRQNA4RkQ70o1eJnYw+
+      hegYQxyYHdOmg0KsVugaTf0zHN88g8CbtdL7DgEC/9Yae8a/pcdAqQgx46tO97S2
+      hCSq+1U1o4CxUhyq+vTxsl9rwRDoUNq7NHgCWc6wOLSJPQrCg/WxN8x4mS7j64Bm
+      hMpBPdUte4qabfD6DQhevRSJYxhYEhES41F0NVs5IUWEc1D/qgXhhNmnvRxD4vMF
+      41a2dlO5sRP886NzkKmaevAIut0reTupICqzfh4ufxfcpM7s90hApcoHnEDK4Sg/
+      oNzIRImiN058kRmi2fzAq/ZNqUhpu4rrsMVYYnCZoYsySzrSbpiPW1UjAswcS1cd
+      FACvpp0TwUlCboGK0j/02cT9ExJMY1hJJORFDe/7L+WgOUKsD1ROrIPmhiSaQNkQ
+      rslWTzBc9RCRPkGnJajeFhEpYOMqYOrjKCSd+0sylo8t0l2vcj1wddtT5WGTcql8
+      E2xRDShoC/pgjLgP4bkT+Ls6T6aOa95pC/s69j8QqIq16JnPEWknHnvqS0N7XjcR
+      9Gf7BjuNDMlPlwAVyY60xWLQG6Q6XEIMvCZfBZVqdnfSN9uVrUF0prsMIkVzvIvh
+      bwQq5y6PMDQupNldYjkJCk8CAwEAAQ==
+      -----END PUBLIC KEY-----
   toolbox:
     m2mClientSecret: toolbox-m2m-client
     m2mTokenEndpoint: https://login.portswigger.net/oauth/token
