@@ -92,7 +92,7 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai.portswigger.net
-  - it: should give both servers both clients, optionally, when enabled
+  - it: should give both servers the instance and scanner clients when enabled
     template: deployment.yaml
     set:
       agenticTesting:
@@ -106,7 +106,6 @@ tests:
               secretKeyRef:
                 name: at-instance-m2m-client
                 key: client-id
-                optional: true
       - contains:
           path: spec.template.spec.containers[?(@.name == "enterprise")].env
           content:
@@ -115,7 +114,6 @@ tests:
               secretKeyRef:
                 name: at-instance-m2m-client
                 key: client-secret
-                optional: true
       - contains:
           path: spec.template.spec.containers[?(@.name == "web")].env
           content:
@@ -124,7 +122,6 @@ tests:
               secretKeyRef:
                 name: toolbox-m2m-client
                 key: client-id
-                optional: true
       - contains:
           path: spec.template.spec.containers[?(@.name == "enterprise")].env
           content:
@@ -133,4 +130,3 @@ tests:
               secretKeyRef:
                 name: toolbox-m2m-client
                 key: client-secret
-                optional: true

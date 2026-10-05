@@ -224,8 +224,9 @@ agenticTesting:
   # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
-  # Read by the web server and the enterprise server. The two m2mClientSecret Secrets (keys client-id
-  # and client-secret) are optional: the servers store a pair from them only when none is stored yet.
+  # Read by the web server and the enterprise server. Once enabled, both m2mClientSecret Secrets (keys
+  # client-id and client-secret) must exist or the servers do not start. A server stores a pair from
+  # them only when none is stored yet, so a stored pair always wins.
   instance:
     m2mClientSecret: at-instance-m2m-client
     gatewayUrl: https://ai.portswigger.net

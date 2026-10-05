@@ -240,12 +240,10 @@ Usage:
     secretKeyRef:
       name: {{ $secret }}
       key: client-id
-      optional: true
 - name: {{ $name }}_SECRET
   valueFrom:
     secretKeyRef:
       name: {{ $secret }}
       key: client-secret
-      optional: true
 {{- end }}
 {{- end -}}
