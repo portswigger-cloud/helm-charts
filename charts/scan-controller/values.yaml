@@ -165,11 +165,6 @@ toolbox:
 
   podLogs: false
 
-  # The Secret holding the toolbox's scanner-machine machine-to-machine client, keys client-id and
-  # client-secret. Not the instance client the web and enterprise servers use, which is a different
-  # pair. REQUIRED once enabled: with it missing the toolbox pod does not start.
-  m2mClientSecret: toolbox-m2m-client
-
   activeDeadlineSeconds: 86400
 
   resources:
@@ -213,19 +208,6 @@ toolbox:
                 # merged rather than replaced.
                 - name: BSEE_BURP_JAVA_OPTS
                   value: -XX:MaxRAMPercentage=50
-                # The scanner-machine OAuth client the toolbox hands Burp in the bootstrap body. From a
-                # Secret so it never appears in the Job spec, the scan controller's log of the task
-                # definition, or Burp's command line.
-                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.toolbox.m2mClientSecret | quote }}
-                      key: client-id
-                - name: BSEE_AT_TOOLBOX_M2M_CLIENT_SECRET
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.toolbox.m2mClientSecret | quote }}
-                      key: client-secret
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
