@@ -43,6 +43,45 @@ tests:
       - equal:
           path: data.DISABLED_PROFILE_FEATURES
           value: SUPPORTS_AGENTIC_TESTING
+  - it: should give the web server the production registry's issuer and key by default
+    template: web/env-configmap.yaml
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
+          value: https://auth-product-registry.platform-prod.portswigger.io/
+      - matchRegex:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
+          pattern: ^-----BEGIN PUBLIC KEY-----\n(.+\n)+-----END PUBLIC KEY-----\n$
+  - it: should give the web server an overridden registry issuer and key
+    template: web/env-configmap.yaml
+    set:
+      agenticTesting:
+        instance:
+          provisioningTokenIssuer: https://registry.example/
+          provisioningTokenPublicKey: |
+            -----BEGIN PUBLIC KEY-----
+            test
+            -----END PUBLIC KEY-----
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
+          value: https://registry.example/
+      - equal:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
+          value: |
+            -----BEGIN PUBLIC KEY-----
+            test
+            -----END PUBLIC KEY-----
+  - it: should not give the enterprise server the registry issuer or key
+    template: enterprise/env-configmap.yaml
+    set:
+      agenticTesting:
+        enabled: true
+    asserts:
+      - notExists:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
+      - notExists:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
   - it: should give the web server the instance settings when enabled
     template: web/env-configmap.yaml
     set:

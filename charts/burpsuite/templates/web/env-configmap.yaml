@@ -27,6 +27,14 @@ data:
   BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
 {{- end }}
+{{- with ((.Values.agenticTesting | default dict).instance | default dict) }}
+{{- if .provisioningTokenIssuer }}
+  BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER: {{ .provisioningTokenIssuer | quote }}
+{{- end }}
+{{- if .provisioningTokenPublicKey }}
+  BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY: {{ .provisioningTokenPublicKey | quote }}
+{{- end }}
+{{- end }}
 {{- if (.Values.agenticTesting | default dict).enabled }}
 {{- with .Values.agenticTesting.instance }}
   BSEE_AT_INSTANCE_GATEWAY_URL: {{ .gatewayUrl | quote }}
