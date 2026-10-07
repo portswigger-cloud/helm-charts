@@ -233,17 +233,3 @@ Usage:
         {{- tpl (.value | toYaml) .context }}
     {{- end }}
 {{- end -}}
-{{- define "burpsuite.agenticTesting.clientEnv" -}}
-{{- range $name, $secret := dict "BSEE_AT_INSTANCE_M2M_AUTH_CLIENT" .Values.agenticTesting.instance.m2mClientSecret "BSEE_AT_TOOLBOX_M2M_CLIENT" .Values.agenticTesting.toolbox.m2mClientSecret }}
-- name: {{ $name }}_ID
-  valueFrom:
-    secretKeyRef:
-      name: {{ $secret }}
-      key: client-id
-- name: {{ $name }}_SECRET
-  valueFrom:
-    secretKeyRef:
-      name: {{ $secret }}
-      key: client-secret
-{{- end }}
-{{- end -}}

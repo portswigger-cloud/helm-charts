@@ -71,9 +71,6 @@
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
-  {{- if (.Values.agenticTesting | default dict).enabled }}
-    {{- include "burpsuite.agenticTesting.clientEnv" . | trim | nindent 4 }}
-  {{- end }}
   {{- with .Values.web.env }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
