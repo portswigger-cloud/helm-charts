@@ -22,8 +22,11 @@ tests:
           value: SUPPORTS_AGENTIC_TESTING
       - notExists:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
-  - it: should not reference either client by default
+  - it: should not give either server an M2M client pair
     template: deployment.yaml
+    set:
+      agenticTesting:
+        enabled: true
     asserts:
       - notContains:
           path: spec.template.spec.containers[?(@.name == "enterprise")].env
@@ -131,41 +134,3 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai.portswigger.net
-  - it: should give both servers the instance and scanner clients when enabled
-    template: deployment.yaml
-    set:
-      agenticTesting:
-        enabled: true
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "web")].env
-          content:
-            name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: at-instance-m2m-client
-                key: client-id
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "enterprise")].env
-          content:
-            name: BSEE_AT_INSTANCE_M2M_AUTH_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: at-instance-m2m-client
-                key: client-secret
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "web")].env
-          content:
-            name: BSEE_AT_TOOLBOX_M2M_CLIENT_ID
-            valueFrom:
-              secretKeyRef:
-                name: toolbox-m2m-client
-                key: client-id
-      - contains:
-          path: spec.template.spec.containers[?(@.name == "enterprise")].env
-          content:
-            name: BSEE_AT_TOOLBOX_M2M_CLIENT_SECRET
-            valueFrom:
-              secretKeyRef:
-                name: toolbox-m2m-client
-                key: client-secret
