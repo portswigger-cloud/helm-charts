@@ -23,7 +23,7 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   serviceAccountName: {{ include "burpsuite.serviceAccountName" . }}
-  terminationGracePeriodSeconds: 10
+  terminationGracePeriodSeconds: 1800
   securityContext:
     runAsUser: 42877
     fsGroup: 42877
