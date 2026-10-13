@@ -165,6 +165,10 @@ toolbox:
 
   podLogs: false
 
+  # Must exist in the cluster, or the toolbox pod is rejected. A ResourceQuota on this class caps
+  # how many toolboxes a Gotham namespace runs; read it to stay under the cap.
+  priorityClassName: customer-toolbox
+
   activeDeadlineSeconds: 86400
 
   resources:
@@ -237,6 +241,9 @@ toolbox:
                 sizeLimit: 1Gi
           restartPolicy: Never
           terminationGracePeriodSeconds: 30
+          {{- with .Values.toolbox.priorityClassName }}
+          priorityClassName: {{ . }}
+          {{- end }}
           {{- with .Values.toolbox.dnsPolicy }}
           dnsPolicy: {{ . }}
           {{- end }}

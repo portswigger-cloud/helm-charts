@@ -1,0 +1,13 @@
+suite: RBAC
+templates:
+  - rbac.yaml
+tests:
+  - it: should let the controller read its namespace's ResourceQuotas
+    documentIndex: 0
+    asserts:
+      - contains:
+          path: rules
+          content:
+            apiGroups: [""]
+            resources: ["resourcequotas"]
+            verbs: ["get", "watch", "list"]
