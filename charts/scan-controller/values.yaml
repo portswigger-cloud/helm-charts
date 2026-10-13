@@ -172,6 +172,7 @@ toolbox:
       cpu: 1
       memory: 4Gi
     limits:
+      cpu: 2
       memory: 4Gi
 
   jobTemplate: |
@@ -196,9 +197,13 @@ toolbox:
             karpenter.sh/do-not-evict: "true"
             karpenter.sh/do-not-disrupt: "true"
         spec:
-          serviceAccount: scanner
-          serviceAccountName: scanner
+          serviceAccount: toolbox
+          serviceAccountName: toolbox
           automountServiceAccountToken: false
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           containers:
             - name: toolbox-container
               env:
@@ -210,7 +215,7 @@ toolbox:
                   value: -XX:MaxRAMPercentage=50
               envFrom:
                 - secretRef:
-                    name: {{ include "scan-controller.fullname" . }}-scanner-env
+                    name: {{ include "scan-controller.fullname" . }}-toolbox-env
               image: {{ include "scan-controller.scanner.image" . }}
               imagePullPolicy: Always
               resources:
