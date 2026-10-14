@@ -23,4 +23,10 @@ spec:
       targetPort: agent-ws
       protocol: TCP
       name: http-agent-ws
+    {{- if (.Values.agenticTesting | default dict).enabled }}
+    - port: {{.Values.agenticTesting.instance.chatPort}}
+      targetPort: web-burp-at
+      protocol: TCP
+      name: http-burp-at
+    {{- end }}
   selector: {{- include "burpsuite.selectorLabels" . | nindent 4}}

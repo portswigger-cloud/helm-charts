@@ -1,6 +1,7 @@
 suite: Agentic testing configuration
 templates:
   - deployment.yaml
+  - service.yaml
   - enterprise/env-configmap.yaml
   - enterprise/env-secret.yaml
   - web/env-configmap.yaml
@@ -134,3 +135,65 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai.portswigger.net
+  - it: should not open the chat port on the web server by default
+    template: deployment.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "web")].ports
+          content:
+            name: web-burp-at
+          any: true
+  - it: should open the chat port on the web server when agentic testing is enabled
+    template: deployment.yaml
+    set:
+      agenticTesting:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "web")].ports
+          content:
+            name: web-burp-at
+            containerPort: 8099
+  - it: should not publish the chat port on the Service by default
+    template: service.yaml
+    asserts:
+      - notContains:
+          path: spec.ports
+          content:
+            name: http-burp-at
+          any: true
+  - it: should publish the chat port on the Service when agentic testing is enabled
+    template: service.yaml
+    set:
+      agenticTesting:
+        enabled: true
+    asserts:
+      - contains:
+          path: spec.ports
+          content:
+            port: 8099
+            targetPort: web-burp-at
+            protocol: TCP
+            name: http-burp-at
+  - it: should tell the web server the chat port when agentic testing is enabled
+    template: web/env-configmap.yaml
+    set:
+      agenticTesting:
+        enabled: true
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_SERVER_PORT
+          value: "8099"
+      - notExists:
+          path: data.BSEE_AT_INSTANCE_EMBED_URL
+  - it: should give the web server the chat URL when the chat host is set
+    template: web/env-configmap.yaml
+    set:
+      agenticTesting:
+        enabled: true
+        instance:
+          chatHost: maria-fernanda.ai.portswigger.cloud
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_EMBED_URL
+          value: https://maria-fernanda.ai.portswigger.cloud

@@ -1,0 +1,81 @@
+suite: Burp AT chat Ingress
+templates:
+  - ingress-burp-at.yaml
+tests:
+  - it: should not route the chat by default
+    set:
+      ingress:
+        enabled: true
+      agenticTesting:
+        instance:
+          chatHost: maria-fernanda.ai.portswigger.cloud
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not route the chat without a chat host
+    set:
+      ingress:
+        enabled: true
+      agenticTesting:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not route the chat when the instance has no Ingress
+    set:
+      agenticTesting:
+        enabled: true
+        instance:
+          chatHost: maria-fernanda.ai.portswigger.cloud
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should route the chat host to the chat port
+    set:
+      ingress:
+        enabled: true
+        className: traefik
+      agenticTesting:
+        enabled: true
+        instance:
+          chatHost: maria-fernanda.ai.portswigger.cloud
+    asserts:
+      - isKind:
+          of: Ingress
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-burpsuite-burp-at
+      - equal:
+          path: spec.ingressClassName
+          value: traefik
+      - equal:
+          path: spec.rules
+          value:
+            - host: maria-fernanda.ai.portswigger.cloud
+              http:
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
+                    backend:
+                      service:
+                        name: RELEASE-NAME-burpsuite
+                        port:
+                          name: http-burp-at
+  - it: should take the chat's annotations and not the instance's
+    set:
+      ingress:
+        enabled: true
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: ingress-secure-headers@kubernetescrd
+      agenticTesting:
+        enabled: true
+        instance:
+          chatHost: maria-fernanda.ai.portswigger.cloud
+        chatIngress:
+          annotations:
+            traefik.ingress.kubernetes.io/router.middlewares: tryerrortops-unavailable@kubernetescrd
+    asserts:
+      - equal:
+          path: metadata.annotations
+          value:
+            traefik.ingress.kubernetes.io/router.middlewares: tryerrortops-unavailable@kubernetescrd
