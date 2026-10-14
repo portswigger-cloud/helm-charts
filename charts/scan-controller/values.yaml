@@ -197,8 +197,8 @@ toolbox:
             karpenter.sh/do-not-evict: "true"
             karpenter.sh/do-not-disrupt: "true"
         spec:
-          serviceAccount: toolbox
-          serviceAccountName: toolbox
+          serviceAccount: {{ include "scan-controller.fullname" . }}-toolbox
+          serviceAccountName: {{ include "scan-controller.fullname" . }}-toolbox
           automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
