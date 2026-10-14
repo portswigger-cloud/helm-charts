@@ -46,8 +46,18 @@ tests:
       - equal:
           path: data.DISABLED_PROFILE_FEATURES
           value: SUPPORTS_AGENTIC_TESTING
-  - it: should give the web server the production registry's issuer and key by default
+  - it: should not give the web server the registry issuer or key by default
     template: web/env-configmap.yaml
+    asserts:
+      - notExists:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
+      - notExists:
+          path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
+  - it: should give the web server the production registry's issuer and key when enabled
+    template: web/env-configmap.yaml
+    set:
+      agenticTesting:
+        enabled: true
     asserts:
       - equal:
           path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
@@ -55,10 +65,11 @@ tests:
       - matchRegex:
           path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
           pattern: ^-----BEGIN PUBLIC KEY-----\n(.+\n)+-----END PUBLIC KEY-----\n$
-  - it: should give the web server an overridden registry issuer and key
+  - it: should give the web server an overridden registry issuer and key when enabled
     template: web/env-configmap.yaml
     set:
       agenticTesting:
+        enabled: true
         instance:
           provisioningTokenIssuer: https://registry.example/
           provisioningTokenPublicKey: |

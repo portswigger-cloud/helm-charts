@@ -220,8 +220,8 @@ aws:
     enabled: false
 
 agenticTesting:
-  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and, apart from the
-  # provisioning token settings, none of the settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
+  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and none of the
+  # settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
   # Read by the web server and the enterprise server.
@@ -230,8 +230,7 @@ agenticTesting:
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
     m2mAudience: https://ai.portswigger.net
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
-    # Read by the web server whether or not agenticTesting is enabled: it accepts credential pushes
-    # only when signed by this issuer's key. Defaults to the production auth product registry.
+    # Read by the web server: it accepts credential pushes only when signed by this issuer's key. Defaults to the production auth product registry.
     provisioningTokenIssuer: https://auth-product-registry.platform-prod.portswigger.io/
     provisioningTokenPublicKey: |
       -----BEGIN PUBLIC KEY-----
