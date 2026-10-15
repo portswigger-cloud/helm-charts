@@ -16,6 +16,10 @@
     containerPort: 8088
   - name: web-scim
     containerPort: 8089
+  {{- if (.Values.agenticTesting | default dict).enabled }}
+  - name: web-burp-at
+    containerPort: {{ .Values.agenticTesting.instance.chatPort }}
+  {{- end }}
   startupProbe:
     httpGet:
       port: web-health
