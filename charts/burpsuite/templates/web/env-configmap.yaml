@@ -42,7 +42,7 @@ data:
   BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
   BSEE_AT_INSTANCE_SERVER_PORT: {{ .chatPort | quote }}
 {{- if .chatHost }}
-  BSEE_AT_INSTANCE_EMBED_URL: {{ printf "https://%s" .chatHost | quote }}
+  BSEE_AT_INSTANCE_EMBED_BASE_URL: {{ printf "https://%s" .chatHost | quote }}
 {{- end }}
 {{- end }}
 {{- else }}

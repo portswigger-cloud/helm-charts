@@ -185,7 +185,7 @@ tests:
           path: data.BSEE_AT_INSTANCE_SERVER_PORT
           value: "8099"
       - notExists:
-          path: data.BSEE_AT_INSTANCE_EMBED_URL
+          path: data.BSEE_AT_INSTANCE_EMBED_BASE_URL
   - it: should give the web server the chat URL when the chat host is set
     template: web/env-configmap.yaml
     set:
@@ -195,5 +195,5 @@ tests:
           chatHost: maria-fernanda.ai.portswigger.cloud
     asserts:
       - equal:
-          path: data.BSEE_AT_INSTANCE_EMBED_URL
+          path: data.BSEE_AT_INSTANCE_EMBED_BASE_URL
           value: https://maria-fernanda.ai.portswigger.cloud
