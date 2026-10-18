@@ -238,7 +238,7 @@ toolbox:
               emptyDir:
                 sizeLimit: 1Gi
           restartPolicy: Never
-          terminationGracePeriodSeconds: 30
+          terminationGracePeriodSeconds: 1800
           {{- with .Values.toolbox.dnsPolicy }}
           dnsPolicy: {{ . }}
           {{- end }}
