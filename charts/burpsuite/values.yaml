@@ -230,6 +230,13 @@ agenticTesting:
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
     m2mAudience: https://ai.portswigger.net
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
+    # The web server serves the Burp AT chat on this port, apart from DAST's own, so the chat can be
+    # given its own host and cannot reach the DAST page that frames it.
+    chatPort: 8099
+    # The chat's own host, a sibling of the instance's: {cust}.ai.portswigger.cloud beside
+    # {cust}.portswigger.cloud. Both must share a registrable domain or the browser withholds the chat's
+    # cookie. Set per instance; while it is empty the chat is not routed and DAST cannot show it.
+    chatHost: ""
     # Read by the web server whether or not agenticTesting is enabled: it accepts credential pushes
     # only when signed by this issuer's key. Defaults to the production auth product registry.
     provisioningTokenIssuer: https://auth-product-registry.platform-prod.portswigger.io/
@@ -248,6 +255,10 @@ agenticTesting:
       9Gf7BjuNDMlPlwAVyY60xWLQG6Q6XEIMvCZfBZVqdnfSN9uVrUF0prsMIkVzvIvh
       bwQq5y6PMDQupNldYjkJCk8CAwEAAQ==
       -----END PUBLIC KEY-----
+  # Annotations for the chat's Ingress. It is separate from the instance's own so the chat does not
+  # get the instance's middlewares, whose frame-blocking headers would stop DAST framing it.
+  chatIngress:
+    annotations: {}
   toolbox:
     m2mTokenEndpoint: https://login.portswigger.net/oauth/token
     mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io

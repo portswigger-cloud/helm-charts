@@ -206,8 +206,10 @@ toolbox:
           containers:
             - name: toolbox-container
               env:
+                # Burp runs as the wrapper's uid, so the attach API would let it dump the wrapper's heap,
+                # and the API key in it, even though the wrapper is non-dumpable.
                 - name: JAVA_OPTS
-                  value: -Xms128m -Xmx512m
+                  value: -Xms128m -Xmx512m -XX:+DisableAttachMechanism
                 # Read back by the controller and prefixed to the bridge options it adds, so this is
                 # merged rather than replaced.
                 - name: BSEE_BURP_JAVA_OPTS
@@ -240,7 +242,7 @@ toolbox:
               emptyDir:
                 sizeLimit: 1Gi
           restartPolicy: Never
-          terminationGracePeriodSeconds: 30
+          terminationGracePeriodSeconds: 1800
           {{- with .Values.toolbox.priorityClassName }}
           priorityClassName: {{ . }}
           {{- end }}

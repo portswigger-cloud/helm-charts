@@ -21,6 +21,10 @@ spec:
     ports:
     - protocol: TCP
       port: 8080
+    {{- if (.Values.agenticTesting | default dict).enabled }}
+    - protocol: TCP
+      port: {{ .Values.agenticTesting.instance.chatPort }}
+    {{- end }}
   {{- end }}
   {{- range .Values.networkPolicy.ingress }}
   - {{ toYaml . | nindent 4 | trim }}
