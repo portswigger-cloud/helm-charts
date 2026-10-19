@@ -17,6 +17,9 @@ maintainers:
 appVersion: "0.0.1"
 annotations:
   changelog: |
+    v0.3.5:
+    - Stagger the stegostore CronJob minute per release namespace so instances
+      no longer all start their backups at :00 (stegostore.staggerMinute, default true)
     v0.3.0:
     - Added support for Barman Cloud Plugin (CloudNativePG 1.26+ migration)
     - Backward compatible via backup.usePlugin flag (default: false)

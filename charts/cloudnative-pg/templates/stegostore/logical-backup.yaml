@@ -1,4 +1,15 @@
 {{- if .Values.stegostore.enabled }}
+{{- /*
+Every instance shares this chart, so a fixed minute starts all of their backups at
+once and overflows the customer-db nodes. Swap the minute for one derived from the
+namespace so each instance keeps a stable slot but the starts spread over the hour.
+*/}}
+{{- $schedule := .Values.stegostore.schedule }}
+{{- $fields := splitList " " $schedule }}
+{{- if and .Values.stegostore.staggerMinute (eq (len $fields) 5) }}
+{{- $minute := mod (atoi (adler32sum .Release.Namespace)) 60 }}
+{{- $schedule = printf "%d %s" $minute (rest $fields | join " ") }}
+{{- end }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -11,7 +22,7 @@ metadata:
     data.portswigger.cloud/data-type: customer
     data.portswigger.cloud/data-classification: confidential
 spec:
-  schedule: {{.Values.stegostore.schedule}}
+  schedule: {{ $schedule | quote }}
   successfulJobsHistoryLimit: 0
   concurrencyPolicy: {{.Values.stegostore.concurrencyPolicy}}
   jobTemplate:

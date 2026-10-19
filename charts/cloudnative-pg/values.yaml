@@ -43,6 +43,9 @@ scheduledBackup:
 stegostore:
   enabled: true
   schedule: "0 * * * *"
+  # Replace the schedule's minute with one derived from the release namespace.
+  # Only five-field schedules are staggered; macros like @hourly pass through.
+  staggerMinute: true
   concurrencyPolicy: Forbid
   imageName: portswigger-cloud/stegostore
   imageRegion: eu-west-1

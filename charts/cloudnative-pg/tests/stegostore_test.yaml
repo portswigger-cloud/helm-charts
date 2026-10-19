@@ -1,0 +1,51 @@
+suite: stegostore CronJob schedule
+templates:
+  - stegostore/logical-backup.yaml
+tests:
+  - it: should stagger the minute by release namespace by default
+    release:
+      namespace: ps-040211fbb2cf8ed68cc00d1c843dabdb
+    asserts:
+      - isKind:
+          of: CronJob
+      - equal:
+          path: spec.schedule
+          value: "19 * * * *"
+
+  - it: should give different namespaces different minutes
+    release:
+      namespace: ps-0c232302c26732eceee87e07ebbcfbed
+    asserts:
+      - equal:
+          path: spec.schedule
+          value: "38 * * * *"
+
+  - it: should keep the hour, day, month and weekday fields when staggering
+    release:
+      namespace: ps-040211fbb2cf8ed68cc00d1c843dabdb
+    set:
+      stegostore.schedule: "0 */6 * * 1-5"
+    asserts:
+      - equal:
+          path: spec.schedule
+          value: "19 */6 * * 1-5"
+
+  - it: should use the schedule unchanged when staggering is disabled
+    release:
+      namespace: ps-040211fbb2cf8ed68cc00d1c843dabdb
+    set:
+      stegostore.staggerMinute: false
+    asserts:
+      - equal:
+          path: spec.schedule
+          value: "0 * * * *"
+
+  - it: should leave schedule macros alone
+    release:
+      namespace: ps-040211fbb2cf8ed68cc00d1c843dabdb
+    set:
+      stegostore.schedule: "@hourly"
+    asserts:
+      - equal:
+          path: spec.schedule
+          value: "@hourly"
