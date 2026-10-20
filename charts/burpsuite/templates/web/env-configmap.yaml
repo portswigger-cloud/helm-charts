@@ -34,12 +34,15 @@ data:
 {{- if .provisioningTokenPublicKey }}
   BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY: {{ .provisioningTokenPublicKey | quote }}
 {{- end }}
+{{- if .m2mAuthTokenUrl }}
+  # The hosted dashboard needs this to start, whether or not agentic testing is enabled
+  BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
+{{- end }}
 {{- end }}
 {{- if (.Values.agenticTesting | default dict).enabled }}
 {{- with .Values.agenticTesting.instance }}
   BSEE_AT_INSTANCE_GATEWAY_URL: {{ .gatewayUrl | quote }}
   BSEE_AT_INSTANCE_M2M_AUDIENCE: {{ .m2mAudience | quote }}
-  BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
   BSEE_AT_INSTANCE_SERVER_PORT: {{ .chatPort | quote }}
 {{- if .chatHost }}
   BSEE_AT_INSTANCE_EMBED_BASE_URL: {{ printf "https://%s" .chatHost | quote }}

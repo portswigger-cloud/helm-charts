@@ -221,7 +221,7 @@ aws:
 
 agenticTesting:
   # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and, apart from the
-  # provisioning token settings, none of the settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
+  # provisioning token settings and m2mAuthTokenUrl, none of the settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
   # has not asked for it. Must match toolbox.enabled on the scan-controller release.
   enabled: false
   # Read by the web server and the enterprise server.
@@ -229,6 +229,8 @@ agenticTesting:
     gatewayUrl: https://ai.portswigger.net
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
     m2mAudience: https://ai.portswigger.net
+    # Read by both servers whether or not agenticTesting is enabled: the hosted dashboard will not start
+    # without it.
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
     # The web server serves the Burp AT chat on this port, apart from DAST's own, so the chat can be
     # given its own host and cannot reach the DAST page that frames it.
