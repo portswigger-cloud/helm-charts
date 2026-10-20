@@ -7,7 +7,6 @@ rules:
   - apiGroups: [""]
     resources: ["pods/log"]
     verbs: ["get", "watch", "list"]
-  # patch moves a warm toolbox to claimed or retiring through its portswigger.net/toolbox-state label
   - apiGroups: [""]
     resources: ["pods"]
     verbs: ["get", "watch", "list", "patch"]

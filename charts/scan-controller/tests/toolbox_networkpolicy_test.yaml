@@ -28,7 +28,7 @@ tests:
       - equal:
           path: spec.endpointSelector.matchLabels["app.kubernetes.io/component"]
           value: scan-controller-toolbox
-  # The scan-controller relabels toolbox pods (warm -> claimed -> retiring) through
+  # DAST's scan-controller relabels toolbox pods (warm -> claimed -> retiring) through
   # portswigger.net/toolbox-state. A selector on that label would drop a pod's network rules
   # the moment it is relabelled.
   - it: should never select toolbox pods on their toolbox-state label
