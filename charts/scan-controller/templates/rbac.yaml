@@ -5,8 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
 rules:
   - apiGroups: [""]
-    resources: ["pods", "pods/log"]
+    resources: ["pods/log"]
     verbs: ["get", "watch", "list"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "watch", "list", "patch"]
   - apiGroups: ["batch"]
     resources: ["jobs"]
     verbs:
