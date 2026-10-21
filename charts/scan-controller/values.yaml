@@ -167,6 +167,9 @@ toolbox:
 
   activeDeadlineSeconds: 86400
 
+  # How often a warm toolbox asks for its bootstrap request while it waits for an agentic test.
+  bootstrapPollIntervalMs: 500
+
   resources:
     requests:
       cpu: 1
@@ -210,6 +213,8 @@ toolbox:
                 # merged rather than replaced.
                 - name: BSEE_BURP_JAVA_OPTS
                   value: -XX:MaxRAMPercentage=50
+                - name: BSEE_AT_TOOLBOX_BOOTSTRAP_POLL_INTERVAL_MS
+                  value: {{ .Values.toolbox.bootstrapPollIntervalMs | quote }}
               envFrom:
                 - secretRef:
                     name: {{ include "scan-controller.fullname" . }}-scanner-env
