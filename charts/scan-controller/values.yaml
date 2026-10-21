@@ -174,6 +174,10 @@ toolbox:
   # How often a warm toolbox asks for its bootstrap request while it waits for an agentic test.
   bootstrapPollIntervalMs: 500
 
+  # How many warm toolboxes (Burp started and licensed, waiting for an agentic test) the scan controller
+  # keeps while agentic testing is on for the customer. 0 keeps none: every toolbox starts cold.
+  warmPoolSize: 0
+
   resources:
     requests:
       cpu: 1
