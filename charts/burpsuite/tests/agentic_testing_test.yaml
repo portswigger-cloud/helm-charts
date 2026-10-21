@@ -23,6 +23,8 @@ tests:
           value: SUPPORTS_AGENTIC_TESTING
       - notExists:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
+      - notExists:
+          path: data.BSEE_AT_TOOLBOX_MAX_CONCURRENT
   - it: should give the web server the M2M token URL by default
     template: web/env-configmap.yaml
     asserts:
@@ -147,6 +149,9 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai-long-lived.portswigger.net
+      - equal:
+          path: data.BSEE_AT_TOOLBOX_MAX_CONCURRENT
+          value: "10"
   - it: should not open the chat port on the web server by default
     template: deployment.yaml
     asserts:

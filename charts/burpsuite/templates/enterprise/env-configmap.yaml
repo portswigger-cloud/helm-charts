@@ -56,6 +56,7 @@ data:
   BSEE_AT_TOOLBOX_MCP_BRIDGE_AUDIENCE: {{ .mcpBridgeAudience | quote }}
   BSEE_AT_TOOLBOX_PLATFORM_API_URL: {{ .platformApiUrl | quote }}
   BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE: {{ .platformApiAudience | quote }}
+  BSEE_AT_TOOLBOX_MAX_CONCURRENT: {{ .maxConcurrent | quote }}
 {{- end }}
 {{- else }}
   # The hosted dashboard profile turns agentic testing on, and the enterprise server then refuses to

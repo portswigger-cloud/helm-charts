@@ -267,5 +267,6 @@ agenticTesting:
     mcpBridgeAudience: https://ai-long-lived.portswigger.net
     platformApiUrl: https://ai.portswigger.net
     platformApiAudience: https://ai-long-lived.portswigger.net
+    maxConcurrent: 10
 
 extraDeploy: []
