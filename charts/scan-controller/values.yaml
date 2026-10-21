@@ -204,6 +204,16 @@ toolbox:
           automountServiceAccountToken: false
           containers:
             - name: toolbox-container
+              ports:
+                - name: management
+                  containerPort: 8098
+              readinessProbe:
+                httpGet:
+                  port: management
+                  path: /health/readiness
+                periodSeconds: 2
+                failureThreshold: 1
+                timeoutSeconds: 2
               env:
                 # Burp runs as the wrapper's uid, so the attach API would let it dump the wrapper's heap,
                 # and the API key in it, even though the wrapper is non-dumpable.
