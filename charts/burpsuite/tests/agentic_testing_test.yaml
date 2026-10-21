@@ -23,6 +23,18 @@ tests:
           value: SUPPORTS_AGENTIC_TESTING
       - notExists:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
+  - it: should give the web server the M2M token URL by default
+    template: web/env-configmap.yaml
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
+          value: https://login.portswigger.net/oauth/token
+  - it: should give the enterprise server the M2M token URL by default
+    template: enterprise/env-configmap.yaml
+    asserts:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
+          value: https://login.portswigger.net/oauth/token
   - it: should not give either server an M2M client pair
     template: deployment.yaml
     set:
