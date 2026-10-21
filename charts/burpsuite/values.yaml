@@ -228,7 +228,7 @@ agenticTesting:
   instance:
     gatewayUrl: https://ai.portswigger.net
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
-    m2mAudience: https://ai.portswigger.net
+    m2mAudience: https://ai-long-lived.portswigger.net
     # Read by both servers whether or not agenticTesting is enabled: the hosted dashboard will not start
     # without it.
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
@@ -264,8 +264,8 @@ agenticTesting:
   toolbox:
     m2mTokenEndpoint: https://login.portswigger.net/oauth/token
     mcpBridgeUrl: https://agent-mcp.portswigger.net
-    mcpBridgeAudience: https://ai.portswigger.net
+    mcpBridgeAudience: https://ai-long-lived.portswigger.net
     platformApiUrl: https://ai.portswigger.net
-    platformApiAudience: https://ai.portswigger.net
+    platformApiAudience: https://ai-long-lived.portswigger.net
 
 extraDeploy: []

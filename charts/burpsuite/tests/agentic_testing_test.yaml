@@ -111,7 +111,7 @@ tests:
           value: https://ai.portswigger.net
       - equal:
           path: data.BSEE_AT_INSTANCE_M2M_AUDIENCE
-          value: https://ai.portswigger.net
+          value: https://ai-long-lived.portswigger.net
       - equal:
           path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
           value: https://login.portswigger.net/oauth/token
@@ -140,13 +140,13 @@ tests:
           value: https://agent-mcp.portswigger.net
       - equal:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_AUDIENCE
-          value: https://ai.portswigger.net
+          value: https://ai-long-lived.portswigger.net
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_URL
           value: https://ai.portswigger.net
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
-          value: https://ai.portswigger.net
+          value: https://ai-long-lived.portswigger.net
   - it: should not open the chat port on the web server by default
     template: deployment.yaml
     asserts:
