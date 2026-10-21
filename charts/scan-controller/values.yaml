@@ -177,10 +177,10 @@ toolbox:
   resources:
     requests:
       cpu: 1
-      memory: 4Gi
+      memory: 5Gi
     limits:
       cpu: 2
-      memory: 4Gi
+      memory: 5Gi
 
   jobTemplate: |
     apiVersion: batch/v1
