@@ -263,7 +263,7 @@ agenticTesting:
     annotations: {}
   toolbox:
     m2mTokenEndpoint: https://login.portswigger.net/oauth/token
-    mcpBridgeUrl: https://enterprise-mcp-bridge.platform-prod.portswigger.io
+    mcpBridgeUrl: https://agent-mcp.portswigger.net
     mcpBridgeAudience: https://ai.portswigger.net
     platformApiUrl: https://ai.portswigger.net
     platformApiAudience: https://ai.portswigger.net

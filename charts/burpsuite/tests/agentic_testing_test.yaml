@@ -137,7 +137,7 @@ tests:
           value: https://login.portswigger.net/oauth/token
       - equal:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
-          value: https://enterprise-mcp-bridge.platform-prod.portswigger.io
+          value: https://agent-mcp.portswigger.net
       - equal:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_AUDIENCE
           value: https://ai.portswigger.net
