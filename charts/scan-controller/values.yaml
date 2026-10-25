@@ -169,7 +169,9 @@ toolbox:
   # how many toolboxes a Gotham namespace runs; read it to stay under the cap.
   priorityClassName: customer-toolbox
 
-  activeDeadlineSeconds: 86400
+  # A backstop only: the idle reaper, start-up timeout and orphan reaper stop toolboxes long before this.
+  # Reaching it is logged as an error and alerted on.
+  activeDeadlineSeconds: 604800
 
   # How often a warm toolbox asks for its bootstrap request while it waits for an agentic test.
   bootstrapPollIntervalMs: 500
