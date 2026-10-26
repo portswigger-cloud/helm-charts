@@ -64,6 +64,7 @@ scanner:
       cpu: 4
       memory: 24Gi
     limits:
+      cpu: 8
       memory: 32Gi
 
   jobTemplate: |
@@ -187,6 +188,7 @@ toolbox:
       cpu: 4
       memory: 24Gi
     limits:
+      cpu: 8
       memory: 32Gi
 
   jobTemplate: |
