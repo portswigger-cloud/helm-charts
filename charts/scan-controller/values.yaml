@@ -61,8 +61,10 @@ scanner:
 
   resources:
     requests:
-      cpu: 2
-      memory: 14Gi
+      cpu: 4
+      memory: 24Gi
+    limits:
+      memory: 32Gi
 
   jobTemplate: |
     apiVersion: batch/v1
@@ -182,11 +184,10 @@ toolbox:
 
   resources:
     requests:
-      cpu: 1
-      memory: 5Gi
+      cpu: 4
+      memory: 24Gi
     limits:
-      cpu: 2
-      memory: 5Gi
+      memory: 32Gi
 
   jobTemplate: |
     apiVersion: batch/v1
