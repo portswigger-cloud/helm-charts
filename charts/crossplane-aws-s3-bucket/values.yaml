@@ -8,3 +8,8 @@ aws:
     deletionWindowInDays: 7
     tags: {}
 stackId: my-stack-id
+lifecycle:
+  # Days S3 keeps an object version after it is overwritten or deleted.
+  noncurrentVersionExpirationDays: 2
+  # Days before S3 aborts an unfinished multipart upload and deletes its parts.
+  abortIncompleteMultipartUploadDays: 7
