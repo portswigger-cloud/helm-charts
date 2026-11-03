@@ -1,0 +1,44 @@
+suite: Bucket lifecycle configuration
+templates:
+  - aws-s3-bucket-lifecycle.yaml
+tests:
+  - it: should expire noncurrent versions after 2 days by default
+    asserts:
+      - equal:
+          path: spec.forProvider.rule[0].noncurrentVersionExpiration
+          value:
+            - noncurrentDays: 2
+  - it: should never keep noncurrent versions by count, so deleted objects with unique keys still expire
+    asserts:
+      - notExists:
+          path: spec.forProvider.rule[0].noncurrentVersionExpiration[0].newerNoncurrentVersions
+  - it: should let a release choose how long to keep noncurrent versions
+    set:
+      lifecycle.noncurrentVersionExpirationDays: 7
+    asserts:
+      - equal:
+          path: spec.forProvider.rule[0].noncurrentVersionExpiration[0].noncurrentDays
+          value: 7
+  - it: should remove delete markers once nothing is left behind them
+    asserts:
+      - equal:
+          path: spec.forProvider.rule[0].expiration
+          value:
+            - expiredObjectDeleteMarker: true
+  - it: should abort unfinished multipart uploads after 7 days by default
+    asserts:
+      - equal:
+          path: spec.forProvider.rule[0].abortIncompleteMultipartUpload
+          value:
+            - daysAfterInitiation: 7
+  - it: should apply the rule to the bucket the chart creates
+    set:
+      aws.resourcePrefix: crossplane-
+      stackId: ps-0123
+    asserts:
+      - equal:
+          path: spec.forProvider.bucketRef.name
+          value: crossplane-ps-0123
+      - equal:
+          path: spec.forProvider.rule[0].status
+          value: Enabled

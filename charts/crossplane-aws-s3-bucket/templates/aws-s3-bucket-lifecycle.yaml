@@ -9,10 +9,17 @@ spec:
       name: {{ .Values.aws.resourcePrefix }}{{ .Values.stackId }}
     region: {{ .Values.aws.region }}
     rule:
-      - id: keep-2-days-of-noncurrent-versions
+      # Don't add newerNoncurrentVersions here. S3 keeps that many noncurrent
+      # versions of every key regardless of age, so an object that is deleted
+      # and never rewritten under the same key (a timestamped dump, say) is
+      # kept forever.
+      - id: expire-noncurrent-versions
         status: Enabled
         noncurrentVersionExpiration:
-          - newerNoncurrentVersions: 2
-            noncurrentDays: 35
+          - noncurrentDays: {{ .Values.lifecycle.noncurrentVersionExpirationDays }}
+        expiration:
+          - expiredObjectDeleteMarker: true
+        abortIncompleteMultipartUpload:
+          - daysAfterInitiation: {{ .Values.lifecycle.abortIncompleteMultipartUploadDays }}
   providerConfigRef:
     name: aws
