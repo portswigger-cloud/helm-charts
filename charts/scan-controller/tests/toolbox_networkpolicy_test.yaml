@@ -2,17 +2,22 @@ suite: Toolbox network policy
 templates:
   - toolbox-networkpolicy.yaml
 tests:
-  - it: should not create a policy with default values
+  - it: should create the policy with default values
     asserts:
       - hasDocuments:
-          count: 0
-  - it: should not create a policy when the toolbox is off
+          count: 1
+  # Turning toolboxes off does not delete toolbox Jobs straight away, and claimed ones can take up
+  # to 30 minutes to save their project. The policy must stay so those pods keep their egress rules.
+  - it: should keep the policy when the toolbox is off
     set:
       toolbox:
         enabled: false
     asserts:
       - hasDocuments:
-          count: 0
+          count: 1
+      - equal:
+          path: spec.endpointSelector.matchLabels["app.kubernetes.io/component"]
+          value: scan-controller-toolbox
   - it: should create a policy selecting toolbox pods when the toolbox is on
     set:
       toolbox:
@@ -45,4 +50,4 @@ tests:
       toolbox: null
     asserts:
       - hasDocuments:
-          count: 0
+          count: 1
