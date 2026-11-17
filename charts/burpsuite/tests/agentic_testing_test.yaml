@@ -7,22 +7,41 @@ templates:
   - web/env-configmap.yaml
   - web/env-secret.yaml
 tests:
-  - it: should disable agentic testing on the web server by default
+  # The licence's product configuration decides whether a customer can run agentic tests
+  - it: should not disable agentic testing on the web server
     template: web/env-configmap.yaml
     asserts:
-      - equal:
-          path: data.DISABLED_PROFILE_FEATURES
-          value: SUPPORTS_AGENTIC_TESTING
       - notExists:
-          path: data.BSEE_AT_INSTANCE_GATEWAY_URL
-  - it: should disable agentic testing on the enterprise server by default
+          path: data.DISABLED_PROFILE_FEATURES
+  - it: should not disable agentic testing on the enterprise server
     template: enterprise/env-configmap.yaml
+    asserts:
+      - notExists:
+          path: data.DISABLED_PROFILE_FEATURES
+  - it: should disable agentic testing on the web server with the kill switch
+    template: web/env-configmap.yaml
+    set:
+      agenticTesting:
+        killSwitch: true
     asserts:
       - equal:
           path: data.DISABLED_PROFILE_FEATURES
           value: SUPPORTS_AGENTIC_TESTING
-      - notExists:
+      - equal:
+          path: data.BSEE_AT_INSTANCE_GATEWAY_URL
+          value: https://ai.portswigger.net
+  - it: should disable agentic testing on the enterprise server with the kill switch
+    template: enterprise/env-configmap.yaml
+    set:
+      agenticTesting:
+        killSwitch: true
+    asserts:
+      - equal:
+          path: data.DISABLED_PROFILE_FEATURES
+          value: SUPPORTS_AGENTIC_TESTING
+      - equal:
           path: data.BSEE_AT_TOOLBOX_MCP_BRIDGE_URL
+          value: https://agent-mcp.portswigger.net
   - it: should give the web server the M2M token URL by default
     template: web/env-configmap.yaml
     asserts:
@@ -37,9 +56,6 @@ tests:
           value: https://login.portswigger.net/oauth/token
   - it: should not give either server an M2M client pair
     template: deployment.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
       - notContains:
           path: spec.template.spec.containers[?(@.name == "enterprise")].env
@@ -51,14 +67,6 @@ tests:
           content:
             name: BSEE_AT_TOOLBOX_M2M_CLIENT_ID
           any: true
-  - it: should tolerate a null agenticTesting key
-    template: web/env-configmap.yaml
-    set:
-      agenticTesting: null
-    asserts:
-      - equal:
-          path: data.DISABLED_PROFILE_FEATURES
-          value: SUPPORTS_AGENTIC_TESTING
   - it: should give the web server the production registry's issuer and key by default
     template: web/env-configmap.yaml
     asserts:
@@ -90,22 +98,14 @@ tests:
             -----END PUBLIC KEY-----
   - it: should not give the enterprise server the registry issuer or key
     template: enterprise/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
       - notExists:
           path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_ISSUER
       - notExists:
           path: data.BSEE_AT_INSTANCE_PROVISIONING_TOKEN_PUBLIC_KEY
-  - it: should give the web server the instance settings when enabled
+  - it: should give the web server the instance settings
     template: web/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
-      - notExists:
-          path: data.DISABLED_PROFILE_FEATURES
       - equal:
           path: data.BSEE_AT_INSTANCE_GATEWAY_URL
           value: https://ai.portswigger.net
@@ -115,14 +115,9 @@ tests:
       - equal:
           path: data.BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL
           value: https://login.portswigger.net/oauth/token
-  - it: should give the enterprise server the instance and toolbox settings when enabled
+  - it: should give the enterprise server the instance and toolbox settings
     template: enterprise/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
-      - notExists:
-          path: data.DISABLED_PROFILE_FEATURES
       - equal:
           path: data.BSEE_AT_INSTANCE_GATEWAY_URL
           value: https://ai.portswigger.net
@@ -147,38 +142,16 @@ tests:
       - equal:
           path: data.BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE
           value: https://ai-long-lived.portswigger.net
-  - it: should not open the chat port on the web server by default
+  - it: should open the chat port on the web server
     template: deployment.yaml
-    asserts:
-      - notContains:
-          path: spec.template.spec.containers[?(@.name == "web")].ports
-          content:
-            name: web-burp-at
-          any: true
-  - it: should open the chat port on the web server when agentic testing is enabled
-    template: deployment.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
       - contains:
           path: spec.template.spec.containers[?(@.name == "web")].ports
           content:
             name: web-burp-at
             containerPort: 8099
-  - it: should not publish the chat port on the Service by default
+  - it: should publish the chat port on the Service
     template: service.yaml
-    asserts:
-      - notContains:
-          path: spec.ports
-          content:
-            name: http-burp-at
-          any: true
-  - it: should publish the chat port on the Service when agentic testing is enabled
-    template: service.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
       - contains:
           path: spec.ports
@@ -187,11 +160,8 @@ tests:
             targetPort: web-burp-at
             protocol: TCP
             name: http-burp-at
-  - it: should tell the web server the chat port when agentic testing is enabled
+  - it: should tell the web server the chat port
     template: web/env-configmap.yaml
-    set:
-      agenticTesting:
-        enabled: true
     asserts:
       - equal:
           path: data.BSEE_AT_INSTANCE_SERVER_PORT
@@ -202,7 +172,6 @@ tests:
     template: web/env-configmap.yaml
     set:
       agenticTesting:
-        enabled: true
         instance:
           chatHost: maria-fernanda.ai.portswigger.cloud
     asserts:

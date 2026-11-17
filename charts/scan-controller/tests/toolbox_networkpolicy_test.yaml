@@ -6,22 +6,7 @@ tests:
     asserts:
       - hasDocuments:
           count: 1
-  # Turning toolboxes off does not delete toolbox Jobs straight away, and claimed ones can take up
-  # to 30 minutes to save their project. The policy must stay so those pods keep their egress rules.
-  - it: should keep the policy when the toolbox is off
-    set:
-      toolbox:
-        enabled: false
-    asserts:
-      - hasDocuments:
-          count: 1
-      - equal:
-          path: spec.endpointSelector.matchLabels["app.kubernetes.io/component"]
-          value: scan-controller-toolbox
-  - it: should create a policy selecting toolbox pods when the toolbox is on
-    set:
-      toolbox:
-        enabled: true
+  - it: should create a policy selecting toolbox pods
     asserts:
       - hasDocuments:
           count: 1
@@ -37,17 +22,8 @@ tests:
   # portswigger.net/toolbox-state. A selector on that label would drop a pod's network rules
   # the moment it is relabelled.
   - it: should never select toolbox pods on their toolbox-state label
-    set:
-      toolbox:
-        enabled: true
     asserts:
       - notExists:
           path: spec.endpointSelector.matchLabels["portswigger.net/toolbox-state"]
       - notExists:
           path: spec.endpointSelector.matchExpressions
-  - it: should tolerate a null toolbox key
-    set:
-      toolbox: null
-    asserts:
-      - hasDocuments:
-          count: 1

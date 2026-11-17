@@ -2,21 +2,9 @@ suite: Burp AT chat Ingress
 templates:
   - ingress-burp-at.yaml
 tests:
-  - it: should not route the chat by default
-    set:
-      ingress:
-        enabled: true
-      agenticTesting:
-        instance:
-          chatHost: maria-fernanda.ai.portswigger.cloud
-    asserts:
-      - hasDocuments:
-          count: 0
   - it: should not route the chat without a chat host
     set:
       ingress:
-        enabled: true
-      agenticTesting:
         enabled: true
     asserts:
       - hasDocuments:
@@ -24,7 +12,6 @@ tests:
   - it: should not route the chat when the instance has no Ingress
     set:
       agenticTesting:
-        enabled: true
         instance:
           chatHost: maria-fernanda.ai.portswigger.cloud
     asserts:
@@ -36,7 +23,6 @@ tests:
         enabled: true
         className: traefik
       agenticTesting:
-        enabled: true
         instance:
           chatHost: maria-fernanda.ai.portswigger.cloud
     asserts:
@@ -68,7 +54,6 @@ tests:
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: ingress-secure-headers@kubernetescrd
       agenticTesting:
-        enabled: true
         instance:
           chatHost: maria-fernanda.ai.portswigger.cloud
         chatIngress:
