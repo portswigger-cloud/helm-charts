@@ -1,0 +1,43 @@
+suite: Analytics configuration
+templates:
+  - enterprise/env-configmap.yaml
+  - web/env-configmap.yaml
+tests:
+  - it: should not render PostHog settings by default
+    asserts:
+      - notExists:
+          path: data.BSEE_POSTHOG_PROJECT_TOKEN
+      - notExists:
+          path: data.BSEE_POSTHOG_API_HOST
+  - it: should render the PostHog settings when set
+    set:
+      analytics:
+        posthog:
+          projectToken: phc_exampleToken
+          apiHost: https://phingest.portswigger.com
+    asserts:
+      - equal:
+          path: data.BSEE_POSTHOG_PROJECT_TOKEN
+          value: phc_exampleToken
+      - equal:
+          path: data.BSEE_POSTHOG_API_HOST
+          value: https://phingest.portswigger.com
+  - it: should render only the host when the token is empty
+    set:
+      analytics:
+        posthog:
+          apiHost: https://phingest.portswigger.com
+    asserts:
+      - notExists:
+          path: data.BSEE_POSTHOG_PROJECT_TOKEN
+      - equal:
+          path: data.BSEE_POSTHOG_API_HOST
+          value: https://phingest.portswigger.com
+  - it: should tolerate a null analytics key
+    set:
+      analytics: null
+    asserts:
+      - notExists:
+          path: data.BSEE_POSTHOG_PROJECT_TOKEN
+      - notExists:
+          path: data.BSEE_POSTHOG_API_HOST

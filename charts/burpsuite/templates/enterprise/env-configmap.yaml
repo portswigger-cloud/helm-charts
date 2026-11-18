@@ -62,6 +62,14 @@ data:
   # start without the toolbox settings above, disable it by default
   DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
 {{- end }}
+{{- with ((.Values.analytics | default dict).posthog | default dict) }}
+{{- if .projectToken }}
+  BSEE_POSTHOG_PROJECT_TOKEN: {{ .projectToken | quote }}
+{{- end }}
+{{- if .apiHost }}
+  BSEE_POSTHOG_API_HOST: {{ .apiHost | quote }}
+{{- end }}
+{{- end }}
 {{- with (last .Values.ingress.hosts) }}
   BSEE_WEB_SERVER_URL: https://{{ .host }}/
 {{- end -}}
