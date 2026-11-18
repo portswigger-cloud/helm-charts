@@ -14,25 +14,25 @@ tests:
       analytics:
         posthog:
           projectToken: phc_exampleToken
-          apiHost: https://telemetry.portswigger.net/ingest
+          apiHost: https://phingest.portswigger.com
     asserts:
       - equal:
           path: data.BSEE_POSTHOG_PROJECT_TOKEN
           value: phc_exampleToken
       - equal:
           path: data.BSEE_POSTHOG_API_HOST
-          value: https://telemetry.portswigger.net/ingest
+          value: https://phingest.portswigger.com
   - it: should render only the host when the token is empty
     set:
       analytics:
         posthog:
-          apiHost: https://telemetry.portswigger.net/ingest
+          apiHost: https://phingest.portswigger.com
     asserts:
       - notExists:
           path: data.BSEE_POSTHOG_PROJECT_TOKEN
       - equal:
           path: data.BSEE_POSTHOG_API_HOST
-          value: https://telemetry.portswigger.net/ingest
+          value: https://phingest.portswigger.com
   - it: should tolerate a null analytics key
     set:
       analytics: null

@@ -270,7 +270,8 @@ agenticTesting:
 
 # Web analytics (PostHog), read by the web server and the enterprise server. Both are empty by default and
 # the BSEE_POSTHOG_* settings are then not rendered, so analytics stay off. The project token is a public,
-# write-only key, not a secret. Set per environment (PR environments use the staging ingest host).
+# write-only key, not a secret. Every environment uses the same ingest host, https://phingest.portswigger.com;
+# the project token picks the PostHog project.
 analytics:
   posthog:
     projectToken: ""
