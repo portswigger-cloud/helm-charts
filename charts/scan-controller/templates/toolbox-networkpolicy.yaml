@@ -1,9 +1,3 @@
-{{- /*
-Rendered whether or not toolbox.enabled is set. Turning toolboxes off does not remove the toolbox
-pods at once: the scan controller deletes them, and a claimed one keeps running for up to its
-termination grace period while it saves its project. Dropping the policy with the flag would leave
-those pods with unrestricted egress. With no toolbox pods it selects nothing.
-*/}}
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:

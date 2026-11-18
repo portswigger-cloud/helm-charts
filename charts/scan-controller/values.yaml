@@ -153,10 +153,8 @@ scanner:
           {{- end }}
 
 toolbox:
-  # Provisions the toolbox job template for the scan controller. Off by default: with it unset the
-  # controller starts normally and refuses toolbox launches, so a chart upgrade cannot enable the
-  # feature in an environment that has not asked for it.
-  enabled: false
+  # Always provisioned. Whether a customer can launch toolboxes is set by their licence's product
+  # configuration, not by the chart.
 
   nodeSelector:
     kubernetes.io/arch: amd64

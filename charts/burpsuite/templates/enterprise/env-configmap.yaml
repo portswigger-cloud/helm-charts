@@ -38,14 +38,11 @@ data:
   BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
   ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
 {{- end }}
-{{- with ((.Values.agenticTesting | default dict).instance | default dict) }}
+{{- with .Values.agenticTesting.instance }}
 {{- if .m2mAuthTokenUrl }}
-  # The hosted dashboard needs this to start, whether or not agentic testing is enabled
+  # The hosted dashboard needs this to start
   BSEE_AT_INSTANCE_M2M_AUTH_TOKEN_URL: {{ .m2mAuthTokenUrl | quote }}
 {{- end }}
-{{- end }}
-{{- if (.Values.agenticTesting | default dict).enabled }}
-{{- with .Values.agenticTesting.instance }}
   BSEE_AT_INSTANCE_GATEWAY_URL: {{ .gatewayUrl | quote }}
   BSEE_AT_INSTANCE_MCP_SERVER_URL: {{ .mcpServerUrl | quote }}
   BSEE_AT_INSTANCE_M2M_AUDIENCE: {{ .m2mAudience | quote }}
@@ -57,9 +54,7 @@ data:
   BSEE_AT_TOOLBOX_PLATFORM_API_URL: {{ .platformApiUrl | quote }}
   BSEE_AT_TOOLBOX_PLATFORM_API_AUDIENCE: {{ .platformApiAudience | quote }}
 {{- end }}
-{{- else }}
-  # The hosted dashboard profile turns agentic testing on, and the enterprise server then refuses to
-  # start without the toolbox settings above, disable it by default
+{{- if .Values.agenticTesting.killSwitch }}
   DISABLED_PROFILE_FEATURES: SUPPORTS_AGENTIC_TESTING
 {{- end }}
 {{- with ((.Values.analytics | default dict).posthog | default dict) }}

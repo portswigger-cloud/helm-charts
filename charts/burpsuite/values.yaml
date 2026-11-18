@@ -220,17 +220,15 @@ aws:
     enabled: false
 
 agenticTesting:
-  # Off by default: the servers then run with SUPPORTS_AGENTIC_TESTING disabled and, apart from the
-  # provisioning token settings and m2mAuthTokenUrl, none of the settings below are rendered, so a chart upgrade cannot enable the feature in an environment that
-  # has not asked for it. Must match toolbox.enabled on the scan-controller release.
-  enabled: false
+  # Emergency only, not for day-to-day use: turns agentic testing off on the enterprise server and
+  # the web server even when the licence allows it. The settings below stay rendered.
+  killSwitch: false
   # Read by the web server and the enterprise server.
   instance:
     gatewayUrl: https://ai.portswigger.net
     mcpServerUrl: http://enterprise-mcp-bridge-internal.enterprise:8002/mcp
     m2mAudience: https://ai-long-lived.portswigger.net
-    # Read by both servers whether or not agenticTesting is enabled: the hosted dashboard will not start
-    # without it.
+    # Read by both servers: the hosted dashboard will not start without it.
     m2mAuthTokenUrl: https://login.portswigger.net/oauth/token
     # The web server serves the Burp AT chat on this port, apart from DAST's own, so the chat can be
     # given its own host and cannot reach the DAST page that frames it.
@@ -239,8 +237,7 @@ agenticTesting:
     # {cust}.portswigger.cloud. Both must share a registrable domain or the browser withholds the chat's
     # cookie. Set per instance; while it is empty the chat is not routed and DAST cannot show it.
     chatHost: ""
-    # Read by the web server whether or not agenticTesting is enabled: it accepts credential pushes
-    # only when signed by this issuer's key. Defaults to the production auth product registry.
+    # Read by the web server: it accepts credential pushes only when signed by this issuer's key. Defaults to the production auth product registry.
     provisioningTokenIssuer: https://auth-product-registry.platform-prod.portswigger.io/
     provisioningTokenPublicKey: |
       -----BEGIN PUBLIC KEY-----
