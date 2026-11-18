@@ -220,10 +220,8 @@ aws:
     enabled: false
 
 agenticTesting:
-  # Always rendered. Whether a customer can run agentic tests is set by their licence's product
-  # configuration, not by the chart.
-  # Emergency only, not for day-to-day use: turns agentic testing off on both servers even when the
-  # licence allows it. The settings below stay rendered.
+  # Emergency only, not for day-to-day use: turns agentic testing off on the enterprise server and
+  # the web server even when the licence allows it. The settings below stay rendered.
   killSwitch: false
   # Read by the web server and the enterprise server.
   instance:
