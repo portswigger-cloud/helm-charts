@@ -102,6 +102,7 @@ ingress:
 ## @section Web Server settings
 ##
 web:
+  enabledProfileFeatures: []
   authenticationToken: ""
   adminEmail: ""
   adminName: ""
@@ -123,6 +124,18 @@ web:
 
   ipRangesAppUrl: https://ip-ranges.portswigger-dev.cloud
   serverJavaOpts: -Xms512m -Xmx512m
+
+oidc:
+  enabled: false
+  issuer: ""
+  discoveryUrl: ""
+  clientId: ""
+  clientSecretRef:
+    name: ""
+    key: ""
+  scopes: "openid profile email"
+  groupsClaim: groups
+  egressHosts: []
 
 ## @section Ephemeral Agent settings
 ##

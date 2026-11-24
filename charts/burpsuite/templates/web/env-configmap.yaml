@@ -25,7 +25,24 @@ data:
   AWS_REGION: {{ .Values.globalEnv.awsRegion | quote }}
 {{- if .Values.aws.s3.enabled }}
   BSEE_AWS_S3_BUCKET_NAME: {{ .Values.aws.resourcePrefix }}{{ .Release.Namespace }}
-  ENABLED_PROFILE_FEATURES: USE_S3_FOR_PROJECT_FILES
+{{- end }}
+{{- $features := .Values.web.enabledProfileFeatures | default list }}
+{{- if .Values.aws.s3.enabled }}
+{{- $features = append $features "USE_S3_FOR_PROJECT_FILES" }}
+{{- end }}
+{{- if .Values.oidc.enabled }}
+{{- $features = append $features "SUPPORTS_OIDC_LOGIN" }}
+  BSEE_OIDC_ISSUER: {{ required "oidc.issuer is required when OIDC is enabled" .Values.oidc.issuer | quote }}
+  BSEE_OIDC_CLIENT_ID: {{ required "oidc.clientId is required when OIDC is enabled" .Values.oidc.clientId | quote }}
+  BSEE_OIDC_REDIRECT_URI: {{ printf "https://%s/api-internal/oidc/callback" (required "an ingress host is required when OIDC is enabled" (first .Values.ingress.hosts).host) | quote }}
+  BSEE_OIDC_SCOPES: {{ .Values.oidc.scopes | quote }}
+  BSEE_OIDC_GROUPS_CLAIM: {{ .Values.oidc.groupsClaim | quote }}
+{{- with .Values.oidc.discoveryUrl }}
+  BSEE_OIDC_DISCOVERY_URL: {{ . | quote }}
+{{- end }}
+{{- end }}
+{{- if $features }}
+  ENABLED_PROFILE_FEATURES: {{ $features | uniq | join "," | quote }}
 {{- end }}
 {{- with ((.Values.agenticTesting | default dict).instance | default dict) }}
 {{- if .provisioningTokenIssuer }}

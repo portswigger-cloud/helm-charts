@@ -1,0 +1,83 @@
+suite: OIDC login configuration
+templates:
+  - deployment.yaml
+  - web/env-configmap.yaml
+  - web/env-secret.yaml
+  - enterprise/env-configmap.yaml
+  - enterprise/env-secret.yaml
+tests:
+  - it: leaves OIDC off by default
+    template: web/env-configmap.yaml
+    asserts:
+      - notExists:
+          path: data.BSEE_OIDC_ISSUER
+      - notExists:
+          path: data.ENABLED_PROFILE_FEATURES
+  - it: enables OIDC and preserves S3 and explicit feature overrides
+    template: web/env-configmap.yaml
+    set: &enabled
+      oidc.enabled: true
+      oidc.issuer: https://idp.example/realms/test
+      oidc.clientId: dast-test
+      oidc.clientSecretRef.name: oidc-client
+      oidc.clientSecretRef.key: client-secret
+      ingress.hosts[0].host: instance.example
+      aws.s3.enabled: true
+      web.enabledProfileFeatures: [ANOTHER_FEATURE]
+    asserts:
+      - equal:
+          path: data.ENABLED_PROFILE_FEATURES
+          value: ANOTHER_FEATURE,USE_S3_FOR_PROJECT_FILES,SUPPORTS_OIDC_LOGIN
+      - equal:
+          path: data.BSEE_OIDC_ISSUER
+          value: https://idp.example/realms/test
+      - equal:
+          path: data.BSEE_OIDC_CLIENT_ID
+          value: dast-test
+      - equal:
+          path: data.BSEE_OIDC_REDIRECT_URI
+          value: https://instance.example/api-internal/oidc/callback
+      - notExists:
+          path: data.BSEE_OIDC_CLIENT_SECRET
+  - it: mounts the client secret only in web
+    template: deployment.yaml
+    set: *enabled
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[?(@.name == "web")].env
+          content:
+            name: BSEE_OIDC_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: oidc-client
+                key: client-secret
+      - notContains:
+          path: spec.template.spec.containers[?(@.name == "enterprise")].env
+          content:
+            name: BSEE_OIDC_CLIENT_SECRET
+          any: true
+  - it: carries optional generic provider settings
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.discoveryUrl: https://discovery.example/openid-configuration
+      oidc.scopes: openid email
+      oidc.groupsClaim: roles
+    asserts:
+      - equal:
+          path: data.BSEE_OIDC_DISCOVERY_URL
+          value: https://discovery.example/openid-configuration
+      - equal:
+          path: data.BSEE_OIDC_SCOPES
+          value: openid email
+      - equal:
+          path: data.BSEE_OIDC_GROUPS_CLAIM
+          value: roles
+  - it: requires a secret reference when enabled
+    template: deployment.yaml
+    set:
+      <<: *enabled
+      oidc.clientSecretRef.name: ""
+    asserts:
+      - failedTemplate:
+          errorMessage: oidc.clientSecretRef.name is required when OIDC is enabled

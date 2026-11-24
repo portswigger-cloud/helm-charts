@@ -75,6 +75,13 @@
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
+  {{- if .Values.oidc.enabled }}
+    - name: BSEE_OIDC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: {{ required "oidc.clientSecretRef.name is required when OIDC is enabled" .Values.oidc.clientSecretRef.name | quote }}
+          key: {{ required "oidc.clientSecretRef.key is required when OIDC is enabled" .Values.oidc.clientSecretRef.key | quote }}
+  {{- end }}
   {{- with .Values.web.env }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
