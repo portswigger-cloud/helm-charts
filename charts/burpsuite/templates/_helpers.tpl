@@ -1,3 +1,9 @@
+{{- define "burpsuite.oidc.validate" -}}
+{{- if not (kindIs "bool" .Values.oidc.enabled) -}}
+{{- fail "oidc.enabled must be a boolean" -}}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Expand the name of the chart.
 */}}

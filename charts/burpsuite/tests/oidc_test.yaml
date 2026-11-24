@@ -81,3 +81,46 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: oidc.clientSecretRef.name is required when OIDC is enabled
+  - it: rejects a quoted false flag
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.enabled: "false"
+    asserts:
+      - failedTemplate:
+          errorMessage: oidc.enabled must be a boolean
+  - it: rejects a numeric flag
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.enabled: 1
+    asserts:
+      - failedTemplate:
+          errorMessage: oidc.enabled must be a boolean
+  - it: rejects an array flag
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.enabled: [false]
+    asserts:
+      - failedTemplate:
+          errorMessage: oidc.enabled must be a boolean
+  - it: rejects an object flag
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.enabled: {value: false}
+    asserts:
+      - failedTemplate:
+          errorMessage: oidc.enabled must be a boolean
+  - it: keeps a boolean false flag off with stale settings
+    template: web/env-configmap.yaml
+    set:
+      <<: *enabled
+      oidc.enabled: false
+    asserts:
+      - equal:
+          path: data.ENABLED_PROFILE_FEATURES
+          value: ANOTHER_FEATURE,USE_S3_FOR_PROJECT_FILES
+      - notExists:
+          path: data.BSEE_OIDC_ISSUER

@@ -1,4 +1,5 @@
 {{- define "burpsuite.web.containerTemplate" -}}
+{{- include "burpsuite.oidc.validate" . }}
 - image: {{ include "burpsuite.web.image" . }}
   imagePullPolicy: Always
   name: web

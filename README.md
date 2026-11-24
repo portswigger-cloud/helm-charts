@@ -16,6 +16,8 @@ oidc:
   egressHosts: [idp.example]
 ```
 
+`oidc.enabled` must be a YAML boolean. Strings, numbers, arrays and objects are rejected during rendering.
+
 The client Secret must exist in the release namespace. Only the web container mounts its value.
 Non-secret settings and `SUPPORTS_OIDC_LOGIN` are passed to web through its ConfigMap.
 S3 and `web.enabledProfileFeatures` overrides are retained. Use `web.enabledProfileFeatures`
