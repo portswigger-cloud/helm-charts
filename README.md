@@ -5,7 +5,7 @@ Helm charts and configuration for Burp Enterprise used on-prem and in the cloud
 
 The `burpsuite` chart's `oidc` block is for the cloud dev PR-environment composition only.
 OIDC through this chart is unsupported for on-prem installations and is disabled by default.
-Configure it through the [Enterprise PR-environment workflow](https://github.com/portswigger-engineering/enterprise/blob/605153aac051fb2bfba7f4794f8ae540cd4c31bb/README.md#oidc-login-in-pr-environments).
+Configure it with the manual `BseeInstance` patch in the [Enterprise procedure](https://github.com/portswigger-engineering/enterprise/blob/f98e98e01302c2659dc67d5875b78bc3156e4349/README.md#oidc-login-in-pr-environments).
 
 The composition supplies `oidc`; `oidc.enabled` must be a YAML boolean. Strings, numbers,
 arrays and objects are rejected during rendering.
