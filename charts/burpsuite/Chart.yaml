@@ -1,8 +1,10 @@
 apiVersion: v2
 name: burpsuite
-description: Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
+description: >-
+  Scan it all. With the enterprise-enabled dynamic web vulnerability scanner.
+  OIDC is for the cloud dev PR-environment composition only and is unsupported for on-prem installations.
 type: application
-version: 0.4.10
+version: 0.4.11
 kubeVersion: ">=1.24.0-0"
 keywords:
   - burpsuite
